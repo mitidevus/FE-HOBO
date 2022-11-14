@@ -1,30 +1,13 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { publicRoutes } from '~/routes';
+import Navbar from './component/Navbar/Navbar';
 
 function App() {
     return (
         <Router>
             <div className="App">
-                <nav>
-                    <ul>
-                        <li>
-                            <Link to="/">Home</Link>
-                        </li>
-                        <li>
-                            <Link to="/search">Search</Link>
-                        </li>
-                        <li>
-                            <Link to="/hotel">Hotel</Link>
-                        </li>
-                        <li>
-                            <Link to="/about">About</Link>
-                        </li>
-                        <li>
-                            <Link to="/contact">Contact</Link>
-                        </li>
-                    </ul>
-                </nav>
-
+               
+                <Navbar></Navbar>
                 <Routes>
                     {publicRoutes.map((route, index) => {
                         const Page = route.component;
