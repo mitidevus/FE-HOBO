@@ -6,7 +6,7 @@ export const Nav = styled.nav`
   height: 85px;
   display: flex;
   justify-content: space-between;
-
+  
 `;
   
 export const NavLink = styled(Link)`
@@ -20,6 +20,7 @@ export const NavLink = styled(Link)`
   font-size: larger;
   &.active {
     text-decoration: underline;
+    color:white;
   }
 `;
   

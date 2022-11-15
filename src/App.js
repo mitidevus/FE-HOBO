@@ -1,12 +1,13 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { publicRoutes } from '~/routes';
 import Navbar from './component/Navbar/Navbar';
 
 function App() {
     return (
         <Router>
+           
             <div className="App">
-               
                 <Navbar></Navbar>
                 <Routes>
                     {publicRoutes.map((route, index) => {

@@ -1,0 +1,9 @@
+.background{
+    background-image: url("../../assets/img/photographer.jpg");
+    background-color: #cccccc;
+    height: 500px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}

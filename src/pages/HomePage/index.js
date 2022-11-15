@@ -1,5 +1,14 @@
+import Search from '~/component/Search/search';
+import React from 'react';
+import './StyleHomepage.css'
+
 function HomePage() {
-    return <h2>Home Page</h2>;
+    return (
+        <div className='background'>
+            <Search></Search>
+        </div>
+        
+    );
 }
 
 export default HomePage;
