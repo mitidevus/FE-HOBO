@@ -2,11 +2,13 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { publicRoutes } from '~/routes';
 import Navbar from './component/Navbar/Navbar';
+import CardView from './component/Card';
 
 function App() {
     return (
         <Router>
-           
+            
+                               
             <div className="App">
                 <Navbar></Navbar>
                 <Routes>
