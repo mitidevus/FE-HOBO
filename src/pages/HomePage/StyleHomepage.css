@@ -1,5 +1,5 @@
-.background{
-    background-image: url("../../assets/img/photographer.jpg");
+.background {
+    background-image: url('../../assets/img/HomePage/photographer.jpg');
     background-color: #cccccc;
     height: 500px;
     background-position: center;
@@ -8,4 +8,3 @@
     position: relative;
     margin-bottom: 3%;
 }
-
