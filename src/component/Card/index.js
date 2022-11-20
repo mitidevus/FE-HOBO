@@ -11,7 +11,7 @@ function CardView(props) {
       <Card.Img variant="top" src={props.img} />
       <Card.Body>
         <Card.Title>{props.name}</Card.Title>
-        <Card.Text>Price: {props.price}</Card.Text>
+        <Card.Text>Price: {props.price}$</Card.Text>
         <Card.Text>Location: {props.location}</Card.Text>
         <Card.Text>Star: {a}</Card.Text>
         <Button variant="primary">Detail</Button>
