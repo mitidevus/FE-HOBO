@@ -5,6 +5,7 @@ import { selectUser } from '~/features/userSlice';
 import { privateRoutes, publicRoutes } from '~/routes';
 import Navbar from './component/Navbar/Navbar';
 import { Navigate } from 'react-router-dom';
+import Footer from './component/Footer/Footer';
 
 function App() {
     const user = useSelector(selectUser);
@@ -29,6 +30,7 @@ function App() {
 
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
+                <Footer></Footer>
             </div>
         </Router>
     );
