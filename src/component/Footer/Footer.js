@@ -6,7 +6,7 @@ import './style.css'
 
 const Footer = () => {
   return (
-    <Footer>
+    <footer>
       <Container>
         <Row>
           <Col className='py-3'>
@@ -38,7 +38,7 @@ const Footer = () => {
           <Col id='Copyright' className='text-center'>Copyright &copy;{new Date().getFullYear()} HOBO</Col>
         </Row>
       </Container>
-    </Footer>
+    </footer>
   )
 }
 
