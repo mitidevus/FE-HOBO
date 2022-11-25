@@ -41,3 +41,11 @@
     background-color: var(--primary-disable-color);
     pointer-events: none;
 }
+
+.error {
+    background-color: #f87171;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 8px 16px;
+}

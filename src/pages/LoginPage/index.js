@@ -4,35 +4,39 @@ import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from '~/features/userSlice';
 import styles from './LoginPage.module.scss';
+import axios from '~/api/auth';
 
 const cx = classNames.bind(styles);
 
 function LoginPage() {
-    const [username, setUsername] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!username || !password) {
+        if (!phoneNumber || !password) {
             return alert('Please fill all fields!');
         }
         const userAccount = {
-            username,
+            phoneNumber,
             password,
         };
 
         // Send userAccount to server and back to home page
-        // ...
-        console.log(userAccount);
-
-        // Set state: user is logged in
-        dispatch(login(username, password));
-
-        // Redirect to home page
-        navigate('/');
+        try {
+            const response = await axios.post('/api/user/signin', userAccount);
+            if (response.status === 200) {
+                dispatch(login(response.data));
+                navigate('/');
+            }
+        } catch (error) {
+            console.log(error);
+            setError(error.response.data);
+        }
     };
 
     return (
@@ -40,12 +44,13 @@ function LoginPage() {
             {/* <div className={cx('background')}> */}
             <form form className={cx('form')}>
                 <h3>Login</h3>
+                {error && <p className={cx('error')}>{error}</p>}
                 <div className="my-3">
                     <input
                         type="email"
                         className="form-control"
-                        placeholder="Username"
-                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Phone number"
+                        onChange={(e) => setPhoneNumber(e.target.value)}
                     />
                 </div>
                 <div className="mb-3">
