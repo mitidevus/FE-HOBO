@@ -4,7 +4,7 @@ import '../Search/SearchStyle.css'
 import Button from 'react-bootstrap/Button';
 import { React, useState } from "react";
 
-const items = ["Filter","Starts", "Price", "Location", "Service"];
+const items = ["Filter","Starts", "Price", "Location"];
 
 // function Search(props) {
 //   let inputContext="";

@@ -10,7 +10,8 @@ function CardView(props) {
     <Card style={{ width: '20rem'}}>
       <Card.Img variant="top" src={props.img} />
       <Card.Body>
-        <Card.Title>{props.name}</Card.Title>
+        <Card.Title>{props.roomName}</Card.Title>
+        <Card.Text>Hotel: {props.hotelName}</Card.Text>
         <Card.Text>Price: {props.price}$</Card.Text>
         <Card.Text>Location: {props.location}</Card.Text>
         <Card.Text>Star: {a}</Card.Text>
