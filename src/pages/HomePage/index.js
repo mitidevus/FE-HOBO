@@ -15,24 +15,18 @@ function HomePage() {
 
 
     const [arr,setArr]=React.useState([]);
+    const [card,setCard]=React.useState(arr);
 
     React.useEffect(()=>{
         Axios.get("http://localhost:2345/api/post/roomList")
         .then(res=>{
             setArr(res.data)
-            
+            setCard(res.data)
         }).catch(err=>console.log(err))
     },[])
 
-    // Axios({
-    //     method: 'get',
-    //     url: `${process.env.BACKEND_URL}/api/post/roomList`,
-    //   })
-    //     .then(function (response) {
-    //         setData(response.data)
-    //     }).catch(err=>console.log(err));
 
-    const [card,setCard]=React.useState(arr);
+    
 
     const handleChange = (event, page) => {
         setPage(page);
