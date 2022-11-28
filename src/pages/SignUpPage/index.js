@@ -2,64 +2,85 @@ import classNames from 'classnames/bind';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from '~/api/auth';
 import { signup } from '~/features/userSlice';
 import styles from './SignUpPage.module.scss';
 
 const cx = classNames.bind(styles);
+const REGISTER_URL = '/api/user/signup';
 
 function SignUpPage() {
     const [username, setUsername] = useState('');
-    const [firstname, setFirstname] = useState('');
-    const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
-    const [userType, setUserType] = useState('Tourist');
+    const [firstname, setFirstname] = useState('');
+    const [lastname, setLastname] = useState('');
+    const [userType, setUserType] = useState('0'); // 0: Customer, 1: Hotel Owner, 2: Admin
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [lisenceNumber, setlisenceNumber] = useState(null);
+    const [hotelPhoneNumber, setHotelPhoneNumber] = useState(null);
+    const [hotelName, setHotelName] = useState(null);
+    const [hotelAddress, setHotelAddress] = useState(null);
     const [agreeTerms, setAgreeTerms] = useState(false);
+    const [error, setError] = useState('');
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const onSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!username || !firstname || !lastname || !email || !phoneNumber || !password || !passwordConfirm) {
+        if (
+            !username ||
+            !firstname ||
+            !lastname ||
+            !email ||
+            !phoneNumber ||
+            !password ||
+            !passwordConfirm ||
+            !agreeTerms
+        ) {
             return alert('Please fill all fields!');
         }
         if (password !== passwordConfirm) {
             return alert('Confirm password is not correct!');
         }
-        if (userType === 'Tourist') {
-            setlisenceNumber(null);
+        if (userType === 1 && !lisenceNumber && !hotelPhoneNumber && !hotelName && !hotelAddress) {
+            return alert('Please fill lisence number!');
         }
         const userAccount = {
             username,
+            email,
             firstname,
             lastname,
-            email,
+            userType,
             phoneNumber,
             password,
             passwordConfirm,
-            userType,
             lisenceNumber,
         };
 
         // Send userAccount to server
         // ...
-        console.log(userAccount);
-
-        // Set state: user is logged in
-        dispatch(signup(username, password, firstname, lastname, email, phoneNumber, userType, lisenceNumber));
-
-        // Redirect to home page
-        navigate('/');
+        try {
+            const response = await axios.post(REGISTER_URL, userAccount);
+            console.log(response);
+            if (response.status === 200) {
+                alert('Sign up successfully!');
+                dispatch(signup(userAccount));
+                navigate('/');
+            }
+        } catch (error) {
+            console.log(error);
+            setError(error.response.data);
+        }
     };
 
     return (
         <div className={cx('wrapper')}>
             <form form className={cx('form')}>
                 <h3>Sign Up</h3>
+                {error && <p className={cx('error')}>{error}</p>}
                 <div className="my-3">
                     <input
                         id="username"
@@ -128,49 +149,81 @@ function SignUpPage() {
                     />
                 </div>
 
-                <div className="row align-items-center mb-3">
-                    <div className="col-5 ms-3">
-                        <div className="mb-1 form-check">
-                            <input
-                                className="form-check-input"
-                                type="radio"
-                                name="userType"
-                                id="tourist"
-                                value="Tourist"
-                                checked={userType === 'Tourist'}
-                                onChange={(e) => setUserType(e.target.value)}
-                            />
-                            <label className="form-check-label" htmlFor="tourist">
-                                Tourist
-                            </label>
-                        </div>
-                        <div className="form-check">
-                            <input
-                                className="form-check-input"
-                                type="radio"
-                                name="userType"
-                                id="hotelOwner"
-                                value="Hotel Owner"
-                                checked={userType === 'Hotel Owner'}
-                                onChange={(e) => setUserType(e.target.value)}
-                            />
-                            <label className="form-check-label" htmlFor="hotelOwner">
-                                Hotel Owner
-                            </label>
-                        </div>
+                <div className="row ms-1 mb-3">
+                    <label className='col'>
+                        Type
+                    </label>
+                    <div className="col-4 form-check">
+                        <input
+                            className="form-check-input"
+                            type="radio"
+                            name="userType"
+                            id="tourist"
+                            value="0"
+                            checked={userType === '0'}
+                            onChange={(e) => setUserType(e.target.value)}
+                        />
+                        <label className="form-check-label" htmlFor="tourist">
+                            Tourist
+                        </label>
                     </div>
+                    <div className="col-4 form-check">
+                        <input
+                            className="form-check-input"
+                            type="radio"
+                            name="userType"
+                            id="hotelOwner"
+                            value="1"
+                            checked={userType === '1'}
+                            onChange={(e) => setUserType(e.target.value)}
+                        />
+                        <label className="form-check-label" htmlFor="hotelOwner">
+                            Hotel Owner
+                        </label>
+                    </div>
+                </div>
 
-                    {userType === 'Hotel Owner' && (
-                        <div className="col">
-                            <input
-                                id="attachFile"
-                                type="text"
-                                className="form-control"
-                                placeholder="Lisence number"
-                                onChange={(e) => setlisenceNumber(e.target.value)}
-                            />
-                        </div>
-                    )}
+                <div className="">
+                    <div className="mb-3">
+                        <input
+                            id="hotelName"
+                            type="text"
+                            className="form-control"
+                            placeholder="Hotel name"
+                            onChange={(e) => setHotelName(e.target.value)}
+                            disabled={userType !== '1'}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <input
+                            id="hotelLisenceNumber"
+                            type="text"
+                            className="form-control"
+                            placeholder="Hotel lisence number"
+                            onChange={(e) => setlisenceNumber(e.target.value)}
+                            disabled={userType !== '1'}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <input
+                            id="hotelPhoneNumber"
+                            type="text"
+                            className="form-control"
+                            placeholder="Hotel phone number"
+                            onChange={(e) => setHotelPhoneNumber(e.target.value)}
+                            disabled={userType !== '1'}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <input
+                            id="hotelAddress"
+                            type="text"
+                            className="form-control"
+                            placeholder="Hotel address"
+                            onChange={(e) => setHotelAddress(e.target.value)}
+                            disabled={userType !== '1'}
+                        />
+                    </div>
                 </div>
 
                 <div className="my-3 form-check">
@@ -189,7 +242,7 @@ function SignUpPage() {
                 </div>
 
                 <div className="d-grid mb-3">
-                    <button type="submit" className={cx('submit-btn')} onClick={onSubmit} disabled={!agreeTerms}>
+                    <button type="submit" className={cx('submit-btn')} onClick={handleSubmit} disabled={!agreeTerms}>
                         Sign Up
                     </button>
                 </div>

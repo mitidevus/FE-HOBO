@@ -36,3 +36,11 @@
 .submit-btn:hover {
     background-color: var(--primary-hover-color);
 }
+
+.error {
+    background-color: #f87171;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 8px 16px;
+}
