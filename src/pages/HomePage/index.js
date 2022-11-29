@@ -75,7 +75,8 @@ function HomePage() {
             setCard(temp);
         }
         else{
-
+            if(filterValue.localeCompare("Filter")!=0) 
+                alert("You must enter the search information before filtering or cliking button search!!!");
             setCard(arr);
         }
     } 
@@ -98,6 +99,7 @@ function HomePage() {
                                 return (
                                     <Col className="col-card">
                                         <CardView
+                                            className="card"
                                             img={card[i].roomImg}
                                             roomName={card[i].roomName}
                                             hotelName={card[i].hotelName}
@@ -113,9 +115,10 @@ function HomePage() {
                 </Container>
             </div>
 
-            <div>
-                <Pagination page={page} onChange={handleChange} count={Math.ceil(card.length/numberOfCards)} variant="outlined" color="primary" />
-            </div>
+          
+            <Pagination page={page} onChange={handleChange} className="pagegination"
+                count={Math.ceil(card.length/numberOfCards)} variant="outlined" color="primary" />
+            
         </>
     );
 }
