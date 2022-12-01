@@ -43,6 +43,8 @@ function SearchPage() {
                 </h1>
             </div>
 
+            <input type="text"></input>
+
             <input type="file" id="file" multiple onChange={handleImageChange} />
 
             <div className="result">{renderPhotos(selectedFiles)}</div>

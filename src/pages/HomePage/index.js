@@ -104,17 +104,40 @@ function HomePage() {
                                 
                                 if (i < card.length)
                                     return (
-                                        <Col className="col-card">
-                                            <CardView
-                                                className="card"
-                                                img={card[i].roomImg}
-                                                roomName={card[i].roomName}
-                                                hotelName={card[i].hotelName}
-                                                price={card[i].price}
-                                                location={card[i].location}
-                                                numberStar={card[i].numberStar}
-                                            ></CardView>
-                                        </Col>
+                                        // <Col className="col-card">
+                                        //     <CardView
+                                        //         className="card"
+                                        //         img={card[i].roomImg}
+                                        //         roomName={card[i].roomName}
+                                        //         hotelName={card[i].hotelName}
+                                        //         price={card[i].price}
+                                        //         location={card[i].location}
+                                        //         numberStar={card[i].numberStar}
+                                        //     ></CardView>
+                                        // </Col>
+
+                                        
+                                         
+                                                <div className="col-4 mt-3">
+                                                    <div className="card text-center">
+                                                        <img className="card-img-top" src={card[i].roomImg} alt="Room" />
+                                                        <div className="card-body">
+                                                            <h5 className="card-title fw-bold">{card[i].roomName}</h5>
+                                                            
+                                                        </div>
+                                                        <ul className="list-group list-group-flush">
+                                                        <li className="list-group-item">{card[i].hotelName}</li>
+                                                            <li className="list-group-item">{card[i].price}</li>
+                                                            <li className="list-group-item">{card[i].numberStar}</li>
+                        
+                                                        </ul>
+                                                        <div className="card-body">
+                                                            <button className='card-button'>Xem chi tiết</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                           
+                                        
                                     );
                                 else return <></>;
                             })}
