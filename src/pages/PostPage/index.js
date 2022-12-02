@@ -15,6 +15,8 @@ function SearchPage() {
     const [description,setDescription]=React.useState("");
 
     const handleImagesChange = (e) => {
+
+        alert("Click the image thay you want to delete!!!")
         // console.log(e.target.files[])
         if (e.target.files) {
         const filesArray = Array.from(e.target.files).map((file) =>
@@ -37,12 +39,13 @@ function SearchPage() {
 
     const renderPhotos = (source) => {
         return source.map((photo) => {
-        return <div> <br></br> <img src={photo} alt="" key={photo} width="20%" onclick={()=>{alert("dfdv")}}/> <button onClick={() => deleteHandler(photo)}>Delete image</button>  </div> ;
+        return <> <img src={photo} alt="" key={photo} width="20%" onClick={() => deleteHandler(photo)}/>  </>;
         });
     };
 
     const handleImageChange =(source) => {
 
+       
         const file=source.target.files[0];
         file.preview=URL.createObjectURL(file);
         setDescriptionImage(file)
@@ -134,10 +137,15 @@ function SearchPage() {
                         <div className="result">{renderPhoto(descriptionImage)}</div>}
                 </Form.Group>
 
+               
+
+
                 <Form.Group className="mb-3">
                     <Form.Label>Slider:</Form.Label>
                     <br></br>
+                    
                     <input type="file" id="file" title=" " multiple onChange={handleImagesChange} />
+                    <br></br>
                     <br></br>
                     {selectedFiles  && 
                          <div className="result">{renderPhotos(selectedFiles)}</div>}
