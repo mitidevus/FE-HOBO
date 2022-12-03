@@ -11,6 +11,7 @@ function SearchPage() {
 
     const [name,setName]=React.useState("");
     const [address,setAddress]=React.useState("");
+    const [star,setStar]=React.useState(0);
     const [phone,setphone]=React.useState("");
     const [description,setDescription]=React.useState("");
 
@@ -77,6 +78,13 @@ function SearchPage() {
         setphone(phone)
     };
 
+    const handleStar = (event)=>{
+        // show the user input value to console
+        const star = event.target.value;
+
+        setphone(star)
+    };
+
     const handleDescription = (event)=>{
         // show the user input value to console
         const description = event.target.value;
@@ -118,6 +126,13 @@ function SearchPage() {
                     <br></br>
                     <input className='input-text-phone' type="text" placeholder="Phone" required
                     onChange={handlePhone}/>
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                    <Form.Label>Star:</Form.Label>
+                    <br></br>
+                    <input className='input-text-star' type="number" placeholder="star" required min='0' max='5'
+                    onChange={handleStar}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3">
