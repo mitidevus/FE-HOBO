@@ -2,6 +2,7 @@
 import Pagination from '@mui/material/Pagination';
 import * as React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
+import Spinner from "react-spinkit";
 import  Axios  from 'axios';
 import CardView from '~/component/Card';
 import Search from '~/component/Search/search';
@@ -16,6 +17,9 @@ function HomePage() {
 
     const [arr,setArr]=React.useState([]);
     const [card,setCard]=React.useState(arr);
+    const [loading,setLoading]=React.useState(false);
+
+    
 
     React.useEffect(()=>{
         Axios.get("http://localhost:2345/api/post/roomList")
@@ -25,8 +29,6 @@ function HomePage() {
         }).catch(err=>console.log(err))
     },[])
 
-
-    
 
     const handleChange = (event, page) => {
         setPage(page);
@@ -40,7 +42,11 @@ function HomePage() {
         console.log(filterContext);
     }
 
+
     const handleOnClickSearch = (value,filterValue) => {
+        setLoading(true)
+        setTimeout(()=>setLoading(false),2000)
+
         inputContext=value;
 
         console.log("arr: ")
@@ -75,7 +81,8 @@ function HomePage() {
             setCard(temp);
         }
         else{
-
+            if(filterValue.localeCompare("Filter")!=0) 
+                alert("You must enter the search information before filtering or cliking button search!!!");
             setCard(arr);
         }
     } 
@@ -90,32 +97,60 @@ function HomePage() {
 
             <div className="App">
                 <Container>
-                    <Row xs={3}>
-                        {[...Array(numberOfCards)].map((e, i) => {
-                            i += (page - 1) * numberOfCards;
-                            
-                            if (i < card.length)
-                                return (
-                                    <Col className="col-card">
-                                        <CardView
-                                            img={card[i].roomImg}
-                                            roomName={card[i].roomName}
-                                            hotelName={card[i].hotelName}
-                                            price={card[i].price}
-                                            location={card[i].location}
-                                            numberStar={card[i].numberStar}
-                                        ></CardView>
-                                    </Col>
-                                );
-                            else return <></>;
-                        })}
-                    </Row>
+                    { loading? <Spinner className='spinner' name="circle" style={{ width: 100, height: 100 }} />
+                        :<Row xs={3}>
+                            {[...Array(numberOfCards)].map((e, i) => {
+                                i += (page - 1) * numberOfCards;
+                                
+                                if (i < card.length)
+                                    return (
+                                        // <Col className="col-card">
+                                        //     <CardView
+                                        //         className="card"
+                                        //         img={card[i].roomImg}
+                                        //         roomName={card[i].roomName}
+                                        //         hotelName={card[i].hotelName}
+                                        //         price={card[i].price}
+                                        //         location={card[i].location}
+                                        //         numberStar={card[i].numberStar}
+                                        //     ></CardView>
+                                        // </Col>
+
+                                        
+                                         
+                                                <div className="col-4 mt-3">
+                                                    <div className="card text-center">
+                                                        <img className="card-img-top" src={card[i].roomImg} alt="Room" />
+                                                        <div className="card-body">
+                                                            <h5 className="card-title fw-bold">{card[i].roomName}</h5>
+                                                            
+                                                        </div>
+                                                        <ul className="list-group list-group-flush">
+                                                        <li className="list-group-item">{card[i].hotelName}</li>
+                                                            <li className="list-group-item">{card[i].price}</li>
+                                                            <li className="list-group-item">{card[i].numberStar}</li>
+                        
+                                                        </ul>
+                                                        <div className="card-body">
+                                                            <button className='card-button'>Xem chi tiết</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                           
+                                        
+                                    );
+                                else return <></>;
+                            })}
+                        </Row>
+                    } 
+                    
                 </Container>
             </div>
 
-            <div>
-                <Pagination page={page} onChange={handleChange} count={Math.ceil(card.length/numberOfCards)} variant="outlined" color="primary" />
-            </div>
+          
+            <Pagination page={page} onChange={handleChange} className="pagegination"
+                count={Math.ceil(card.length/numberOfCards)} variant="outlined" color="primary" />
+            
         </>
     );
 }

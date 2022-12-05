@@ -6,13 +6,13 @@ import HomePage from '~/pages/HomePage';
 import HotelPage from '~/pages/HotelPage';
 import LoginPage from '~/pages/LoginPage';
 import ResetPasswordPage from '~/pages/ResetPasswordPage';
-import SearchPage from '~/pages/SearchPage';
+import SearchPage from '~/pages/PostPage';
 import SignUpPage from '~/pages/SignUpPage';
 
 // Public Routes
 const publicRoutes = [
     { path: '/', component: HomePage },
-    { path: '/search', component: SearchPage },
+    { path: '/post', component: SearchPage },
     { path: '/hotel', component: HotelPage },
     { path: '/about', component: AboutPage },
     { path: '/contact', component: ContactPage },

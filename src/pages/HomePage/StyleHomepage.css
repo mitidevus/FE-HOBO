@@ -8,3 +8,30 @@
     position: relative;
     margin-bottom: 3%;
 }
+
+.spinner{
+    margin-left: 45%;
+}
+
+.card{
+    margin-bottom: 30px;
+}
+
+.card-button {
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-weight: bold;
+    padding: 10px 50px;
+    border: 1px solid var(--primary-color);
+}
+
+.card-button:hover {
+    background-color: var(--primary-hover-color);
+    color: var(--white);
+}
+
+.pagegination{
+    margin-left: 45%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
