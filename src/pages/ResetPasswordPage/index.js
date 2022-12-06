@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Button from '~/component/Button';
 import styles from './ResetPasswordPage.module.scss';
 
 const cx = classNames.bind(styles);
@@ -34,17 +34,13 @@ function ResetPasswordPage() {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
-                <div className="row justify-content-evenly mb-3">
-                    <div className="col-5">
-                        <button type="submit" className={cx('submit-btn')} onClick={onSubmit}>
-                            Submit
-                        </button>
-                    </div>
-                    <div className="col-5">
-                        <Link to="/login" className={cx('btn btn-secondary', 'cancel-btn')}>
-                            Cancel
-                        </Link>
-                    </div>
+                <div className="d-flex justify-content-evenly mt-4">
+                    <Button primary type="submit" onClick={onSubmit}>
+                        Submit
+                    </Button>
+                    <Button secondary to="/login">
+                        Cancel
+                    </Button>
                 </div>
             </form>
         </div>

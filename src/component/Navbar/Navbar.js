@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logout, selectUser } from '~/features/userSlice';
+import Button from '../Button';
 import { Nav, NavLink, NavMenu } from './NavbarElements';
 
 import './style.css';
@@ -8,14 +9,12 @@ import './style.css';
 const Navbar = () => {
     const user = useSelector(selectUser);
     const navigate = useNavigate();
-
     const dispatch = useDispatch();
 
     const handleLogout = async (e) => {
         e.preventDefault();
         dispatch(logout());
         try {
-            //   await logOut();
             navigate('/');
         } catch (error) {
             console.log(error);
@@ -35,32 +34,61 @@ const Navbar = () => {
                     <NavLink to="/post" activeStyle>
                         Post
                     </NavLink>
-                    <NavLink to="/hotel" activeStyle>
-                        Hotel
-                    </NavLink>
                     <NavLink to="/about" activeStyle>
                         About
                     </NavLink>
                     <NavLink to="/contact" activeStyle>
                         Contact
                     </NavLink>
+
+                    {/* Xong thì xóa */}
+                    <NavLink to="/hotels/123" activeStyle>
+                        Hotel
+                    </NavLink>
+
+                    <NavLink to="hotels/123/rooms/123" activeStyle>
+                        Room
+                    </NavLink>
+
+                    {user && user.userType === '1' && (
+                        <NavLink to={`/hotels/${user.hotelId}`} activeStyle>
+                            My Hotel
+                        </NavLink>
+                    )}
+
+                    {user && user.userType === '2' && (
+                        <NavLink to="/approve" activeStyle>
+                            Approve
+                        </NavLink>
+                    )}
+                </NavMenu>
+                <NavMenu>
                     {user ? (
                         <>
-                            <NavLink to="/account">Account</NavLink>
+                            <NavLink to="/account">
+                                <img
+                                    src={
+                                        user.avatar
+                                            ? user.avatar
+                                            : 'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png'
+                                    }
+                                    className="avatar"
+                                    alt="Avatar"
+                                />
+                            </NavLink>
                             <NavLink to="/">
-                                <button onClick={handleLogout} className="btn btn-lg btn-secondary">
+                                <Button secondary onClick={handleLogout}>
                                     Logout
-                                </button>
+                                </Button>
                             </NavLink>
                         </>
                     ) : (
                         <>
                             <NavLink to="/login" activeStyle>
-                                {/* <button className="px-4 btn btn-lg btn-primary">Login</button> */}
                                 Login
                             </NavLink>
                             <NavLink to="/signup" activeStyle>
-                                <button className="px-3 btn btn-lg btn-primary">Sign Up</button>
+                                <Button primary>Sign Up</Button>
                             </NavLink>
                         </>
                     )}

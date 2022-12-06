@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from '~/api/auth';
+import Button from '~/component/Button';
 import { signup } from '~/features/userSlice';
 import styles from './SignUpPage.module.scss';
 
@@ -10,6 +11,7 @@ const cx = classNames.bind(styles);
 const REGISTER_URL = '/api/user/signup';
 
 function SignUpPage() {
+    // Basic information
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -18,11 +20,16 @@ function SignUpPage() {
     const [lastname, setLastname] = useState('');
     const [userType, setUserType] = useState('0'); // 0: Customer, 1: Hotel Owner, 2: Admin
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [lisenceNumber, setlisenceNumber] = useState(null);
-    const [hotelPhoneNumber, setHotelPhoneNumber] = useState(null);
+    const avatar = 'https://www.kindpng.com/picc/m/22-223863_no-avatar-png-circle-transparent-png.png';
+
+    // Hotel information
+    const hotelId = null;
+    const [licenseNumber, setLicenseNumber] = useState('');
     const [hotelName, setHotelName] = useState(null);
     const [hotelAddress, setHotelAddress] = useState(null);
+    const [hotelPhoneNumber, setHotelPhoneNumber] = useState(null);
     const [agreeTerms, setAgreeTerms] = useState(false);
+
     const [error, setError] = useState('');
 
     const navigate = useNavigate();
@@ -45,19 +52,23 @@ function SignUpPage() {
         if (password !== passwordConfirm) {
             return alert('Confirm password is not correct!');
         }
-        if (userType === 1 && !lisenceNumber && !hotelPhoneNumber && !hotelName && !hotelAddress) {
-            return alert('Please fill lisence number!');
+        if (userType === 1 && !licenseNumber && !hotelPhoneNumber && !hotelName && !hotelAddress) {
+            return alert('Please fill license number!');
         }
         const userAccount = {
             username,
             email,
+            password,
             firstname,
             lastname,
             userType,
             phoneNumber,
-            password,
-            passwordConfirm,
-            lisenceNumber,
+            avatar,
+            hotelId,
+            licenseNumber,
+            hotelName,
+            hotelAddress,
+            hotelPhoneNumber,
         };
 
         // Send userAccount to server
@@ -150,9 +161,7 @@ function SignUpPage() {
                 </div>
 
                 <div className="row ms-1 mb-3">
-                    <label className='col'>
-                        Type
-                    </label>
+                    <label className="col">Type</label>
                     <div className="col-4 form-check">
                         <input
                             className="form-check-input"
@@ -200,7 +209,7 @@ function SignUpPage() {
                             type="text"
                             className="form-control"
                             placeholder="Hotel lisence number"
-                            onChange={(e) => setlisenceNumber(e.target.value)}
+                            onChange={(e) => setLicenseNumber(e.target.value)}
                             disabled={userType !== '1'}
                         />
                     </div>
@@ -242,9 +251,9 @@ function SignUpPage() {
                 </div>
 
                 <div className="d-grid mb-3">
-                    <button type="submit" className={cx('submit-btn')} onClick={handleSubmit} disabled={!agreeTerms}>
+                    <Button primary type="submit" onClick={handleSubmit} disabled={!agreeTerms}>
                         Sign Up
-                    </button>
+                    </Button>
                 </div>
 
                 <p className="mt-5 register">
