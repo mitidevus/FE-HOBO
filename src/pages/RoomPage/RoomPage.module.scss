@@ -1,0 +1,57 @@
+.wrapper {
+    font-size: 16px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.hotel-title {
+    font-size: 20px;
+    text-align: center;
+    padding: 30px;
+}
+
+.hotel-name {
+    font-family: var(--pattaya-font);
+    font-size: 40px;
+}
+
+.room-info {
+    background-color: #f7f7f7;
+    width: 100%;
+    padding: 20px 0;
+}
+
+.room-info-container {
+    padding: 30px 150px;
+}
+
+.room-info-slider {
+    width: 100%;
+    height: 100%;
+}
+
+.room-info-detail {
+    font-size: 16px;
+    margin-left: 50px;
+    margin-top: 45px;
+}
+
+.room-name {
+    font-family: var(--cormorant-font);
+    font-size: 27px;
+}
+
+.room-price {
+    font-weight: bold;
+    font-size: 24px;
+    color: #b99470;
+    margin-left: 2px;
+}

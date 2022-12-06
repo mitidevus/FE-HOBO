@@ -2,9 +2,10 @@ import classNames from 'classnames/bind';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from '~/api/auth';
+import Button from '~/component/Button';
 import { login } from '~/features/userSlice';
 import styles from './LoginPage.module.scss';
-import axios from '~/api/auth';
 
 const cx = classNames.bind(styles);
 
@@ -75,9 +76,9 @@ function LoginPage() {
                     </span>
                 </div>
                 <div className="d-grid mb-3">
-                    <button type="submit" className={cx('submit-btn')} onClick={handleSubmit}>
+                    <Button primary type="submit" onClick={handleSubmit}>
                         Login
-                    </button>
+                    </Button>
                 </div>
                 <p className="mt-5 register">
                     New to Hobo?

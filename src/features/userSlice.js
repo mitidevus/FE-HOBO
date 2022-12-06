@@ -1,10 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    user: null,
+    // user: null,
+    user: {
+        avatar: 'https://render.fineartamerica.com/images/rendered/default/acrylic-print/8/7/hangingwire/break/images/artworkimages/medium/1/funny-boss-cat-alexey-konovalenko.jpg',
+        hotelId: 20127651,
+        userType: '1',
+    },
+
 };
 
-export const userSlice = createSlice({
+export const userSlice = createSlice({  
     name: 'user',
     initialState,
     reducers: {
