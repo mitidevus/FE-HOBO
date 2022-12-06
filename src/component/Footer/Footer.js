@@ -28,9 +28,9 @@ const Footer = () => {
           <Col className='py-3'>
             <h4 id='Head'>CONTACT</h4>
             <ul className='list-unstyled'>
-              <li><i className='fas fa-brands fa-square-facebook'></i> www.facebook.com/HOBO</li>
-              <li><i className='fas fa-brands fa-instagram'></i> www.instagram.com/HOBO</li>
-              <li></li>
+              <li><i className='fas fa-brands fa-square-facebook'/> www.facebook.com/HOBO</li>
+              <li><i className='fas fa-brands fa-instagram'/> www.instagram.com/HOBO</li>
+              <li><i className='fas fa-regular fa-envelope'/> hobovn.website@gmail.com</li>
             </ul>
           </Col>
         </Row>

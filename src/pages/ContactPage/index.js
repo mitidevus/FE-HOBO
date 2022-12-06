@@ -1,41 +1,59 @@
-import React from 'react'
+import React, { useState } from 'react';
+import axios from "~/api/auth";
 
 function ContactPage() {
-    const [formStatus, setFormStatus] = React.useState('Send')
-    const onSubmit = (e) => {
-        e.preventDefault()
-        setFormStatus('Submitting...')
-        const { name, email, message } = e.target.elements
-        let conFom = {
-        name: name.value,
-        email: email.value,
-        message: message.value,
+    const [formStatus, setFormStatus] = useState('Send')
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [message, setMessage] = useState("");
+    
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setFormStatus('Sending...');
+
+        const content = {
+            toName: name,
+            toEmail: email,
+            fromEmail: "hobovn.website@gmail.com",
+            subject: "Contact HOBOVN",
+            message: message,
+        };
+
+        //Send userAccount to server and back to home page
+        try {
+            const response = await axios.post('/api/mail/sendNewMail', content);
+            if (response.status === 200) {
+                setFormStatus('Send')
+            }
+        } catch (error) {
+            console.log(error);
         }
-        console.log(conFom)
-    }
+
+        
+    };
     return (
         <div className="container mt-5">
             <h2 className="mb-3">Contact Form</h2>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label className="form-label" htmlFor="name">
                         Name
                     </label>
-                    <input className="form-control" type="text" id="name" required />
+                    <input className="form-control" type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required />
                 </div>
                 
                 <div className="mb-3">
                     <label className="form-label" htmlFor="email">
                         Email
                     </label>
-                    <input className="form-control" type="email" id="email" required />
+                    <input className="form-control" type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                 </div>
 
                 <div className="mb-3">
                     <label className="form-label" htmlFor="message">
                         Message
                     </label>
-                    <textarea className="form-control" id="message" required />
+                    <textarea className="form-control" id="message" value={message} onChange={(e) => setMessage(e.target.value)} required />
                 </div>
                 
                 <button className="btn btn-danger" type="submit">

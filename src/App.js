@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Navigate, Route, Routes, useLocation } from 'r
 import { selectUser } from '~/features/userSlice';
 import { adminRoutes, hotelOwnerRoutes, privateRoutes, publicRoutes } from '~/routes';
 import Navbar from './component/Navbar/Navbar';
+import Footer from './component/Footer/Footer';
 
 const ScrollToTop = ({ children }) => {
     const location = useLocation();
@@ -54,6 +55,7 @@ function App() {
 
                         <Route path="*" element={<Navigate to="/" replace />} />
                     </Routes>
+                    <Footer></Footer>
                 </div>
             </ScrollToTop>
         </Router>
