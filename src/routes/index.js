@@ -7,12 +7,8 @@ import HomePage from '~/pages/HomePage';
 import HotelPage from '~/pages/HotelPage';
 import LoginPage from '~/pages/LoginPage';
 import ResetPasswordPage from '~/pages/ResetPasswordPage';
-<<<<<<< HEAD
-import SearchPage from '~/pages/PostPage';
-=======
 import RoomPage from '~/pages/RoomPage';
 import SearchPage from '~/pages/SearchPage';
->>>>>>> HotelPage
 import SignUpPage from '~/pages/SignUpPage';
 
 // Public Routes
