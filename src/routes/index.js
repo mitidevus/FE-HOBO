@@ -8,13 +8,13 @@ import HotelPage from '~/pages/HotelPage';
 import LoginPage from '~/pages/LoginPage';
 import ResetPasswordPage from '~/pages/ResetPasswordPage';
 import RoomPage from '~/pages/RoomPage';
-import SearchPage from '~/pages/SearchPage';
+import PostPage from '~/pages/PostPage';
 import SignUpPage from '~/pages/SignUpPage';
 
 // Public Routes
 const publicRoutes = [
     { path: '/', component: HomePage },
-    { path: '/search', component: SearchPage },
+    { path: '/post', component: PostPage },
     { path: '/about', component: AboutPage },
     { path: '/hotels/:hotelId', component: HotelPage },
     { path: '/hotels/:hotelId/rooms/:roomId', component: RoomPage },

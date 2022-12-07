@@ -6,9 +6,30 @@ import './style.css';
 
 function SearchPage() {
 
-    const [selectedFiles, setSelectedFiles] = React.useState([]);
-    const [descriptionImage, setDescriptionImage]=React.useState();
+    /*
+    const [counter, setCounter] = React.useState(0);
 
+  const handleClick = () => {
+    setCounter(counter + 1);
+    console.log(counter);
+  };
+  return (
+    <div className="App">
+      <button onClick={handleClick}>Hello</button>
+
+      {Array.from(Array(counter)).map((c, index) => {
+        return <><br></br> <input key={c} type="text"></input></>;
+      })}
+    </div>
+  );
+
+  */
+
+    const [selectedFiles, setSelectedFiles] = React.useState([]);
+    const [thumbnail, setThumbnail]=React.useState();
+    const [inputFields, setInputFields] = React.useState([{
+        fullName:'',
+    } ]);
     const [name,setName]=React.useState("");
     const [address,setAddress]=React.useState("");
     const [star,setStar]=React.useState(0);
@@ -45,16 +66,12 @@ function SearchPage() {
     };
 
     const handleImageChange =(source) => {
-
-       
-        const file=source.target.files[0];
-        file.preview=URL.createObjectURL(file);
-        setDescriptionImage(file)
-        URL.revokeObjectURL(file)
+        const file=source.target.value;
+        setThumbnail(file)
     }
 
     const renderPhoto = (source) => {
-        return <img src={source.preview} alt="" width="20%"/>;
+        return <img src={source} alt="" width="20%"/>;
     };
    
     const handleName = (event)=>{
@@ -100,6 +117,79 @@ function SearchPage() {
         alert("5")
     }
 
+    const addInputField = ()=>{
+        setInputFields([...inputFields, {
+            fullName:'',
+        } ])
+      
+    }
+    const removeInputFields = (index)=>{
+        const rows = [...inputFields];
+        rows.splice(index, 1);
+        setInputFields(rows);
+   }
+
+   const renderImage = (e) => {
+    return <img src={e} alt="" width="5%"/>
+   }
+
+   const handleChange = (index, evnt)=>{
+    
+        const { name, value } = evnt.target;
+        const list = [...inputFields];
+        list[index][name] = value;
+        setInputFields(list);
+        console.log(list[index][name])
+        
+    }
+ 
+
+    const renderSlider= () =>{
+        return <>
+            <div className="container_">
+            <div>
+                <div>
+                  {
+                      inputFields.map((data, index)=>{
+                          const {fullName}= data;
+                          return(
+                            <div className="my-3" key={index}>
+                    <div className="col">
+                        <div>
+                            <input  type="text" onChange={(evnt)=>handleChange(index, evnt)} value={fullName} name="fullName" className="slider-style"  placeholder="Image link" />
+
+                        </div>
+                    </div>
+                   
+
+                    {(data.length!==1)?  
+                    <div className="">
+                        <br></br>
+                        {renderImage(fullName)}
+                        <button className="btn btn-danger" onClick={removeInputFields}>Delete this image</button>
+                    </div>:''}
+                   
+                    
+                    </div>
+                          )
+                      })
+                  }
+
+
+     
+                <div className="row">
+                    <div className="col-sm-12">
+                    <button className="btn btn-outline-success " onClick={addInputField}>Add New</button>
+                    </div>
+                </div>
+                  </div>
+                </div>
+                <div className="col-sm-4">
+                </div>
+            </div>
+        </>
+    }
+
     return (
         <div className='container'>
 
@@ -143,19 +233,24 @@ function SearchPage() {
                 </Form.Group>
               
                 <Form.Group className="mb-3">
-                    <Form.Label>Description image:</Form.Label>
+                    <Form.Label>Thumbnail:</Form.Label>
                     <br></br>
-                    <input type="file" id="file" title=" " onChange={handleImageChange}/>
+                    <input className='thumbnail-style' type="text" id="text-thumbnail" title=" " onChange={handleImageChange}/>
                     <br></br>
                     <br></br>
-                    {descriptionImage  && 
-                        <div className="result">{renderPhoto(descriptionImage)}</div>}
+                    {thumbnail  && 
+                        <div className="result">{renderPhoto(thumbnail)}</div>}
                 </Form.Group>
 
                
-
-
                 <Form.Group className="mb-3">
+                    <Form.Label>Slider:</Form.Label>
+                    <br></br>
+                    {renderSlider()}
+                </Form.Group>
+
+
+                {/* <Form.Group className="mb-3">
                     <Form.Label>Slider:</Form.Label>
                     <br></br>
                     
@@ -164,7 +259,7 @@ function SearchPage() {
                     <br></br>
                     {selectedFiles  && 
                          <div className="result">{renderPhotos(selectedFiles)}</div>}
-                </Form.Group>
+                </Form.Group> */}
 
             </Form>
 

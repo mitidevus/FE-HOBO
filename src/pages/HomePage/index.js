@@ -22,7 +22,7 @@ function HomePage() {
     
 
     React.useEffect(()=>{
-        Axios.get("http://localhost:2345/api/post/roomList")
+        Axios.get("http://localhost:2345/api/post/postlist")
         .then(res=>{
             setArr(res.data)
             setCard(res.data)
@@ -120,7 +120,7 @@ function HomePage() {
                                          
                                                 <div className="col-4 mt-3">
                                                     <div className="card text-center">
-                                                        <img className="card-img-top" src={card[i].roomImg} alt="Room" />
+                                                        <img className="card-img-top" src={card[i].thumbnail} alt="Room" />
                                                         <div className="card-body">
                                                             <h5 className="card-title fw-bold">{card[i].roomName}</h5>
                                                             
@@ -128,7 +128,7 @@ function HomePage() {
                                                         <ul className="list-group list-group-flush">
                                                         <li className="list-group-item">{card[i].hotelName}</li>
                                                             <li className="list-group-item">{card[i].price}</li>
-                                                            <li className="list-group-item">{card[i].numberStar}</li>
+                                                            <li className="list-group-item">{card[i].starNumber}</li>
                         
                                                         </ul>
                                                         <div className="card-body">

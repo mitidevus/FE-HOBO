@@ -26,3 +26,15 @@ input[type='file'] {
 .submit{
     text-align: center;
 }
+
+.thumbnail-style{
+    width: 500px;
+}
+
+.slider-style{
+    width: 500px;
+}
+
+.btn{
+    margin-left: 10px;
+}
