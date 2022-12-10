@@ -1,69 +1,29 @@
 import * as React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import  Axios  from 'axios';
 import './style.css';
+import { useSelector } from 'react-redux';
+import {selectUser} from '../../features/userSlice'
 
 
 function SearchPage() {
 
-    /*
-    const [counter, setCounter] = React.useState(0);
-
-  const handleClick = () => {
-    setCounter(counter + 1);
-    console.log(counter);
-  };
-  return (
-    <div className="App">
-      <button onClick={handleClick}>Hello</button>
-
-      {Array.from(Array(counter)).map((c, index) => {
-        return <><br></br> <input key={c} type="text"></input></>;
-      })}
-    </div>
-  );
-
-  */
-
     const [selectedFiles, setSelectedFiles] = React.useState([]);
     const [thumbnail, setThumbnail]=React.useState();
-    const [inputFields, setInputFields] = React.useState([{
-        fullName:'',
-    } ]);
+    const [sliderList, setsliderList] = React.useState([]);
+    const [utilities, setUtilities] = React.useState([]);
     const [name,setName]=React.useState("");
+    const [licenseNumber,setLicenseNumber]=React.useState("");
     const [address,setAddress]=React.useState("");
     const [star,setStar]=React.useState(0);
     const [phone,setphone]=React.useState("");
     const [description,setDescription]=React.useState("");
+    const [nameUtility,setNameUtility]=React.useState("")
+    const [imgNameUtility,setImgNameUtility]=React.useState("")
 
-    const handleImagesChange = (e) => {
-
-        alert("Click the image thay you want to delete!!!")
-        // console.log(e.target.files[])
-        if (e.target.files) {
-        const filesArray = Array.from(e.target.files).map((file) =>
-            URL.createObjectURL(file)
-        );
-
-        // console.log("filesArray: ", filesArray);
-
-        setSelectedFiles((prevImages) => prevImages.concat(filesArray));
-        Array.from(e.target.files).map(
-            (file) => URL.revokeObjectURL(file) // avoid memory leak
-        );
-        }
-    };
-
-    function deleteHandler(image) {
-        setSelectedFiles(selectedFiles.filter((e) => e !== image));
-        URL.revokeObjectURL(image);
-      }
-
-    const renderPhotos = (source) => {
-        return source.map((photo) => {
-        return <> <img src={photo} alt="" key={photo} width="20%" onClick={() => deleteHandler(photo)}/>  </>;
-        });
-    };
+    const user=useSelector(selectUser)
+    console.log(user.userId)
 
     const handleImageChange =(source) => {
         const file=source.target.value;
@@ -79,6 +39,12 @@ function SearchPage() {
         const name = event.target.value;
 
         setName(name)
+    };
+
+    const handleLicenseNumber = (event)=>{
+        // show the user input value to console
+        const licenseNumber = event.target.value;
+        setLicenseNumber(licenseNumber)
     };
 
     const handleAddress = (event)=>{
@@ -99,7 +65,7 @@ function SearchPage() {
         // show the user input value to console
         const star = event.target.value;
 
-        setphone(star)
+        setStar(star)
     };
 
     const handleDescription = (event)=>{
@@ -110,88 +76,209 @@ function SearchPage() {
     };
 
     const handleCheck = () =>{
-        if (name.length===0) alert("1")
-        else if (address.length===0) alert("2")
-        else if (phone.length===0) alert("3")
-        else if (description.length===0) alert("4")
-        alert("5")
+        if (name.length===0) return false
+        else if (address.length===0) return false
+        else if (phone.length===0) return false
+        else if (description.length===0) return false
+        return true
     }
 
-    const addInputField = ()=>{
-        setInputFields([...inputFields, {
-            fullName:'',
-        } ])
-      
-    }
-    const removeInputFields = (index)=>{
-        const rows = [...inputFields];
-        rows.splice(index, 1);
-        setInputFields(rows);
-   }
+    const checkInputFillComplete = () => {
 
-   const renderImage = (e) => {
-    return <img src={e} alt="" width="5%"/>
-   }
+        if(handleCheck()) {
+            console.log(star)
+            console.log(sliderList)
+            console.log(licenseNumber)
+            console.log(utilities)
 
-   const handleChange = (index, evnt)=>{
-    
-        const { name, value } = evnt.target;
-        const list = [...inputFields];
-        list[index][name] = value;
-        setInputFields(list);
-        console.log(list[index][name])
         
+
+            // Axios.post("http://localhost:2345/api/hotel/createhotel", {
+            //         userId: user.userId,
+            //         licenseNumber:licenseNumber,
+            //         hotelName: name,
+            //         hotelAddress: address,
+            //         hotelPhoneNumber: phone,
+            //         starNumber: star,
+            //         description: description,
+            //         descriptionImage: thumbnail,
+            //         utilities:utilities,
+            //         slider : sliderList,
+            //     })
+            //     .then((response) => {
+            //     console.log(response);
+            // });
+        }
+        else {
+            alert("You must fill in the information about Name hotel, Address, Phone Number, Star, Description, Thumbnail, Slider")
+        }
     }
- 
 
-    const renderSlider= () =>{
+    const outputImage = (source) => {
+        return <img src={source} alt="" width="20%"/>;
+    }
+
+    const handleUtilitiesChange = (e, index) => {
+        const { name, value } = e.target;
+        const list = [...utilities];
+        list[index][name] = value;
+        setUtilities(list);
+      };
+      
+      const handleUtilitiesRemove = (index) => {
+        const list = [...utilities];
+        list.splice(index, 1);
+        setUtilities(list);
+      };
+      
+      const handleUtilitiesAdd = () => {
+        // const nameValue=nameInput.current.value;
+        // const imgValue=imgInput.current.value;
+
+        if(nameUtility!=="" && imgNameUtility!=="")  {
+            setUtilities([...utilities, { name: nameUtility, imageURL: imgNameUtility }]);
+            // nameInput.current.value="";
+            // imgInput.current.value="";
+
+            setNameUtility("")
+            setImgNameUtility("")
+        }
+          
+          
+      };
+
+      console.log(utilities)
+
+      const renderUtilities = () => {
         return <>
-            <div className="container_">
-            <div>
-                <div>
-                  {
-                      inputFields.map((data, index)=>{
-                          const {fullName}= data;
-                          return(
-                            <div className="my-3" key={index}>
-                    <div className="col">
-                        <div>
-                            <input  type="text" onChange={(evnt)=>handleChange(index, evnt)} value={fullName} name="fullName" className="slider-style"  placeholder="Image link" />
-
+                <form className="App" autoComplete="off">
+                    <div className="form-field">
+                    {utilities.map((singleUtilities, index) => (
+                        <div key={index} className="Utilities">
+                        <div className="first-division">
+                            <p className='name-utility-style'>Name utility: {singleUtilities.name}</p>
+                            <img src={singleUtilities.imageURL} alt="" width="20%"/>
+                            <br></br>
+                            <br></br>
+                        {/* value={singleUtilities.Utilities} onChange={(e) => handleUtilitiesChange(e, index)} */}
+                            {/* <input className='Utilities-style' placeholder="Name" name="Utilities" type="text" id="utilities" ref={nameInput}/>
+                            <br></br>
+                            <br></br>
+                            <input className='Utilities-style' placeholder="Image Link" name="Utilities-img" type="text" id="utilities-img" ref={imgInput}/> */}
+                            <br></br>
+                            <br></br>
+                            
+                            
+                            <div className="second-division">
+                            {utilities.length !== 0 && (
+                            <button
+                                type="button"
+                                onClick={() => handleUtilitiesRemove(index)}
+                                className="remove-btn"
+                            >
+                                <span>Remove</span>
+                            </button>
+                            )}
                         </div>
-                    </div>
-                   
+                            
+                        </div>
 
-                    {(data.length!==1)?  
-                    <div className="">
+                        
                         <br></br>
-                        {renderImage(fullName)}
-                        <button className="btn btn-danger" onClick={removeInputFields}>Delete this image</button>
-                    </div>:''}
-                   
+                        </div>
+                        
+                    ))}
+                    <input className='Utilities-style' placeholder="Name" name="Utilities" type="text" id="utilities" value={nameUtility} onChange={(e) => setNameUtility(e.target.value)}/>
+                    <br></br>
+                    <br></br>        
+                    <input className='Utilities-style' placeholder="Image Link" name="Utilities-img" type="text" id="utilities-img" value={imgNameUtility} onChange={(e) => setImgNameUtility(e.target.value)}/>
+                    
+                    <br></br>
+                    <br></br>
+                    <button type="button" onClick={handleUtilitiesAdd} className="btn btn-success add-btn-utilitie">
+                        <span>Add an Utility</span>
+                    </button>
                     
                     </div>
-                          )
-                      })
-                  }
-
-
-     
-                <div className="row">
-                    <div className="col-sm-12">
-                    <button className="btn btn-outline-success " onClick={addInputField}>Add New</button>
-                    </div>
-                </div>
-                  </div>
-                </div>
-                <div className="col-sm-4">
-                </div>
-            </div>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                </form>
         </>
     }
 
+
+    
+    const handleSliderChange = (e, index) => {
+        const { name, value } = e.target;
+        const list = [...sliderList];
+        list[index][name] = value;
+        setsliderList(list);
+      };
+      
+      const handleSliderRemove = (index) => {
+        const list = [...sliderList];
+        list.splice(index, 1);
+        setsliderList(list);
+      };
+      
+      const handleSliderAdd = () => {
+        setsliderList([...sliderList, { Slider: "" }]);
+      };
+ 
+      const renderSlider = () => {
+        return <>
+                <form className="App" autoComplete="off">
+                    <div className="form-field">
+                    {sliderList.map((singleSlider, index) => (
+                        <div key={index} className="Sliders">
+                            <div className="first-division">
+                                <input className='slider-style' name="Slider" type="text" id="Slider" value={singleSlider.Slider} onChange={(e) => handleSliderChange(e, index)}/>
+                            
+                                <div className="second-division">
+                                {sliderList.length !== 0 && (
+                                <button
+                                    type="button"
+                                    onClick={() => handleSliderRemove(index)}
+                                    className="remove-btn"
+                                >
+                                    <span>Remove</span>
+                                </button>
+                                )}
+                            </div>  
+                        </div>
+
+                        <br></br>
+                        </div>
+                        
+                    ))}
+
+                    <br></br>
+                    <br></br>
+                    <button type="button" onClick={handleSliderAdd} className="btn btn-success add-btn">
+                        <span>Add a Slider</span>
+                    </button>
+                    
+                    </div>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <div className="output">
+                    <p>Your slider:</p>
+                    {sliderList &&
+                        sliderList.map((singleSlider, index) => (
+                        <ul key={index}>
+                            {singleSlider.Slider && <li>{outputImage(singleSlider.Slider)}</li>}
+                        </ul>
+                        ))}
+                    </div>
+                </form>
+        </>
+    }
+   
+
     return (
-        <div className='container'>
+        <div className='container wrapper'>
 
             <h1 className='title-postpage'>POST PAGE</h1>
             <br></br>
@@ -205,6 +292,13 @@ function SearchPage() {
                 </Form.Group>
 
                 <Form.Group className="mb-3">
+                    <Form.Label>License number:</Form.Label>
+                    <br></br>
+                    <input className='input-text-name' type="text" placeholder="Name" required
+                    onChange={handleLicenseNumber}/>
+                </Form.Group>
+
+                <Form.Group className="mb-3">
                     <Form.Label>Address:</Form.Label>
                     <br></br>
                     <input className='input-text-address' type="text" placeholder="Address" required
@@ -212,7 +306,7 @@ function SearchPage() {
                 </Form.Group>
                 
                 <Form.Group className="mb-3">
-                    <Form.Label>PhoneNumber:</Form.Label>
+                    <Form.Label>Phone Number:</Form.Label>
                     <br></br>
                     <input className='input-text-phone' type="text" placeholder="Phone" required
                     onChange={handlePhone}/>
@@ -242,6 +336,12 @@ function SearchPage() {
                         <div className="result">{renderPhoto(thumbnail)}</div>}
                 </Form.Group>
 
+                <Form.Group className="mb-3">
+                    <Form.Label>Utility:</Form.Label>
+                    <br></br>
+                    {renderUtilities()}
+                </Form.Group>
+
                
                 <Form.Group className="mb-3">
                     <Form.Label>Slider:</Form.Label>
@@ -249,28 +349,18 @@ function SearchPage() {
                     {renderSlider()}
                 </Form.Group>
 
-
-                {/* <Form.Group className="mb-3">
-                    <Form.Label>Slider:</Form.Label>
-                    <br></br>
-                    
-                    <input type="file" id="file" title=" " multiple onChange={handleImagesChange} />
-                    <br></br>
-                    <br></br>
-                    {selectedFiles  && 
-                         <div className="result">{renderPhotos(selectedFiles)}</div>}
-                </Form.Group> */}
-
             </Form>
 
             <div className='submit'>
-                <button type="button" class="btn btn-primary" onClick={handleCheck}>Submit</button>
+                <button type="button" className="btn btn-primary" onClick={checkInputFillComplete}>Submit</button>
             </div>
 
             <br></br>
     
         </div>
       );
+
+
 }
 
 export default SearchPage;

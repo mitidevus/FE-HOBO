@@ -3,9 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     // user: null,
     user: {
+        //phải có user_id
         avatar: 'https://render.fineartamerica.com/images/rendered/default/acrylic-print/8/7/hangingwire/break/images/artworkimages/medium/1/funny-boss-cat-alexey-konovalenko.jpg',
-        hotelId: 20127651,
-        userType: '1',
+        hotelId: "638dc5e48d010b4f8b9059d3",
+        userType: 2,
+        userId: '638dc5e48d010b4f8b9059d2' 
     },
 
 };

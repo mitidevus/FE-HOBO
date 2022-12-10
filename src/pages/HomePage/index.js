@@ -7,13 +7,12 @@ import  Axios  from 'axios';
 import CardView from '~/component/Card';
 import Search from '~/component/Search/search';
 import './StyleHomepage.css';
+import { FaStar } from "react-icons/fa";
 
 function HomePage() {
     const [page, setPage] = React.useState(1);
 
     const numberOfCards = 6;
-
-
 
     const [arr,setArr]=React.useState([]);
     const [card,setCard]=React.useState(arr);
@@ -87,9 +86,15 @@ function HomePage() {
         }
     } 
 
-    
+    const printStar = (a) => {
+        const result=[]
+        for(let i=0;i<a;i++) result.push(<FaStar></FaStar>)
+        console.log(" + "+a)
+        return <div>{result}</div>
+    }
 
     return (
+        
         <>
             <div className="background">
                 <Search onClickButton={handleOnClickSearch} onSelectFilter={handleOnSelectFilter}></Search>
@@ -128,7 +133,7 @@ function HomePage() {
                                                         <ul className="list-group list-group-flush">
                                                         <li className="list-group-item">{card[i].hotelName}</li>
                                                             <li className="list-group-item">{card[i].price}</li>
-                                                            <li className="list-group-item">{card[i].starNumber}</li>
+                                                            <li className="list-group-item">{printStar(card[i].starNumber)}</li>
                         
                                                         </ul>
                                                         <div className="card-body">

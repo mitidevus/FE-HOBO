@@ -1,5 +1,15 @@
+.wrapper {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    background-image: url("../../assets/img/PostPage/background.jpg");
+    font-size: 1.2rem;
+    padding-top: 10px;
+    background-repeat: repeat-y;
+}
+
 .title-postpage{
     text-align: center;
+   
 }
 
 input[type='file'] {
@@ -31,10 +41,15 @@ input[type='file'] {
     width: 500px;
 }
 
+.remove-btn{
+    margin-top: 5px;
+}
+
 .slider-style{
     width: 500px;
 }
 
-.btn{
+.name-utility-style{
     margin-left: 10px;
+    font-style: italic;
 }
