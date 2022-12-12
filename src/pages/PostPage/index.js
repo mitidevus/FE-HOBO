@@ -23,7 +23,7 @@ function SearchPage() {
     const [imgNameUtility,setImgNameUtility]=React.useState("")
 
     const user=useSelector(selectUser)
-    console.log(user.userId)
+    //console.log(user.userId)
 
     const handleImageChange =(source) => {
         const file=source.target.value;
@@ -93,21 +93,21 @@ function SearchPage() {
 
         
 
-            // Axios.post("http://localhost:2345/api/hotel/createhotel", {
-            //         userId: user.userId,
-            //         licenseNumber:licenseNumber,
-            //         hotelName: name,
-            //         hotelAddress: address,
-            //         hotelPhoneNumber: phone,
-            //         starNumber: star,
-            //         description: description,
-            //         descriptionImage: thumbnail,
-            //         utilities:utilities,
-            //         slider : sliderList,
-            //     })
-            //     .then((response) => {
-            //     console.log(response);
-            // });
+            Axios.post("http://localhost:2345/api/hotel/createhotel", {
+                    userId: user.userId,
+                    licenseNumber:licenseNumber,
+                    hotelName: name,
+                    hotelAddress: address,
+                    hotelPhoneNumber: phone,
+                    starNumber: star,
+                    description: description,
+                    descriptionImage: thumbnail,
+                    utilities:utilities,
+                    slider : sliderList,
+                })
+                .then((response) => {
+                console.log(response);
+            });
         }
         else {
             alert("You must fill in the information about Name hotel, Address, Phone Number, Star, Description, Thumbnail, Slider")
@@ -147,7 +147,7 @@ function SearchPage() {
           
       };
 
-      console.log(utilities)
+      //console.log(utilities)
 
       const renderUtilities = () => {
         return <>
