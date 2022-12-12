@@ -149,7 +149,7 @@ function ContactPage() {
                                         </div>
                                         <div className="text pl-3">
                                             <p>
-                                                <span>Phone:</span>
+                                                <span>Phone: </span>
                                                 <a href="tel://123456789">
                                                     Undone
                                                 </a>
@@ -162,7 +162,7 @@ function ContactPage() {
                                         </div>
                                         <div className="text pl-3">
                                             <p>
-                                                <span>Email:</span>
+                                                <span>Email: </span>
                                                 <a href="mailto:hobovn.website@gmail.com">
                                                     hobovn.website@gmail.com
                                                 </a>
@@ -175,7 +175,7 @@ function ContactPage() {
                                         </div>
                                         <div className="text pl-3">
                                             <p>
-                                                <span>Website:</span>
+                                                <span>Website: </span>
                                                 <a href="#">
                                                     Undone
                                                 </a>
