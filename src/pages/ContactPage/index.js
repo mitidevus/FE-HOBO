@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import './ContactPage.scss';
 
 function ContactPage() {
-    const [formStatus, setFormStatus] = useState('Send')
+    const [formStatus, setFormStatus] = useState('Send Message');
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [subject, setSubject] = useState("");
@@ -34,8 +34,14 @@ function ContactPage() {
         try {
             const response = await axios.post('/api/mail/sendNewMail', contentSend);
             const response2 = await axios.post('/api/mail/sendNewMail', contentReply);
+            setFormStatus('Sending...');
             if (response.status === 200 && response2.status === 200) {
                 toast.success("Form submitted successfully");
+                setName('');
+                setEmail('');
+                setSubject('');
+                setMessage('');
+                setFormStatus('Send Message')
             }
         } catch (error) {
             console.log(error);
@@ -118,7 +124,7 @@ function ContactPage() {
                                                     <div className="form-group">
                                                         <input
                                                         type="submit"
-                                                        value="Send Message"
+                                                        value={formStatus}
                                                         className="bt btn btn-primary"
                                                         />
                                                 </div>
