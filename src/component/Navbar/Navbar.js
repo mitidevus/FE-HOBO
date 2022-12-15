@@ -32,7 +32,7 @@ const Navbar = () => {
                         Home
                     </NavLink>
                     <NavLink to="/post" activeStyle>
-                        Post
+                        Create my first hotel 
                     </NavLink>
                     <NavLink to="/about" activeStyle>
                         About

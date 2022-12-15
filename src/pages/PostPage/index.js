@@ -90,6 +90,7 @@ function SearchPage() {
             console.log(sliderList)
             console.log(licenseNumber)
             console.log(utilities)
+            console.log(user.userId)
 
         
 

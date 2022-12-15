@@ -5,6 +5,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import Spinner from "react-spinkit";
 import  Axios  from 'axios';
 import CardView from '~/component/Card';
+import { Route,Routes,Link } from 'react-router-dom';
 import Search from '~/component/Search/search';
 import './StyleHomepage.css';
 import { FaStar } from "react-icons/fa";
@@ -123,24 +124,33 @@ function HomePage() {
 
                                         
                                          
-                                                <div className="col-4 mt-3">
-                                                    <div className="card text-center">
-                                                        <img className="card-img-top" src={card[i].thumbnail} alt="Room" />
-                                                        <div className="card-body">
-                                                            <h5 className="card-title fw-bold">{card[i].roomName}</h5>
+                                        <div className="col-4 mt-3">
+                                            <div className="card text-center">
+                                                <img className="card-img-top" src={card[i].thumbnail} alt="Room" />
+                                                <div className="card-body">
+                                                    <h5 className="card-title fw-bold">{card[i].roomName}</h5>
                                                             
-                                                        </div>
-                                                        <ul className="list-group list-group-flush">
-                                                        <li className="list-group-item">{card[i].hotelName}</li>
-                                                            <li className="list-group-item">{card[i].price}</li>
-                                                            <li className="list-group-item">{printStar(card[i].starNumber)}</li>
+                                                 </div>
+                                                <ul className="list-group list-group-flush">
+                                                    <li className="list-group-item">{card[i].hotelName}</li>
+                                                    <li className="list-group-item">{card[i].price}</li>
+                                                    <li className="list-group-item">{printStar(card[i].starNumber)}</li>
                         
-                                                        </ul>
-                                                        <div className="card-body">
-                                                            <button className='card-button'>Xem chi tiết</button>
-                                                        </div>
-                                                    </div>
+                                                </ul>
+                                                {/* <div className="card-body">
+                                                    <button className='card-button'>Details</button>
+                                                </div> */}
+
+                                                <div className="card-body">
+
+                                                    <Link to={`hotels/${card[i].hotelId}/rooms/${card[i]._id}`} activeStyle>
+                                                        <button className='card-button'>Details</button>
+                                                    </Link>
+                                                    
                                                 </div>
+
+                                            </div>
+                                        </div>
                                            
                                         
                                     );
