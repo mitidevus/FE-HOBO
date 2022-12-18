@@ -55,10 +55,10 @@ function ContactPage() {
                 <ToastContainer position="top-center"/>
                 <div className="row justify-content-center">
                     <div className="col-md-10">
-                        <div className="wrapper">
+                        <div className="wrapper rounded-5">
                             <div className="row no-gutters">
                                 <div className="col-md-6">
-                                    <div className="contact-wrap w-100 p-lg-5 p-4">
+                                    <div className="contact-wrap w-100 p-lg-5 p-4 rounded-5">
                                         <h3 className="mb-4">Send us a message</h3>
                                         <form
                                         id="contactForm"

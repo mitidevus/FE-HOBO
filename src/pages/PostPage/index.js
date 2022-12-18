@@ -2,7 +2,7 @@ import * as React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import  Axios  from 'axios';
-import './style.css';
+import './style.scss';
 import { useSelector } from 'react-redux';
 import {selectUser} from '../../features/userSlice'
 
@@ -156,17 +156,14 @@ function SearchPage() {
                     {utilities.map((singleUtilities, index) => (
                         <div key={index} className="Utilities">
                         <div className="first-division">
-                            <p className='name-utility-style'>Name utility: {singleUtilities.name}</p>
+                            <br/>
+                            <p className='bt'>Name utility: {singleUtilities.name}</p>
                             <img src={singleUtilities.imageURL} alt="" width="20%"/>
-                            <br></br>
-                            <br></br>
                         {/* value={singleUtilities.Utilities} onChange={(e) => handleUtilitiesChange(e, index)} */}
                             {/* <input className='Utilities-style' placeholder="Name" name="Utilities" type="text" id="utilities" ref={nameInput}/>
                             <br></br>
                             <br></br>
                             <input className='Utilities-style' placeholder="Image Link" name="Utilities-img" type="text" id="utilities-img" ref={imgInput}/> */}
-                            <br></br>
-                            <br></br>
                             
                             
                             <div className="second-division">
@@ -174,9 +171,9 @@ function SearchPage() {
                             <button
                                 type="button"
                                 onClick={() => handleUtilitiesRemove(index)}
-                                className="remove-btn"
+                                className="sbt remove-btn"
                             >
-                                <span>Remove</span>
+                                <span>X</span>
                             </button>
                             )}
                         </div>
@@ -188,21 +185,18 @@ function SearchPage() {
                         </div>
                         
                     ))}
-                    <input className='Utilities-style' placeholder="Name" name="Utilities" type="text" id="utilities" value={nameUtility} onChange={(e) => setNameUtility(e.target.value)}/>
+                    <input className='fctr form-control' placeholder="Name" name="Utilities" type="text" id="utilities" value={nameUtility} onChange={(e) => setNameUtility(e.target.value)}/>
                     <br></br>
                     <br></br>        
-                    <input className='Utilities-style' placeholder="Image Link" name="Utilities-img" type="text" id="utilities-img" value={imgNameUtility} onChange={(e) => setImgNameUtility(e.target.value)}/>
+                    <input className='fctr form-control' placeholder="Image Link" name="Utilities-img" type="text" id="utilities-img" value={imgNameUtility} onChange={(e) => setImgNameUtility(e.target.value)}/>
                     
                     <br></br>
                     <br></br>
-                    <button type="button" onClick={handleUtilitiesAdd} className="btn btn-success add-btn-utilitie">
+                    <button type="button" onClick={handleUtilitiesAdd} className="bt btn btn-success add-btn-utilitie">
                         <span>Add an Utility</span>
                     </button>
                     
                     </div>
-                    <br></br>
-                    <br></br>
-                    <br></br>
                 </form>
         </>
     }
@@ -225,6 +219,29 @@ function SearchPage() {
       const handleSliderAdd = () => {
         setsliderList([...sliderList, { Slider: "" }]);
       };
+
+      const StarRating = () => {
+        const [hover, setHover] = React.useState(0);
+        return (
+          <div className="star-rating">
+            {[...Array(5)].map((star, index) => {
+              index += 1;
+              return (
+                <button
+                  type="button"
+                  key={index}
+                  className={index <= ((star && hover) || hover) ? "on" : "off"}
+                  onClick={() => setStar(index)}
+                  onMouseEnter={() => setHover(index)}
+                  onMouseLeave={() => setHover(star)}
+                >
+                  <i className="fas fa-solid fa-star"/>
+                </button>
+              );
+            })}
+          </div>
+        );
+      };
  
       const renderSlider = () => {
         return <>
@@ -233,38 +250,30 @@ function SearchPage() {
                     {sliderList.map((singleSlider, index) => (
                         <div key={index} className="Sliders">
                             <div className="first-division">
-                                <input className='slider-style' name="Slider" type="text" id="Slider" value={singleSlider.Slider} onChange={(e) => handleSliderChange(e, index)}/>
+                                <input className='fctr form-control' name="Slider" type="text" id="Slider" value={singleSlider.Slider} onChange={(e) => handleSliderChange(e, index)}/>
                             
                                 <div className="second-division">
                                 {sliderList.length !== 0 && (
                                 <button
                                     type="button"
                                     onClick={() => handleSliderRemove(index)}
-                                    className="remove-btn"
+                                    className="sbt remove-btn"
                                 >
-                                    <span>Remove</span>
+                                    <span>X</span>
                                 </button>
                                 )}
-                            </div>  
-                        </div>
-
-                        <br></br>
+                                </div>  
+                            </div>
                         </div>
                         
                     ))}
-
-                    <br></br>
-                    <br></br>
-                    <button type="button" onClick={handleSliderAdd} className="btn btn-success add-btn">
-                        <span>Add a Slider</span>
+                    <button type="button" onClick={handleSliderAdd} className="bt btn btn-success add-btn">
+                        <span>Add an image to Slider</span>
                     </button>
                     
                     </div>
-                    <br></br>
-                    <br></br>
-                    <br></br>
+                    <br/>
                     <div className="output">
-                    <p>Your slider:</p>
                     {sliderList &&
                         sliderList.map((singleSlider, index) => (
                         <ul key={index}>
@@ -278,87 +287,123 @@ function SearchPage() {
    
 
     return (
-        <div className='container wrapper'>
+        <section className="post-section">
+            <div className="container">
+                <div className="row justify-content-center">
+                    <div className="col-md-10">
+                        <div className="wrapper">
+                            <div className="row no-gutters">
+                                <div className="post-wrap w-100 p-lg-5 p-4 rounded-5">
+                                    <h3 className="mb-4 text-center">POST    PAGE</h3>
+                                    <Form>
+                                        <Form.Group className="post-group mb-3">
+                                            <Form.Label className='label'>Name hotel:</Form.Label>
+                                            <br></br>
+                                            <input className='fctr form-control' type="text" placeholder="HOBO Hotel" required
+                                            onChange={handleName}/>
+                                        </Form.Group>
 
-            <h1 className='title-postpage'>POST PAGE</h1>
-            <br></br>
+                                        <Form.Group className="post-group mb-3">
+                                            <Form.Label className='label'>License number:</Form.Label>
+                                            <br></br>
+                                            <input className='fctr form-control' type="text" placeholder="0000-0000" required
+                                            onChange={handleLicenseNumber}/>
+                                        </Form.Group>
 
-            <Form>
-                <Form.Group className="mb-3">
-                    <Form.Label>Name hotel:</Form.Label>
-                    <br></br>
-                    <input className='input-text-name' type="text" placeholder="Name" required
-                    onChange={handleName}/>
+                                        <Form.Group className="post-group mb-3">
+                                            <Form.Label className='label'>Address:</Form.Label>
+                                            <br></br>
+                                            <input 
+                                            className='fctr form-control' 
+                                            type="text" 
+                                            placeholder="227 Nguyen Van Cu Street, Ward 4, District 5, Ho Chi Minh City, Viet Nam"
+                                            required
+                                            onChange={handleAddress}
+                                            />
+                                        </Form.Group>
+                                        
+                                        <Form.Group className="post-group mb-3">
+                                            <Form.Label className='label'>Phone Number:</Form.Label>
+                                            <br></br>
+                                            <input className='fctr form-control' type="text" placeholder="(+028) XX XXX XXX" required
+                                            onChange={handlePhone}/>
+                                        </Form.Group>
+
+                                        <Form.Group className="post-group mb-3">
+                                            <Form.Label className='label'>Star:</Form.Label>
+                                            <br></br>
+                                            {/* <input className='fctr form-control' type="number" placeholder="star" required min='0' max='5'
+                                            onChange={handleStar}/> */}
+                                            <StarRating onChange={handleStar} />
+                                        </Form.Group>
+
+                                        <Form.Group className="post-group mb-3">
+                                            <Form.Label className='label'>Description:</Form.Label>
+                                            <br></br>
+                                            <textarea className="fctr form-control" cols="40" rows="5" required
+                                            onChange={handleDescription}></textarea>
+                                        </Form.Group>
+                                    
+                                        <Form.Group className="post-group mb-3">
+                                            <Form.Label className='label'>Thumbnail:</Form.Label>
+                                            <br></br>
+                                            <input className='fctr form-control' type="text" id="text-thumbnail" title=" " onChange={handleImageChange}/>
+                                            <br></br>
+                                            <br></br>
+                                            {thumbnail  && 
+                                                <div className="result">{renderPhoto(thumbnail)}</div>}
+                                        </Form.Group>
+                                    </Form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div className="row justify-content-center">
+                    <div className="col-md-10">
+                        <div className="wrapper">
+                            <div className="row no-gutters">
+                                <div className="post-wrap w-100 p-lg-5 p-4 rounded-5">
+                                    <Form>
+                                        <Form.Group className="post-group mb-3">
+                                            <Form.Label className='label'>Utility:</Form.Label>
+                                            <br></br>
+                                            {renderUtilities()}
+                                        </Form.Group>
+                                    </Form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div className="row justify-content-center">
+                    <div className="col-md-10">
+                        <div className="wrapper">
+                            <div className="row no-gutters">
+                                <div className="post-wrap w-100 p-lg-5 p-4 rounded-5">
+                                    <Form>
+                                        <Form.Group className="post-group mb-3">
+                                            <Form.Label className='label'>Slider:</Form.Label>
+                                            <br></br>
+                                            {renderSlider()}
+                                        </Form.Group>
+                                    </Form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <Form.Group className="post-group mb-3">
+                    <div className='text-center'>
+                        <button type="button" className="mbt btn btn-primary" onClick={checkInputFillComplete}>Submit</button>
+                    </div>
                 </Form.Group>
-
-                <Form.Group className="mb-3">
-                    <Form.Label>License number:</Form.Label>
-                    <br></br>
-                    <input className='input-text-name' type="text" placeholder="Name" required
-                    onChange={handleLicenseNumber}/>
-                </Form.Group>
-
-                <Form.Group className="mb-3">
-                    <Form.Label>Address:</Form.Label>
-                    <br></br>
-                    <input className='input-text-address' type="text" placeholder="Address" required
-                    onChange={handleAddress}/>
-                </Form.Group>
-                
-                <Form.Group className="mb-3">
-                    <Form.Label>Phone Number:</Form.Label>
-                    <br></br>
-                    <input className='input-text-phone' type="text" placeholder="Phone" required
-                    onChange={handlePhone}/>
-                </Form.Group>
-
-                <Form.Group className="mb-3">
-                    <Form.Label>Star:</Form.Label>
-                    <br></br>
-                    <input className='input-text-star' type="number" placeholder="star" required min='0' max='5'
-                    onChange={handleStar}/>
-                </Form.Group>
-
-                <Form.Group className="mb-3">
-                    <Form.Label>Description:</Form.Label>
-                    <br></br>
-                    <textarea className="description-input" cols="40" rows="5" required
-                    onChange={handleDescription}></textarea>
-                </Form.Group>
-              
-                <Form.Group className="mb-3">
-                    <Form.Label>Thumbnail:</Form.Label>
-                    <br></br>
-                    <input className='thumbnail-style' type="text" id="text-thumbnail" title=" " onChange={handleImageChange}/>
-                    <br></br>
-                    <br></br>
-                    {thumbnail  && 
-                        <div className="result">{renderPhoto(thumbnail)}</div>}
-                </Form.Group>
-
-                <Form.Group className="mb-3">
-                    <Form.Label>Utility:</Form.Label>
-                    <br></br>
-                    {renderUtilities()}
-                </Form.Group>
-
-               
-                <Form.Group className="mb-3">
-                    <Form.Label>Slider:</Form.Label>
-                    <br></br>
-                    {renderSlider()}
-                </Form.Group>
-
-            </Form>
-
-            <div className='submit'>
-                <button type="button" className="btn btn-primary" onClick={checkInputFillComplete}>Submit</button>
             </div>
-
-            <br></br>
-    
-        </div>
-      );
+        </section>
+    );
 
 
 }

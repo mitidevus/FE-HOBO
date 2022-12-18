@@ -8,29 +8,20 @@ const Footer = () => {
   return (
     <footer>
       <Container>
-        <Row>
+        <Row className='text-center'>
           <Col className='py-3'>
-            <h4 id='Head'>COLUMN 1</h4>
             <ul className='list-unstyled'>
-              <li>1</li>
-              <li>2</li>
-              <li>3</li>
+              <li><i className='ftri fas fa-brands fa-facebook-f'/> www.facebook.com/HOBO</li>
             </ul>
           </Col>
           <Col className='py-3'>
-            <h4 id='Head'>COLUMN 2</h4>
             <ul className='list-unstyled'>
-              <li>1</li>
-              <li>2</li>
-              <li>3</li>
+              <li><i className='ftri fas fa-brands fa-instagram'/> www.instagram.com/HOBO</li>
             </ul>
           </Col>
           <Col className='py-3'>
-            <h4 id='Head'>CONTACT</h4>
             <ul className='list-unstyled'>
-              <li><i className='fas fa-brands fa-square-facebook'/> www.facebook.com/HOBO</li>
-              <li><i className='fas fa-brands fa-instagram'/> www.instagram.com/HOBO</li>
-              <li><i className='fas fa-regular fa-envelope'/> hobovn.website@gmail.com</li>
+              <li><i className='ftri fas fa-regular fa-envelope'/> hobovn.website@gmail.com</li>
             </ul>
           </Col>
         </Row>

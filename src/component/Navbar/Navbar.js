@@ -34,13 +34,6 @@ const Navbar = () => {
                     <NavLink to="/post" activeStyle>
                         Post
                     </NavLink>
-                    <NavLink to="/about" activeStyle>
-                        About
-                    </NavLink>
-                    <NavLink to="/contact" activeStyle>
-                        Contact
-                    </NavLink>
-
                     {/* Xong thì xóa */}
                     <NavLink to="/hotels/123" activeStyle>
                         Hotel
@@ -61,6 +54,12 @@ const Navbar = () => {
                             Approve
                         </NavLink>
                     )}
+                    <NavLink to="/about" activeStyle>
+                        About
+                    </NavLink>
+                    <NavLink to="/contact" activeStyle>
+                        Contact
+                    </NavLink>
                 </NavMenu>
                 <NavMenu>
                     {user ? (
