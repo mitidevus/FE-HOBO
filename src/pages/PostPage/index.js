@@ -5,6 +5,7 @@ import  Axios  from 'axios';
 import './style.scss';
 import { useSelector } from 'react-redux';
 import {selectUser} from '../../features/userSlice'
+import {Rating} from 'react-simple-star-rating'
 
 
 function SearchPage() {
@@ -220,29 +221,6 @@ function SearchPage() {
       const handleSliderAdd = () => {
         setsliderList([...sliderList, { Slider: "" }]);
       };
-
-      const StarRating = () => {
-        const [hover, setHover] = React.useState(0);
-        return (
-          <div className="star-rating">
-            {[...Array(5)].map((star, index) => {
-              index += 1;
-              return (
-                <button
-                  type="button"
-                  key={index}
-                  className={index <= ((star && hover) || hover) ? "on" : "off"}
-                  onClick={() => setStar(index)}
-                  onMouseEnter={() => setHover(index)}
-                  onMouseLeave={() => setHover(star)}
-                >
-                  <i className="fas fa-solid fa-star"/>
-                </button>
-              );
-            })}
-          </div>
-        );
-      };
  
       const renderSlider = () => {
         return <>
@@ -335,7 +313,16 @@ function SearchPage() {
                                             <br></br>
                                             {/* <input className='fctr form-control' type="number" placeholder="star" required min='0' max='5'
                                             onChange={handleStar}/> */}
-                                            <StarRating onChange={handleStar} />
+                                            <Rating
+                                                onClick={handleStar}
+                                                ratingValue={star}
+                                                size={20}
+                                                label
+                                                transition
+                                                fillColor='gold'
+                                                emptyColor='gray'
+                                                className='foo fctr form-control'
+                                            />
                                         </Form.Group>
 
                                         <Form.Group className="post-group mb-3">
