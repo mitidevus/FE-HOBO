@@ -266,14 +266,27 @@ function SearchPage() {
    
 
     return (
-        <section className="post-section">
+        <section className="post">
+            <br/>
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-md-10">
                         <div className="wrapper">
                             <div className="row no-gutters">
+                                    <div className="post-section rounded-5">
+                                        <h1>POST PAGE</h1>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div className="row justify-content-center">
+                    <div className="col-md-10">
+                        <div className="wrapper">
+                            <div className="row no-gutters">
                                 <div className="post-wrap w-100 p-lg-5 p-4 rounded-5">
-                                    <h3 className="mb-4 text-center">POST    PAGE</h3>
+                                    {/* <h3 className="mb-4 text-center">POST    PAGE</h3> */}
                                     <Form>
                                         <Form.Group className="post-group mb-3">
                                             <Form.Label className='label'>Name hotel:</Form.Label>

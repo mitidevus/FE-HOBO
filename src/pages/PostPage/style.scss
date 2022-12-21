@@ -11,8 +11,29 @@ button {
     color: #ccc;
   }
 
-.post-section {
-    padding: 7em 0;
+.post {
+    padding: 0;
+  }
+
+  .post-section {
+    color: #adff2f;
+    padding: 2vh 0;
+    text-align: center;
+    background: linear-gradient(-45deg,rgba(46, 39, 157, 1), rgba(127, 39, 156, 1), #e73c7e, rgba(46, 39, 157, 1), rgba(127, 39, 156, 1));
+    background-size: 400% 400%;
+    animation: anim 10s ease infinite;
+    height: 9vh;
+  }
+  @keyframes anim {
+      0% {
+          background-position: 0 50%;
+      }
+      50% {
+          background-position: 100% 50%;
+      }
+      100% {
+          background-position: 0 50%;
+      }
   }
   
   .wrapper {
@@ -161,7 +182,7 @@ button {
     border-width: 1px;
     border-radius: 5px;
     font-size: 24px;
-    font-weight: 700;
+    font-weight: 500;
     -webkit-box-shadow: 0px 10px 20px -6px rgba(0, 0, 0, 0.12);
     -moz-box-shadow: 0px 10px 20px -6px rgba(0, 0, 0, 0.12);
     box-shadow: 0px 10px 20px -6px rgba(0, 0, 0, 0.12);
