@@ -1,10 +1,9 @@
+import CloseIcon from '@mui/icons-material/Close';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
-import styles from './AddItemForm.module.scss';
-import axios from '~/api/auth';
-import Button from '../Button';
-import CloseIcon from '@mui/icons-material/Close';
 import { useParams } from 'react-router-dom';
+import Button from '../Button';
+import styles from './AddItemForm.module.scss';
 
 const cx = classNames.bind(styles);
 
@@ -15,11 +14,9 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
     const [bed, setBed] = useState('');
     const [toilet, setToilet] = useState('');
     const [thumbnail, setThumbnail] = useState('');
-    const [slider, setSlider] = useState([
-        { id: 1, image: '' },
-        { id: 2, image: '' },
-        { id: 3, image: '' },
-    ]);
+    const [slider1, setSlider1] = useState('');
+    const [slider2, setSlider2] = useState('');
+    const [slider3, setSlider3] = useState('');
     const [description, setDescription] = useState('');
     const [error, setError] = useState('');
 
@@ -36,16 +33,15 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
             !bed ||
             !toilet ||
             !thumbnail ||
-            !slider[0].image ||
-            !slider[1].image ||
-            !slider[2].image ||
+            !slider1 ||
+            !slider2 ||
+            !slider3 ||
             !description
         ) {
             return alert('Please fill all fields!');
         }
 
         const newRoom = {
-            id: rooms.length + 1,
             hotelId,
             roomName,
             price,
@@ -53,25 +49,13 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
             bed,
             toilet,
             thumbnail,
-            slider,
+            slider: [slider1, slider2, slider3],
             description,
         };
 
         console.log(newRoom);
         handleAddRoom(newRoom);
         setShowAddForm(false);
-
-        // Send userAccount to server and back to home page
-        // try {
-        //     const res = await axios.put(`/room/${room.id}`, AddRoom);
-        //     console.log(res);
-        //     handleAddRoom(AddRoom);
-        //     setShowAddForm(false);
-        // }
-        // catch (err) {
-        //     console.log(err);
-        //     setError(err.response.data.msg);
-        // }
     };
 
     return (
@@ -94,6 +78,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                             placeholder="Name"
                             value={roomName}
                             onChange={(e) => setRoomName(e.target.value)}
+                            required
                         />
                     </div>
                 </div>
@@ -109,6 +94,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                             placeholder="Price"
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
+                            required
                         />
                     </div>
                     <div className="col">
@@ -121,6 +107,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                             placeholder="Quantity"
                             value={quantity}
                             onChange={(e) => setQuantity(e.target.value)}
+                            required
                         />
                     </div>
                     <div className="col">
@@ -133,6 +120,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                             placeholder="Bed"
                             value={bed}
                             onChange={(e) => setBed(e.target.value)}
+                            required
                         />
                     </div>
                     <div className="col">
@@ -145,6 +133,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                             placeholder="Toilet"
                             value={toilet}
                             onChange={(e) => setToilet(e.target.value)}
+                            required
                         />
                     </div>
                 </div>
@@ -160,6 +149,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                                 placeholder="Thumbnail URL"
                                 value={thumbnail}
                                 onChange={(e) => setThumbnail(e.target.value)}
+                                required
                             />
                         </div>
                         <div>
@@ -171,30 +161,27 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                                 type="text"
                                 className="form-control mb-3"
                                 placeholder="Slider URL"
-                                value={slider[0].image}
-                                onChange={(e) =>
-                                    setSlider([{ ...slider[0], image: e.target.value }, slider[1], slider[2]])
-                                }
+                                value={slider1}
+                                onChange={(e) => setSlider1(e.target.value)}
+                                required
                             />
 
                             <input
                                 type="text"
                                 className="form-control mb-3"
                                 placeholder="Slider URL"
-                                value={slider[1].image}
-                                onChange={(e) =>
-                                    setSlider([slider[0], { ...slider[1], image: e.target.value }, slider[2]])
-                                }
+                                value={slider2}
+                                onChange={(e) => setSlider2(e.target.value)}
+                                required
                             />
 
                             <input
                                 type="text"
                                 className="form-control mb-3"
                                 placeholder="Slider URL"
-                                value={slider[2].image}
-                                onChange={(e) =>
-                                    setSlider([slider[0], slider[1], { ...slider[2], image: e.target.value }])
-                                }
+                                value={slider3}
+                                onChange={(e) => setSlider3(e.target.value)}
+                                required
                             />
                         </div>
                     </div>

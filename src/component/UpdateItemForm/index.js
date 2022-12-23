@@ -26,8 +26,7 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
 
         const updatedRoom = detail
             ? {
-                  id: room.id,
-                  hotelId: room.hotelId,
+                  _id: room._id,
                   roomName,
                   price,
                   quantity,
@@ -38,8 +37,7 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
                   description,
               }
             : {
-                  id: room.id,
-                  hotelId: room.hotelId,
+                  _id: room._id,
                   roomName,
                   price,
                   quantity,
@@ -51,18 +49,6 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
         console.log(updatedRoom);
         handleUpdateRoom(updatedRoom);
         setShowUpdateForm(false);
-
-        // Send userAccount to server and back to home page
-        // try {
-        //     const res = await axios.put(`/room/${room.id}`, updatedRoom);
-        //     console.log(res);
-        //     handleUpdateRoom(updatedRoom);
-        //     setShowUpdateForm(false);
-        // }
-        // catch (err) {
-        //     console.log(err);
-        //     setError(err.response.data.msg);
-        // }
     };
 
     if (detail) {
@@ -163,30 +149,24 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
                                     type="text"
                                     className="form-control mb-3"
                                     placeholder="Slider URL"
-                                    value={slider[0].image}
-                                    onChange={(e) =>
-                                        setSlider([{ ...slider[0], image: e.target.value }, slider[1], slider[2]])
-                                    }
+                                    value={slider[0]}
+                                    onChange={(e) => setSlider([e.target.value, slider[1], slider[2]])}
                                 />
 
                                 <input
                                     type="text"
                                     className="form-control mb-3"
                                     placeholder="Slider URL"
-                                    value={slider[1].image}
-                                    onChange={(e) =>
-                                        setSlider([slider[0], { ...slider[1], image: e.target.value }, slider[2]])
-                                    }
+                                    value={slider[1]}
+                                    onChange={(e) => setSlider([slider[0], e.target.value, slider[2]])}
                                 />
 
                                 <input
                                     type="text"
                                     className="form-control mb-3"
                                     placeholder="Slider URL"
-                                    value={slider[2].image}
-                                    onChange={(e) =>
-                                        setSlider([slider[0], slider[1], { ...slider[2], image: e.target.value }])
-                                    }
+                                    value={slider[2]}
+                                    onChange={(e) => setSlider([slider[0], slider[1], e.target.value])}
                                 />
                             </div>
                         </div>
@@ -302,9 +282,9 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
                     </div>
 
                     <div className="d-grid mb-3">
-                        <button type="submit" className={cx('submit-btn')} onClick={(e) => handleSubmit(e)}>
+                        <Button primary type="submit" className="w-50 center" onClick={(e) => handleSubmit(e)}>
                             Update
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </div>

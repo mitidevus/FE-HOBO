@@ -29,8 +29,8 @@ export default function Slider({ slides }) {
         <div className={cx('container-slider')}>
             {slides.map((slide, index) => {
                 return (
-                    <div key={slide.id} className={slideIndex === index + 1 ? cx('slide', 'active-anim') : cx('slide')}>
-                        <img src={slide.image} alt="Slider" />
+                    <div key={index} className={slideIndex === index + 1 ? cx('slide', 'active-anim') : cx('slide')}>
+                        <img src={slide} alt="Slider" />
                     </div>
                 );
             })}

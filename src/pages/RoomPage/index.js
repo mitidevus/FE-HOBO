@@ -1,8 +1,8 @@
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
-import axios from 'axios';
+import axios from '~/api/auth';
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import BookingForm from '~/component/BookingForm';
@@ -101,63 +101,67 @@ function RoomPage() {
 
     const params = useParams();
     const roomIdAPI = params.roomId;
-    const hotelIdAPI = params.hotelId;
-    console.log(hotelIdAPI, roomIdAPI);
 
     const [hotel, setHotel] = useState(hotelRes);
     const [room, setRoom] = useState(roomRes);
     const [suggestedRooms, setSuggestedRooms] = useState(suggestedRoomsRes);
 
-    // useEffect(() => {
-    //     // Call API to get hotel
-    //     axios
-    //         .get(`http://localhost:3000/hotels/${hotelIdAPI}`)
-    //         .then((res) => {
-    //             console.log(res.data);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-
-    //     // Call API to get room
-    //     axios
-    //         .get(`http://localhost:3000/hotels/${hotelIdAPI}/rooms/${roomIdAPI}`)
-    //         .then((res) => {
-    //             console.log(res.data);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-
-    //     // Call API to get suggestedRooms
-    //     axios
-    //         .get(`http://localhost:3000/hotels/${hotelIdAPI}/rooms`)
-    //         .then((res) => {
-    //             console.log(res.data);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-    // }, [hotelIdAPI, roomIdAPI]);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const roomRes = await axios.get(`/api/post/info/${roomIdAPI}`);
+                if (roomRes) {
+                    setRoom(roomRes.data);
+                }
+                const hotelRes = await axios.get(`/api/hotel/info/${room.hotelId}`);
+                if (hotelRes) {
+                    setHotel(hotelRes.data);
+                }
+                const roomObj = {
+                    hotel_id: room.hotelId,
+                    post_id: room.id,
+                };
+                console.log(roomObj);
+                const suggestedRoomsRes = await axios.get('/api/post/postlistexcept', roomObj);
+                if (suggestedRoomsRes) {
+                    setSuggestedRooms(suggestedRoomsRes.data);
+                    console.log(suggestedRoomsRes.data);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+    }, []);
 
     const handleDeleteRoom = () => {
         const confirm = window.confirm('Are you sure to delete this room?');
         if (confirm) {
-            // Call API to delete room
-            // axios
-            //     .delete(`http://localhost:3000/hotels/${hotelIdAPI}/rooms/${roomIdAPI}`)
-            //     .then((res) => {
-            //         console.log(res.data);
-            //     })
-            //     .catch((err) => {
-            //         console.log(err);
-            //     });
-            navigate(`/hotels/${hotelIdAPI}`);
+            //Call API to delete room
+            axios
+                .delete(`api/post/deletepost/${room._id}`)
+                .then((res) => {
+                    console.log(res.data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+            navigate(`/hotel/${room.hotelId}`);
         }
     };
 
     const handleUpdateRoom = (newRoom) => {
         setRoom(newRoom);
+
+        // Call API to update room
+        axios
+            .post('/api/post/changeinfo', newRoom)
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
     return (
@@ -178,7 +182,7 @@ function RoomPage() {
                         <div className="row">
                             <div className="col-7">
                                 <div className={cx('room-info-slider')}>
-                                    <Slider slides={[{image: room.thumbnail} ,...room.slider]} />
+                                    <Slider slides={[room.thumbnail, ...room.slider]} />
                                 </div>
                             </div>
                             <div className="col-5">
