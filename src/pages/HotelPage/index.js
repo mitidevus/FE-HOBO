@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '~/api/auth';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -13,7 +13,7 @@ import styles from './HotelPage.module.scss';
 
 const cx = classNames.bind(styles);
 
-// Send userId to server, and server respond this object
+//Send userId to server, and server respond this object
 const hotelRes = {
     id: 1, // Là hotelId
     userId: 123, // Là userId của hotel owner
@@ -177,29 +177,33 @@ function HotelPage() {
         setRooms(newRooms);
     };
 
-    // useEffect(() => {
-    //     // Call API to get hotel detail
-    //     const fetchData = async () => {
-    //         try {
-    //             const hotelRes = await axios.get(`http://localhost:3000/hotels/${hotelIdAPI}`);
-    //             if (hotelRes) {
-    //                 setHotel(hotelRes.data);
-    //             }
-    //             const roomsRes = await axios.get(`http://localhost:3000/hotels/${hotelIdAPI}/rooms`);
-    //             if (roomsRes) {
-    //                 setRooms(roomsRes.data);
-    //             }
-    //             const commentsRes = await axios.get(`http://localhost:3000/hotels/${hotelIdAPI}/comments`);
-    //             if (commentsRes) {
-    //                 setComments(commentsRes.data);
-    //             }
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     };
+    useEffect(() => {
+        // Call API to get hotel detail
+        const fetchData = async () => {
+            try {
+                const hotelRes = await axios.get(`/api/hotel/info/${hotelIdAPI}`);
+                if (hotelRes) {
+                    setHotel(hotelRes.data);
+                }
+                const roomsRes = await axios.get(`/api/post/postlist/${hotelIdAPI}`);
+                if (roomsRes) {
+                    setRooms(roomsRes.data);
+                }
+                const commentsRes = await axios.get(`/api/comment/commentlistbyhotel/${hotelIdAPI}`);
+                if (commentsRes) {
+                    setComments(commentsRes.data);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
 
-    //     fetchData();
-    // }, []);
+        fetchData();
+    }, []);
+
+    console.log(hotel);
+    console.log(rooms);
+    console.log(comments);
 
     return (
         <div className={cx('wrapper')}>

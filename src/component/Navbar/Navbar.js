@@ -42,16 +42,16 @@ const Navbar = () => {
                     </NavLink>
 
                     {/* Xong thì xóa */}
-                    <NavLink to="/hotels/123" activeStyle>
+                    <NavLink to="/hotel/639700482e84ad02f4864a68" activeStyle>
                         Hotel
                     </NavLink>
 
-                    <NavLink to="hotels/123/rooms/123" activeStyle>
+                    <NavLink to="room/63970668d5f14557aced81bb" activeStyle>
                         Room
                     </NavLink>
 
                     {user && user.userType === '1' && (
-                        <NavLink to={`/hotels/${user.hotelId}`} activeStyle>
+                        <NavLink to={`/hotel/${user.hotelId}`} activeStyle>
                             My Hotel
                         </NavLink>
                     )}

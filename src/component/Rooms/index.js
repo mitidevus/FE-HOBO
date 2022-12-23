@@ -10,6 +10,7 @@ import Button from '../Button';
 import ItemTitle from '../ItemTitle';
 import UpdateItemForm from '../UpdateItemForm';
 import styles from './Rooms.module.scss';
+import axios from '~/api/auth';
 
 const cx = classNames.bind(styles);
 
@@ -22,7 +23,7 @@ function formatCash(str) {
         });
 }
 
-function Rooms({ rooms, header, description, updateRooms, addRoom=false }) {
+function Rooms({ rooms, header, description, updateRooms, addRoom = false }) {
     const user = useSelector(selectUser);
 
     const [showAddForm, setShowAddForm] = useState(false);
@@ -32,24 +33,54 @@ function Rooms({ rooms, header, description, updateRooms, addRoom=false }) {
     const handleAddRoom = (room) => {
         const newRooms = [...rooms, room];
         updateRooms(newRooms);
+
+        // Call API to add room
+        axios
+            .post('/api/post/createpost', room)
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
-    
-    const handleDeleteRoom = (id) => {
+
+    const handleDeleteRoom = (roomId) => {
         const confirm = window.confirm('Are you sure to delete this room?');
         if (confirm) {
-            const newRooms = rooms.filter((room) => room.id !== id);
+            const newRooms = rooms.filter((room) => room._id !== roomId);
             updateRooms(newRooms);
+
+            // Call API to delete room
+            axios
+                .delete(`/api/post/deletepost/${roomId}`)
+                .then((res) => {
+                    console.log(res.data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         }
     };
 
     const handleUpdateRoom = (room) => {
         const newRooms = rooms.map((item) => {
-            if (item.id === room.id) {
+            if (item._id === room._id) {
                 return room;
             }
             return item;
         });
         updateRooms(newRooms);
+
+        // Call API to update room
+        axios
+            .post('/api/post/changeinfo', room)
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
     return (
@@ -83,11 +114,7 @@ function Rooms({ rooms, header, description, updateRooms, addRoom=false }) {
                                     </li>
                                 </ul>
                                 <div className="card-body">
-                                    <Button
-                                        primary
-                                        large={!(user && user.userType === '1')}
-                                        to={`/hotels/${room.hotelId}/rooms/${room.id}`}
-                                    >
+                                    <Button primary large={!(user && user.userType === '1')} href={`/room/${room._id}`}>
                                         Details
                                     </Button>
                                     {user && user.userType === '1' && (
@@ -101,7 +128,7 @@ function Rooms({ rooms, header, description, updateRooms, addRoom=false }) {
                                             >
                                                 <EditIcon />
                                             </Button>
-                                            <Button danger onClick={() => handleDeleteRoom(room.id)}>
+                                            <Button danger onClick={() => handleDeleteRoom(room._id)}>
                                                 <CloseIcon />
                                             </Button>
                                         </>
@@ -123,11 +150,7 @@ function Rooms({ rooms, header, description, updateRooms, addRoom=false }) {
                 )}
                 {showAddForm && (
                     <>
-                        <AddItemForm
-                            rooms={rooms}
-                            setShowAddForm={setShowAddForm}
-                            handleAddRoom={handleAddRoom}
-                        />
+                        <AddItemForm rooms={rooms} setShowAddForm={setShowAddForm} handleAddRoom={handleAddRoom} />
                     </>
                 )}
             </div>
