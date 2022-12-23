@@ -6,7 +6,7 @@ const initialState = {
         //phải có user_id
         avatar: 'https://render.fineartamerica.com/images/rendered/default/acrylic-print/8/7/hangingwire/break/images/artworkimages/medium/1/funny-boss-cat-alexey-konovalenko.jpg',
         hotelId: "638dc5e48d010b4f8b9059d3",
-        userType: 2,
+        userType: "1",
         userId: '638dc5e48d010b4f8b9059d2' 
     },
 
