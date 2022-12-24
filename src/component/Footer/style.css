@@ -8,7 +8,13 @@
     color: #1dbfaf;
     padding-top: 1rem;
 }
+.ftri {
+    color: #1dbfaf;
+}
 footer{
     background-color: #22252c;
-    color: #fff;
+    color: #1dbfaf;
+}
+li {
+    color: #fff
 }
