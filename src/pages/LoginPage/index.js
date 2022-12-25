@@ -44,7 +44,7 @@ function LoginPage() {
         <div className={cx('wrapper')}>
             {/* <div className={cx('background')}> */}
             <form form className={cx('form')}>
-                <h3>Login</h3>
+                <h3 style={{color: 'black'}}>Login</h3>
                 {error && <p className={cx('error')}>{error}</p>}
                 <div className="my-3">
                     <input
@@ -76,7 +76,7 @@ function LoginPage() {
                     </span>
                 </div>
                 <div className="d-grid mb-3">
-                    <Button primary type="submit" onClick={handleSubmit}>
+                    <Button primary type="submit"  onClick={handleSubmit}>
                         Login
                     </Button>
                 </div>

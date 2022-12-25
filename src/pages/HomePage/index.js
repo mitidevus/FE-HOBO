@@ -110,18 +110,6 @@ function HomePage() {
                                 
                                 if (i < card.length)
                                     return (
-                                        // <Col className="col-card">
-                                        //     <CardView
-                                        //         className="card"
-                                        //         img={card[i].roomImg}
-                                        //         roomName={card[i].roomName}
-                                        //         hotelName={card[i].hotelName}
-                                        //         price={card[i].price}
-                                        //         location={card[i].location}
-                                        //         numberStar={card[i].numberStar}
-                                        //     ></CardView>
-                                        // </Col>
-
                                         
                                          
                                         <div className="col-4 mt-3">
@@ -143,7 +131,7 @@ function HomePage() {
 
                                                 <div className="card-body">
 
-                                                    <Link to={`hotels/${card[i].hotelId}/rooms/${card[i]._id}`} activeStyle>
+                                                    <Link to={`/room/${card[i]._id}`} activeStyle>
                                                         <button className='card-button'>Details</button>
                                                     </Link>
                                                     
