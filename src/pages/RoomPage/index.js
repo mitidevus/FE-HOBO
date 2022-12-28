@@ -222,7 +222,7 @@ function RoomPage() {
                                         Book now!
                                     </Button>
 
-                                    {user && user.userType === '1' && (
+                                    {user && user.userType === 2 && (
                                         <>
                                             <Button
                                                 secondary

@@ -15,6 +15,7 @@ function Button({
     disabled = false,
     small,
     large,
+    round,
     children,
     className,
     leftIcon,
@@ -56,6 +57,7 @@ function Button({
         disabled,
         small,
         large,
+        round,
     });
 
     return (

@@ -31,9 +31,13 @@ const Navbar = () => {
                     <NavLink to="/" activeStyle>
                         Home
                     </NavLink>
-                    <NavLink to="/post" activeStyle>
-                        Create my first hotel 
+                    <NavLink to="/about" activeStyle>
+                        About
                     </NavLink>
+                    <NavLink to="/contact" activeStyle>
+                        Contact
+                    </NavLink>
+
                     {/* Xong thì xóa */}
                     <NavLink to="/hotel/639700482e84ad02f4864a68" activeStyle>
                         Hotel
@@ -43,23 +47,23 @@ const Navbar = () => {
                         Room
                     </NavLink>
 
-                    {user && user.userType === '1' && (
+                    {user && user.userType === 2 && user.hotelId === null && (
+                        <NavLink to="/post" activeStyle>
+                            Create my first hotel
+                        </NavLink>
+                    )}
+
+                    {user && user.userType === 2 && user.hotelId && (
                         <NavLink to={`/hotel/${user.hotelId}`} activeStyle>
                             My Hotel
                         </NavLink>
                     )}
 
-                    {user && user.userType === '2' && (
+                    {user && user.userType === 0 && (
                         <NavLink to="/approve" activeStyle>
                             Approve
                         </NavLink>
                     )}
-                    <NavLink to="/about" activeStyle>
-                        About
-                    </NavLink>
-                    <NavLink to="/contact" activeStyle>
-                        Contact
-                    </NavLink>
                 </NavMenu>
                 <NavMenu>
                     {user ? (

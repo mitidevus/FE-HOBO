@@ -88,7 +88,7 @@ function Rooms({ rooms, header, description, updateRooms, addRoom = false }) {
             <div className={cx('rooms-container')}>
                 <ItemTitle header={header} description={description} />
                 {/* Add room button */}
-                {user && user.userType === '1' && addRoom && (
+                {user && user.userType === 2 && addRoom && (
                     <Button success className={cx('add-room-btn')} onClick={() => setShowAddForm(true)}>
                         <AddIcon />
                     </Button>
@@ -114,10 +114,10 @@ function Rooms({ rooms, header, description, updateRooms, addRoom = false }) {
                                     </li>
                                 </ul>
                                 <div className="card-body">
-                                    <Button primary large={!(user && user.userType === '1')} href={`/room/${room._id}`}>
+                                    <Button primary large={!(user && user.userType === 2)} href={`/room/${room._id}`}>
                                         Details
                                     </Button>
-                                    {user && user.userType === '1' && (
+                                    {user && user.userType === 2 && (
                                         <>
                                             <Button
                                                 secondary

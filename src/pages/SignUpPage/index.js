@@ -18,7 +18,7 @@ function SignUpPage() {
     const [passwordConfirm, setPasswordConfirm] = useState('');
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
-    const [userType, setUserType] = useState('0'); // 0: Customer, 1: Hotel Owner, 2: Admin
+    const [userType, setUserType] = useState(1); // 0: Admin, 1: Customer, 2: Hotel Owner
     const [phoneNumber, setPhoneNumber] = useState('');
     const avatar = 'https://www.kindpng.com/picc/m/22-223863_no-avatar-png-circle-transparent-png.png';
 
@@ -52,7 +52,7 @@ function SignUpPage() {
         if (password !== passwordConfirm) {
             return alert('Confirm password is not correct!');
         }
-        if (userType === 1 && !licenseNumber && !hotelPhoneNumber && !hotelName && !hotelAddress) {
+        if (userType === 2 && !licenseNumber && !hotelPhoneNumber && !hotelName && !hotelAddress) {
             return alert('Please fill license number!');
         }
         const userAccount = {
@@ -169,7 +169,7 @@ function SignUpPage() {
                             name="userType"
                             id="tourist"
                             value="0"
-                            checked={userType === '0'}
+                            checked={userType === 1}
                             onChange={(e) => setUserType(e.target.value)}
                         />
                         <label className="form-check-label" htmlFor="tourist">
@@ -183,7 +183,7 @@ function SignUpPage() {
                             name="userType"
                             id="hotelOwner"
                             value="1"
-                            checked={userType === '1'}
+                            checked={userType === 2}
                             onChange={(e) => setUserType(e.target.value)}
                         />
                         <label className="form-check-label" htmlFor="hotelOwner">
@@ -200,7 +200,7 @@ function SignUpPage() {
                             className="form-control"
                             placeholder="Hotel name"
                             onChange={(e) => setHotelName(e.target.value)}
-                            disabled={userType !== '1'}
+                            disabled={userType !== 2}
                         />
                     </div>
                     <div className="mb-3">
@@ -210,7 +210,7 @@ function SignUpPage() {
                             className="form-control"
                             placeholder="Hotel lisence number"
                             onChange={(e) => setLicenseNumber(e.target.value)}
-                            disabled={userType !== '1'}
+                            disabled={userType !== 2}
                         />
                     </div>
                     <div className="mb-3">
@@ -220,7 +220,7 @@ function SignUpPage() {
                             className="form-control"
                             placeholder="Hotel phone number"
                             onChange={(e) => setHotelPhoneNumber(e.target.value)}
-                            disabled={userType !== '1'}
+                            disabled={userType !== 2}
                         />
                     </div>
                     <div className="mb-3">
@@ -230,7 +230,7 @@ function SignUpPage() {
                             className="form-control"
                             placeholder="Hotel address"
                             onChange={(e) => setHotelAddress(e.target.value)}
-                            disabled={userType !== '1'}
+                            disabled={userType !== 2}
                         />
                     </div>
                 </div>

@@ -38,7 +38,7 @@ function App() {
                             })}
 
                         {user &&
-                            user.userType === '1' &&
+                            user.userType === 2 &&
                             hotelOwnerRoutes.map((route, index) => {
                                 const Page = route.component;
 
@@ -46,7 +46,7 @@ function App() {
                             })}
 
                         {user &&
-                            user.userType === '2' &&
+                            user.userType === 0 &&
                             adminRoutes.map((route, index) => {
                                 const Page = route.component;
 
