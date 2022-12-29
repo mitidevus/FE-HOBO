@@ -324,18 +324,8 @@ function SearchPage() {
                                         <Form.Group className="post-group mb-3">
                                             <Form.Label className='label'>Star:</Form.Label>
                                             <br></br>
-                                            {/* <input className='fctr form-control' type="number" placeholder="star" required min='0' max='5'
-                                            onChange={handleStar}/> */}
-                                            <Rating
-                                                onClick={handleStar}
-                                                ratingValue={star}
-                                                size={20}
-                                                label
-                                                transition
-                                                fillColor='gold'
-                                                emptyColor='gray'
-                                                className='foo fctr form-control'
-                                            />
+                                            <input className='fctr form-control' type="number" placeholder="star" required min='0' max='5'
+                                            onChange={handleStar}/>
                                         </Form.Group>
 
                                         <Form.Group className="post-group mb-3">
