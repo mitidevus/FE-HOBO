@@ -11,14 +11,14 @@ function AccountPage() {
     const user = useSelector(selectUser);
     //console.log(user.userId)
     React.useEffect(() => {
-        Axios.get(`http://localhost:2345/api/user/info/${user.userId}`)
+        Axios.get(`http://localhost:2345/api/user/info/${user._id}`)
             .then((res) => {
                 setInforUser(res.data);
 
                 console.log(inforUser.avatar);
             })
             .catch((err) => console.log(err));
-    }, []);
+    }, [user]);
 
     const [showSetting, setShowSetting] = React.useState(false);
     const [isEditingPro5, setIsEditingPro5] = React.useState(false);

@@ -32,6 +32,7 @@ function LoginPage() {
         try {
             loginPage(userAccount).then((res) => {
                 if (res) {
+                    console.log("res", res)
                     dispatch(login(res.data));
                     navigate('/');
                 }

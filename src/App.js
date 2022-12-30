@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { BrowserRouter as Router, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { selectUser } from '~/features/userSlice';
@@ -21,12 +21,13 @@ function App() {
     return (
         <Router>
             <ScrollToTop>
-                <div className="App"
+                <div
+                    className="App"
                     style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      minHeight: '100vh',
-                      justifyContent: 'space-between',  
+                        display: 'flex',
+                        flexDirection: 'column',
+                        minHeight: '100vh',
+                        justifyContent: 'space-between',
                     }}
                 >
                     <Navbar></Navbar>

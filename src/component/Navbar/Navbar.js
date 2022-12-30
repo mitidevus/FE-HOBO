@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logout, selectUser } from '~/features/userSlice';
@@ -10,7 +11,7 @@ const Navbar = () => {
     const user = useSelector(selectUser);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    console.log('userInfor', user);
     const handleLogout = async (e) => {
         e.preventDefault();
         dispatch(logout());
@@ -20,7 +21,10 @@ const Navbar = () => {
             console.log(error);
         }
     };
-
+    const [userInfor, setUserInfor] = useState(null);
+    useEffect(() => {
+        setUserInfor(user);
+    }, [user]);
     return (
         <>
             <Nav>
@@ -47,32 +51,32 @@ const Navbar = () => {
                         Room
                     </NavLink>
 
-                    {user && user.userType === 2 && user.hotelId === null && (
+                    {userInfor && userInfor.userType === 2 && userInfor.hotelId === null && (
                         <NavLink to="/post" activeStyle>
                             Create my first hotel
                         </NavLink>
                     )}
 
-                    {user && user.userType === 2 && user.hotelId && (
-                        <NavLink to={`/hotel/${user.hotelId}`} activeStyle>
+                    {userInfor && userInfor.userType === 2 && userInfor.hotelId && (
+                        <NavLink to={`/hotel/${userInfor.hotelId}`} activeStyle>
                             My Hotel
                         </NavLink>
                     )}
 
-                    {user && user.userType === 0 && (
+                    {userInfor && userInfor.userType === 0 && (
                         <NavLink to="/approve" activeStyle>
                             Approve
                         </NavLink>
                     )}
                 </NavMenu>
                 <NavMenu>
-                    {user ? (
+                    {userInfor && userInfor !== {} ? (
                         <>
                             <NavLink to="/account">
                                 <img
                                     src={
-                                        user.avatar
-                                            ? user.avatar
+                                        userInfor.avatar
+                                            ? userInfor.avatar
                                             : 'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png'
                                     }
                                     className="avatar"
