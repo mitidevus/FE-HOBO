@@ -3,7 +3,7 @@ import { selectUser } from '../../features/userSlice';
 import Axios from 'axios';
 import * as React from 'react';
 import './style.scss';
-import { Button, Col, Form, Image, InputGroup, Row } from 'react-bootstrap';
+import { Button, Col, Form, Image, InputGroup, Row, Toast } from 'react-bootstrap';
 
 function AccountPage() {
     const [inforUser, setInforUser] = React.useState({});
@@ -24,13 +24,21 @@ function AccountPage() {
     const [isEditingPro5, setIsEditingPro5] = React.useState(false);
 
     /* Info */
-    const [username, setUsername] = React.useState(null);
     const [phoneNumber, setPhoneNumber] = React.useState(null);
     const [firstName, setFirstName] = React.useState(null);
     const [lastName, setLastName] = React.useState(null);
     const [email, setEmail] = React.useState(null);
     const [avatar, setAvatar] = React.useState(null);
-
+    const [showToast, setShowToast] = React.useState(false);
+    const [toastContent, setToastContent] = React.useState('');
+    const showToastFunc = (content) => {
+        setShowToast(true);
+        setToastContent(content);
+        setTimeout(() => {
+            setShowToast(false);
+            setToastContent('');
+        }, 2000);
+    };
     const clickRef = React.useRef(null);
     React.useEffect(() => {
         const handleClickOutside = (event) => {
@@ -47,19 +55,62 @@ function AccountPage() {
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
-        if (form.checkValidity() === false) {
+        const emailReg = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+        const phoneReg = /^[0-9]{10}$/;
+        if (emailReg.test(email || inforUser.email) === false) {
+            showToastFunc('Your email is not valid');
             event.preventDefault();
             event.stopPropagation();
+            return;
         }
-        if (username === '' || phoneNumber === '') {
-            setValidated(false);
+        if (!phoneReg.test(phoneNumber || inforUser.phoneNumber)) {
+            showToastFunc('Your phone number is not valid');
+            event.preventDefault();
+            event.stopPropagation();
+            return;
         }
-        setValidated(true);
+        if (form.checkValidity() === false) {
+            console.log('form invalid');
+            event.preventDefault();
+            event.stopPropagation();
+            setValidated(true);
+        } else {
+            console.log('form valid');
+            const payload = {
+                username: inforUser.username,
+                phoneNumber: phoneNumber || inforUser.phoneNumber,
+                firstName: firstName || inforUser.firstName,
+                lastName: lastName || inforUser.lastName,
+                email: email || inforUser.email,
+                avatar: avatar || inforUser.avatar,
+            };
+            console.log(payload);
+            event.preventDefault();
+            event.stopPropagation();
+            Axios.post(`http://localhost:2345/api/user/changeinfo`, payload)
+                .then((res) => {
+                    console.log(res.data);
+                    setIsEditingPro5(false);
+                    setShowSetting(false);
+                    // clear form
+                    setPhoneNumber(null);
+                    setFirstName(null);
+                    setLastName(null);
+                    setEmail(null);
+                    setAvatar(null);
+                    // reload page
+                    window.location.reload();
+                })
+                .catch((err) => console.log(err));
+        }
     };
 
     return (
         <div className="container text-center position-relative">
-            <div className="position-absolute end-0  top-0">
+            <Toast show={showToast} className="position-absolute end-0  top-0">
+                <Toast.Body>{toastContent}</Toast.Body>
+            </Toast>
+            <div className="position-absolute top-0 start-0 ">
                 <div className="dropdown" ref={clickRef}>
                     <button
                         className={'btn btn-info w-100 text-bg-dark' + (showSetting ? ' active' : '')}
@@ -68,8 +119,12 @@ function AccountPage() {
                             if (isEditingPro5) {
                                 setIsEditingPro5(false);
                                 // clear form
-                                setUsername(null);
                                 setPhoneNumber(null);
+                                setFirstName(null);
+                                setLastName(null);
+                                setEmail(null);
+                                setAvatar(null);
+                                setValidated(false);
                             }
                         }}
                     >
@@ -129,26 +184,20 @@ function AccountPage() {
                                 <div className=" w-100 p-lg-5 p-4 rounded-5">
                                     <Form noValidate validated={validated} onSubmit={handleSubmit}>
                                         <Row className="mb-3">
-                                            <Form.Group as={Col} md="12" controlId="validationCustom01">
-                                                <Form.Label>Username</Form.Label>
-                                                <Form.Control
-                                                    required
-                                                    type="text"
-                                                    placeholder="First name"
-                                                    defaultValue={inforUser.username || ''}
-                                                    value={username}
-                                                    onChange={(e) => {
-                                                        setUsername(e.target.value);
-                                                    }}
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                    Username is required
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        </Row>
-                                        <Row className="mb-3">
                                             <Form.Group as={Col} md="6" controlId="validationCustom02">
-                                                <Form.Label>Frist name</Form.Label>
+                                                <Form.Label>
+                                                    <div className="d-flex justify-content-between align-items-center">
+                                                        <i className="fas fa-user m-2"></i>
+                                                        <span
+                                                            style={{
+                                                                fontSize: '1.2rem',
+                                                                fontWeight: 'bold',
+                                                            }}
+                                                        >
+                                                            First name
+                                                        </span>
+                                                    </div>
+                                                </Form.Label>
                                                 <Form.Control
                                                     required
                                                     type="text"
@@ -164,7 +213,19 @@ function AccountPage() {
                                                 </Form.Control.Feedback>
                                             </Form.Group>
                                             <Form.Group as={Col} md="6" controlId="validationCustom02">
-                                                <Form.Label>Last name</Form.Label>
+                                                <Form.Label>
+                                                    <div className="d-flex justify-content-between align-items-center">
+                                                        <i className="fas fa-user m-2"></i>
+                                                        <span
+                                                            style={{
+                                                                fontSize: '1.2rem',
+                                                                fontWeight: 'bold',
+                                                            }}
+                                                        >
+                                                            Last name
+                                                        </span>
+                                                    </div>
+                                                </Form.Label>
                                                 <Form.Control
                                                     required
                                                     type="text"
@@ -182,7 +243,19 @@ function AccountPage() {
                                         </Row>
                                         <Row className="mb-3">
                                             <Form.Group as={Col} md="6" controlId="validationCustom05">
-                                                <Form.Label>Phone number</Form.Label>
+                                                <Form.Label>
+                                                    <div className="d-flex justify-content-between align-items-center">
+                                                        <i className="fas fa-phone m-2"></i>
+                                                        <span
+                                                            style={{
+                                                                fontSize: '1.2rem',
+                                                                fontWeight: 'bold',
+                                                            }}
+                                                        >
+                                                            Phone number
+                                                        </span>
+                                                    </div>
+                                                </Form.Label>
                                                 <Form.Control
                                                     type="text"
                                                     placeholder="Phone number"
@@ -198,7 +271,19 @@ function AccountPage() {
                                                 </Form.Control.Feedback>
                                             </Form.Group>
                                             <Form.Group as={Col} md="6" controlId="validationCustom03">
-                                                <Form.Label>Email</Form.Label>
+                                                <Form.Label>
+                                                    <div className="d-flex justify-content-between align-items-center">
+                                                        <i className="fas fa-envelope m-2"></i>
+                                                        <span
+                                                            style={{
+                                                                fontSize: '1.2rem',
+                                                                fontWeight: 'bold',
+                                                            }}
+                                                        >
+                                                            Email
+                                                        </span>
+                                                    </div>
+                                                </Form.Label>
                                                 <Form.Control
                                                     type="text"
                                                     placeholder="Email"
@@ -214,9 +299,21 @@ function AccountPage() {
                                                 </Form.Control.Feedback>
                                             </Form.Group>
                                         </Row>
-                                        <Row className="mb-3">
+                                        <Row className="mb-3 align-items-center justify-content-center">
                                             <Form.Group as={Col} md="12" controlId="validationCustom03">
-                                                <Form.Label>Avatar</Form.Label>
+                                                <Form.Label>
+                                                    <div className="d-flex justify-content-between align-items-center">
+                                                        <i className="fas fa-image m-2"></i>
+                                                        <span
+                                                            style={{
+                                                                fontSize: '1.2rem',
+                                                                fontWeight: 'bold',
+                                                            }}
+                                                        >
+                                                            Avatar
+                                                        </span>
+                                                    </div>
+                                                </Form.Label>
                                                 <Form.Control
                                                     type="text"
                                                     placeholder="Avatar link"
@@ -225,6 +322,7 @@ function AccountPage() {
                                                     onChange={(e) => {
                                                         setAvatar(e.target.value);
                                                     }}
+                                                    isValid={avatar && avatar?.length > 0 ? true : false}
                                                 />
                                                 <Form.Control.Feedback type="invalid">
                                                     Avatar link is required
@@ -233,7 +331,12 @@ function AccountPage() {
                                             <Image
                                                 src={avatar && avatar?.length > 0 ? avatar : inforUser.avatar}
                                                 alt="harry potter"
-                                                style={{ width: '400px' }}
+                                                style={{
+                                                    width: '400px',
+                                                    alignSelf: 'center',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                }}
                                             />
                                         </Row>
                                         <Button className="btn btn-info" type="submit">
