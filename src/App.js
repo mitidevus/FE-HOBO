@@ -21,7 +21,14 @@ function App() {
     return (
         <Router>
             <ScrollToTop>
-                <div className="App">
+                <div className="App"
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      minHeight: '100vh',
+                      justifyContent: 'space-between',  
+                    }}
+                >
                     <Navbar></Navbar>
                     <Routes>
                         {publicRoutes.map((route, index) => {
