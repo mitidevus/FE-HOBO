@@ -78,7 +78,7 @@ function SignUpPage() {
             console.log(response);
             if (response.status === 200) {
                 alert('Sign up successfully!');
-                dispatch(signup(userAccount));
+                dispatch(signup(response.data));
                 navigate('/');
             }
         } catch (error) {

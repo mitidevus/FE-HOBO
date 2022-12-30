@@ -3,20 +3,21 @@ import {selectUser} from '../../features/userSlice'
 import  Axios  from 'axios';
 import * as React from 'react';
 import './style.scss';
+import { getInfoUser } from '../../api/user/user.api';
 
 function AccountPage() {
 
     const [inforUser,setInforUser]=React.useState({});
 
+    // Hàm selector của react-redux nó giúp mình lấy dữ liệu từ kho redux ra
     const user=useSelector(selectUser)
-    //console.log(user.userId)
-    React.useEffect(()=>{
-        Axios.get(`http://localhost:2345/api/user/info/${user.userId}`)
-        .then(res=>{
-           setInforUser(res.data)
 
-           console.log(inforUser.avatar)
-        }).catch(err=>console.log(err))
+    React.useEffect(()=>{
+        getInfoUser(user._id).then(res => {
+            if (res) {
+                setInforUser(res.data)
+            }
+        })
     },[])
 
 

@@ -5,12 +5,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from '~/api/auth';
 import Button from '~/component/Button';
 import { login } from '~/features/userSlice';
+import { loginPage } from '../../api/auth/auth.api';
 import styles from './LoginPage.module.scss';
 
 const cx = classNames.bind(styles);
 
 function LoginPage() {
-    const [phoneNumber, setPhoneNumber] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
@@ -19,21 +20,22 @@ function LoginPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!phoneNumber || !password) {
+        if (!username || !password) {
             return alert('Please fill all fields!');
         }
         const userAccount = {
-            phoneNumber,
+            username,
             password,
         };
 
         // Send userAccount to server and back to home page
         try {
-            const response = await axios.post('/api/user/signin', userAccount);
-            if (response.status === 200) {
-                dispatch(login(response.data));
-                navigate('/');
-            }
+            loginPage(userAccount).then((res) => {
+                if (res) {
+                    dispatch(login(res.data));
+                    navigate('/');
+                }
+            });
         } catch (error) {
             console.log(error);
             setError(error.response.data);
@@ -50,8 +52,8 @@ function LoginPage() {
                     <input
                         type="email"
                         className="form-control"
-                        placeholder="Phone number"
-                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        placeholder="Username"
+                        onChange={(e) => setUsername(e.target.value)}
                     />
                 </div>
                 <div className="mb-3">
