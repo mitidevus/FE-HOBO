@@ -143,7 +143,7 @@ function HomePage() {
 
                                                 <div className="card-body">
 
-                                                    <Link to={`/room/${card[i]._id}`} activeStyle>
+                                                    <Link to={`hotels/${card[i].hotelId}/rooms/${card[i]._id}`} activeStyle>
                                                         <button className='card-button'>Details</button>
                                                     </Link>
                                                     

@@ -4,6 +4,7 @@ const initialState = {
     user: {}
 };
 
+// Redux toolkit
 export const userSlice = createSlice({  
     name: 'user',
     initialState,
@@ -22,6 +23,7 @@ export const userSlice = createSlice({
 
 export const { login, logout, signup } = userSlice.actions;
 
+// Hàm để lấy dữ liệu từ redux
 export const selectUser = (state) => state.user.user;
 
 export default userSlice.reducer;

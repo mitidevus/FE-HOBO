@@ -9,6 +9,7 @@ function AccountPage() {
 
     const [inforUser,setInforUser]=React.useState({});
 
+    // Hàm selector của react-redux nó giúp mình lấy dữ liệu từ kho redux ra
     const user=useSelector(selectUser)
 
     React.useEffect(()=>{
