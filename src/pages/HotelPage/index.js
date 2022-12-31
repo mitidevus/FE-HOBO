@@ -136,7 +136,7 @@ const commentsRes = [
         userId: 123,
         name: 'Nguyen Van A',
         avatar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/RedCat_8727.jpg/1200px-RedCat_8727.jpg',
-        date: '07:00 2020-01-01',
+        createDate: '07:00 2020-01-01',
         content:
             'The hotel is very nice, the staff is very friendly, the room is very clean, I am very satisfied with this hotel.',
         isHide: false,
@@ -145,7 +145,7 @@ const commentsRes = [
         userId: 456,
         name: 'Nguyen Van B',
         avatar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/RedCat_8727.jpg/1200px-RedCat_8727.jpg',
-        date: '08:00 2020-01-01',
+        createDate: '08:00 2020-01-01',
         content:
             'The hotel is very nice, the staff is very friendly, the room is very clean, I am very satisfied with this hotel.',
         isHide: false,
@@ -154,7 +154,7 @@ const commentsRes = [
         userId: 789,
         name: 'Nguyen Van C',
         avatar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/RedCat_8727.jpg/1200px-RedCat_8727.jpg',
-        date: '09:00 2020-01-01',
+        createDate: '09:00 2020-01-01',
         content:
             'The hotel is very nice, the staff is very friendly, the room is very clean, I am very satisfied with this hotel.',
         isHide: false,
@@ -177,6 +177,26 @@ function HotelPage() {
         setRooms(newRooms);
     };
 
+    // const createComment = (newComment) => {
+    //     setComments([...comments, newComment]);
+    // };
+
+    const handleComment = (newComment) => {
+        const comment = {
+            hotelId: hotel._id,
+            userId: user._id,
+            content: newComment,
+        };
+        axios
+            .post('/api/comment/createcomment', comment)
+            .then((res) => {
+                setComments([res.data, ...comments]);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     useEffect(() => {
         // Call API to get hotel detail
         const fetchData = async () => {
@@ -191,7 +211,7 @@ function HotelPage() {
                 }
                 const commentsRes = await axios.get(`/api/comment/commentlistbyhotel/${hotelIdAPI}`);
                 if (commentsRes) {
-                    setComments(commentsRes.data);
+                    setComments(commentsRes.data.reverse());
                 }
             } catch (error) {
                 console.log(error);
@@ -234,7 +254,13 @@ function HotelPage() {
                     </div>
                 </div>
 
-                <Rooms rooms={rooms} addRoom header="Room type" description="Good choice for you" updateRooms={updateRooms} />
+                <Rooms
+                    rooms={rooms}
+                    addRoom
+                    header="Room type"
+                    description="Good choice for you"
+                    updateRooms={updateRooms}
+                />
 
                 <div className={cx('utilities')}>
                     <div className={cx('utilities-container')}>
@@ -278,7 +304,7 @@ function HotelPage() {
                                                 <span className="ms-2 pb-3 fw-bold">{comment.name}</span>
                                             </div>
                                             <div className="w-100">
-                                                <span className="text-black-50">{comment.date}</span>
+                                                <span className="text-black-50">{comment.createdDate}</span>
                                                 <p>{comment.content}</p>
                                             </div>
                                         </div>
@@ -298,7 +324,16 @@ function HotelPage() {
                                         <textarea className="form-control" id="comment" rows="3"></textarea>
 
                                         <div className="w-50  mt-3">
-                                            <Button primary type="submit">
+                                            <Button
+                                                primary
+                                                type="button"
+                                                onClick={() => {
+                                                    // Get value of text area
+                                                    const comment = document.getElementById('comment').value;
+                                                    document.getElementById('comment').value = '';
+                                                    handleComment(comment);
+                                                }}
+                                            >
                                                 Send
                                             </Button>
                                         </div>
