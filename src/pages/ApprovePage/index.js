@@ -1,23 +1,17 @@
-import DoneIcon from '@mui/icons-material/Done';
-import CloseIcon from '@mui/icons-material/Close';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import axios from '~/api/auth';
+import CloseIcon from '@mui/icons-material/Close';
+import DoneIcon from '@mui/icons-material/Done';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
-import BookingForm from '~/component/BookingForm';
+import axios from '~/api/auth';
 import Button from '~/component/Button';
-import Rooms from '~/component/Rooms';
 import Slider from '~/component/Slider';
-import UpdateItemForm from '~/component/UpdateItemForm';
-import { selectUser } from '~/features/userSlice';
 import styles from './ApprovePage.module.scss';
 
 const cx = classNames.bind(styles);
 
-const unapprovedRooms = [
+const unapprovedRoomsRes = [
     {
         _id: '639706acd5f14557aced81bc',
         createdDate: '12/12/2022, 5:47:08 PM',
@@ -132,8 +126,8 @@ function formatCash(str) {
 }
 
 function ApprovePage() {
-    const [rooms, setRooms] = useState(unapprovedRooms);
-    const [room, setRoom] = useState(rooms[0] || '');
+    const [rooms, setRooms] = useState(unapprovedRoomsRes);
+    const [room, setRoom] = useState(rooms[0] || {});
 
     // Click left button to change room
     const prevRoom = () => {
@@ -157,33 +151,63 @@ function ApprovePage() {
 
     // Click approve button to approve room
     const handleApprovePost = () => {
+        // Call API to update status of post
+        axios
+            .patch(`/api/admin/approvepost/${room._id}`)
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
         const index = rooms.findIndex((item) => item._id === room._id);
         const newRooms = [...rooms];
         newRooms.splice(index, 1);
         setRooms(newRooms);
         setRoom(newRooms[0] || '');
-
-        // Call API to update status of post
-        // const approvedRoom = {
-        //     ...room,
-        //     isApproved: true,
-        // };
     };
 
     // Click reject button to reject room
     const handleRejectPost = () => {
+        // Call API to update status of post
+        axios
+            .patch(`/api/admin/disapprovepost/${room._id}`)
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
         const index = rooms.findIndex((item) => item._id === room._id);
         const newRooms = [...rooms];
         newRooms.splice(index, 1);
         setRooms(newRooms);
         setRoom(newRooms[0] || '');
-
-        // Call API to update status of post
-        // const rejectedRoom = {
-        //     ...room,
-        //     isApproved: false,
-        // };
     };
+
+    useEffect(() => {
+        // Call API to get unapproved post
+        const fetchData = async () => {
+            try {
+                // Get API, send a object with isApproved: null to filter
+                const unapprovedRooms = await axios.post('/api/admin/postlist', {
+                    isApproved: null,
+                });
+                if (unapprovedRooms) {
+                    setRooms(unapprovedRooms.data);
+                    setRoom(unapprovedRooms.data[0] || '');
+                    console.log(unapprovedRooms.data);
+                    console.log(unapprovedRooms.data[0]);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     if (room) {
         return (
