@@ -31,14 +31,12 @@ function Rooms({ rooms, header, description, updateRooms, addRoom = false }) {
     const [updatedRoom, setUpdatedRoom] = useState({});
 
     const handleAddRoom = (room) => {
-        const newRooms = [...rooms, room];
-        updateRooms(newRooms);
-
         // Call API to add room
         axios
             .post('/api/post/createpost', room)
             .then((res) => {
-                console.log(res.data);
+                const newRooms = [...rooms, room];
+                updateRooms(newRooms);
             })
             .catch((err) => {
                 console.log(err);
@@ -48,14 +46,12 @@ function Rooms({ rooms, header, description, updateRooms, addRoom = false }) {
     const handleDeleteRoom = (roomId) => {
         const confirm = window.confirm('Are you sure to delete this room?');
         if (confirm) {
-            const newRooms = rooms.filter((room) => room._id !== roomId);
-            updateRooms(newRooms);
-
             // Call API to delete room
             axios
                 .delete(`/api/post/deletepost/${roomId}`)
                 .then((res) => {
-                    console.log(res.data);
+                    const newRooms = rooms.filter((room) => room._id !== roomId);
+                    updateRooms(newRooms);
                 })
                 .catch((err) => {
                     console.log(err);
@@ -64,19 +60,17 @@ function Rooms({ rooms, header, description, updateRooms, addRoom = false }) {
     };
 
     const handleUpdateRoom = (room) => {
-        const newRooms = rooms.map((item) => {
-            if (item._id === room._id) {
-                return room;
-            }
-            return item;
-        });
-        updateRooms(newRooms);
-
         // Call API to update room
         axios
             .post('/api/post/changeinfo', room)
             .then((res) => {
-                console.log(res.data);
+                const newRooms = rooms.map((item) => {
+                    if (item._id === room._id) {
+                        return room;
+                    }
+                    return item;
+                });
+                updateRooms(newRooms);
             })
             .catch((err) => {
                 console.log(err);

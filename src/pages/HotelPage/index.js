@@ -10,6 +10,8 @@ import Rooms from '~/component/Rooms';
 import Slider from '~/component/Slider';
 import { selectUser } from '~/features/userSlice';
 import styles from './HotelPage.module.scss';
+import CloseIcon from '@mui/icons-material/Close';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
 const cx = classNames.bind(styles);
 
@@ -79,56 +81,6 @@ const roomsRes = [
         toilet: 1,
         thumbnail: 'https://mauweb.monamedia.net/encore/wp-content/uploads/2019/02/02.jpg',
     },
-    {
-        id: 2,
-        hotelId: 123,
-        roomName: 'LUXURY DOUBLE ROOM SUITE',
-        price: 850000,
-        quantity: '2-4',
-        bed: 2,
-        toilet: 1,
-        thumbnail: 'https://mauweb.monamedia.net/encore/wp-content/uploads/2019/02/032.jpg',
-    },
-    {
-        id: 3,
-        hotelId: 123,
-        roomName: 'LUXURY SINGLE ROOM ART SUITE',
-        price: 900000,
-        quantity: '1-2',
-        bed: 1,
-        toilet: 1,
-        thumbnail: 'https://mauweb.monamedia.net/encore/wp-content/uploads/2019/02/05.jpg',
-    },
-    {
-        id: 4,
-        hotelId: 123,
-        roomName: 'LUXURY SINGLE ROOM SUITE',
-        price: 1450000,
-        quantity: '1-2',
-        bed: 1,
-        toilet: 1,
-        thumbnail: 'https://mauweb.monamedia.net/encore/wp-content/uploads/2019/02/041.jpg',
-    },
-    {
-        id: 5,
-        hotelId: 123,
-        roomName: 'DOUBLE SUITE ATTIC FLOOR',
-        price: 1500000,
-        quantity: '2-4',
-        bed: 2,
-        toilet: 2,
-        thumbnail: 'https://mauweb.monamedia.net/encore/wp-content/uploads/2019/02/013.jpg',
-    },
-    {
-        id: 6,
-        hotelId: 123,
-        roomName: 'PREMIUM DOUBLE ROOM SUITE',
-        price: 2000000,
-        quantity: '2-4',
-        bed: 2,
-        toilet: 2,
-        thumbnail: 'https://mauweb.monamedia.net/encore/wp-content/uploads/2019/02/06.jpg',
-    },
 ];
 
 const commentsRes = [
@@ -137,24 +89,6 @@ const commentsRes = [
         name: 'Nguyen Van A',
         avatar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/RedCat_8727.jpg/1200px-RedCat_8727.jpg',
         createDate: '07:00 2020-01-01',
-        content:
-            'The hotel is very nice, the staff is very friendly, the room is very clean, I am very satisfied with this hotel.',
-        isHide: false,
-    },
-    {
-        userId: 456,
-        name: 'Nguyen Van B',
-        avatar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/RedCat_8727.jpg/1200px-RedCat_8727.jpg',
-        createDate: '08:00 2020-01-01',
-        content:
-            'The hotel is very nice, the staff is very friendly, the room is very clean, I am very satisfied with this hotel.',
-        isHide: false,
-    },
-    {
-        userId: 789,
-        name: 'Nguyen Van C',
-        avatar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/RedCat_8727.jpg/1200px-RedCat_8727.jpg',
-        createDate: '09:00 2020-01-01',
         content:
             'The hotel is very nice, the staff is very friendly, the room is very clean, I am very satisfied with this hotel.',
         isHide: false,
@@ -177,10 +111,6 @@ function HotelPage() {
         setRooms(newRooms);
     };
 
-    // const createComment = (newComment) => {
-    //     setComments([...comments, newComment]);
-    // };
-
     const handleComment = (newComment) => {
         const comment = {
             hotelId: hotel._id,
@@ -195,6 +125,36 @@ function HotelPage() {
             .catch((err) => {
                 console.log(err);
             });
+    };
+
+    const handleDeleteComment = (commentId) => {
+        const confirm = window.confirm('Are you sure to delete your comment?');
+        if (confirm) {
+            axios
+                .delete(`/api/comment/deletecomment/${commentId}`)
+                .then((res) => {
+                    const newComments = comments.filter((comment) => comment._id !== commentId);
+                    setComments(newComments);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    };
+
+    const handleHideComment = (commentId) => {
+        const confirm = window.confirm('Are you sure to hide this comment?');
+        if (confirm) {
+            axios
+                .patch(`/api/admin/hidecomment/${commentId}`)
+                .then((res) => {
+                    const newComments = comments.filter((comment) => comment._id !== commentId);
+                    setComments(newComments);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
     };
 
     useEffect(() => {
@@ -307,6 +267,34 @@ function HotelPage() {
                                                 <span className="text-black-50">{comment.createdDate}</span>
                                                 <p>{comment.content}</p>
                                             </div>
+                                            <div className={cx("handle-comment")}>
+                                                <div className="mb-1">
+                                                    {user && user.userType === 0 && (
+                                                        <Button
+                                                            warning
+                                                            onClick={() => {
+                                                                handleHideComment(comment._id);
+                                                            }}
+                                                            className={cx('handle-comment-btn')}
+                                                        >
+                                                            <RemoveCircleOutlineIcon />
+                                                        </Button>
+                                                    )}
+                                                </div>
+                                                <div>
+                                                    {user && user._id === comment.userId && (
+                                                        <Button
+                                                            danger
+                                                            onClick={() => {
+                                                                handleDeleteComment(comment._id);
+                                                            }}
+                                                            className={cx('handle-comment-btn')}
+                                                        >
+                                                            <CloseIcon />
+                                                        </Button>
+                                                    )}
+                                                </div>
+                                            </div>
                                         </div>
                                     </li>
                                 ))}
@@ -321,14 +309,13 @@ function HotelPage() {
                                             Comment
                                         </label>
 
-                                        <textarea className="form-control" id="comment" rows="3"></textarea>
+                                        <textarea maxlength="250" className="form-control" id="comment" rows="3" required></textarea>
 
                                         <div className="w-50  mt-3">
                                             <Button
                                                 primary
                                                 type="button"
                                                 onClick={() => {
-                                                    // Get value of text area
                                                     const comment = document.getElementById('comment').value;
                                                     document.getElementById('comment').value = '';
                                                     handleComment(comment);

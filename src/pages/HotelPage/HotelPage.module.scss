@@ -109,3 +109,15 @@
     width: 70%;
     margin: 0 auto;
 }
+
+.handle-comment {
+    position: absolute;
+    top: 2px;
+    right: -60px;
+}
+
+.handle-comment-btn {
+    max-width: 10px;
+    max-height: 10px;
+    padding: 16px;
+}
