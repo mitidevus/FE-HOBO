@@ -10,7 +10,7 @@ import styles from './LoginPage.module.scss';
 const cx = classNames.bind(styles);
 
 function LoginPage() {
-    const [phoneNumber, setPhoneNumber] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
@@ -19,11 +19,11 @@ function LoginPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!phoneNumber || !password) {
+        if (!username || !password) {
             return alert('Please fill all fields!');
         }
         const userAccount = {
-            phoneNumber,
+            username,
             password,
         };
 
@@ -36,7 +36,7 @@ function LoginPage() {
             }
         } catch (error) {
             console.log(error);
-            setError(error.response.data);
+            setError(error.response.data.message);
         }
     };
 
@@ -50,8 +50,8 @@ function LoginPage() {
                     <input
                         type="email"
                         className="form-control"
-                        placeholder="Phone number"
-                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        placeholder="Username"
+                        onChange={(e) => setUsername(e.target.value)}
                     />
                 </div>
                 <div className="mb-3">

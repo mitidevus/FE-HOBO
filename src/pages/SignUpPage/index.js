@@ -16,8 +16,8 @@ function SignUpPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
-    const [firstname, setFirstname] = useState('');
-    const [lastname, setLastname] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [userType, setUserType] = useState(1); // 0: Admin, 1: Customer, 2: Hotel Owner
     const [phoneNumber, setPhoneNumber] = useState('');
     const avatar = 'https://www.kindpng.com/picc/m/22-223863_no-avatar-png-circle-transparent-png.png';
@@ -39,8 +39,8 @@ function SignUpPage() {
         e.preventDefault();
         if (
             !username ||
-            !firstname ||
-            !lastname ||
+            !firstName ||
+            !lastName ||
             !email ||
             !phoneNumber ||
             !password ||
@@ -59,8 +59,8 @@ function SignUpPage() {
             username,
             email,
             password,
-            firstname,
-            lastname,
+            firstName,
+            lastName,
             userType,
             phoneNumber,
             avatar,
@@ -75,15 +75,14 @@ function SignUpPage() {
         // ...
         try {
             const response = await axios.post(REGISTER_URL, userAccount);
-            console.log(response);
             if (response.status === 200) {
                 alert('Sign up successfully!');
-                dispatch(signup(userAccount));
+                dispatch(signup(response.data));
                 navigate('/');
             }
         } catch (error) {
             console.log(error);
-            setError(error.response.data);
+            setError(error.response.data.message);
         }
     };
 
@@ -108,7 +107,7 @@ function SignUpPage() {
                             type="text"
                             className="form-control"
                             placeholder="First name"
-                            onChange={(e) => setFirstname(e.target.value)}
+                            onChange={(e) => setFirstName(e.target.value)}
                         />
                     </div>
                     <div className="col-6">
@@ -117,7 +116,7 @@ function SignUpPage() {
                             type="text"
                             className="form-control"
                             placeholder="Last name"
-                            onChange={(e) => setLastname(e.target.value)}
+                            onChange={(e) => setLastName(e.target.value)}
                         />
                     </div>
                 </div>
@@ -251,7 +250,7 @@ function SignUpPage() {
                 </div>
 
                 <div className="d-grid mb-3">
-                    <Button primary type="submit" onClick={handleSubmit} disabled={!agreeTerms}>
+                    <Button primary type="button" onClick={handleSubmit} disabled={!agreeTerms}>
                         Sign Up
                     </Button>
                 </div>

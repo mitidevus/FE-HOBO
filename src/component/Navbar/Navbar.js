@@ -38,15 +38,6 @@ const Navbar = () => {
                         Contact
                     </NavLink>
 
-                    {/* Xong thì xóa */}
-                    <NavLink to="/hotel/639700482e84ad02f4864a68" activeStyle>
-                        Hotel
-                    </NavLink>
-
-                    <NavLink to="room/63970668d5f14557aced81bb" activeStyle>
-                        Room
-                    </NavLink>
-
                     {user && user.userType === 2 && user.hotelId === null && (
                         <NavLink to="/post" activeStyle>
                             Create my first hotel

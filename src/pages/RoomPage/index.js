@@ -62,26 +62,6 @@ const suggestedRoomsRes = [
         toilet: 1,
         thumbnail: 'https://mauweb.monamedia.net/encore/wp-content/uploads/2019/02/02.jpg',
     },
-    {
-        id: 2,
-        hotelId: 123,
-        roomName: 'LUXURY DOUBLE ROOM SUITE',
-        price: 850000,
-        quantity: '2-4',
-        bed: 2,
-        toilet: 1,
-        thumbnail: 'https://mauweb.monamedia.net/encore/wp-content/uploads/2019/02/032.jpg',
-    },
-    {
-        id: 3,
-        hotelId: 123,
-        roomName: 'LUXURY SINGLE ROOM ART SUITE',
-        price: 900000,
-        quantity: '1-2',
-        bed: 1,
-        toilet: 1,
-        thumbnail: 'https://mauweb.monamedia.net/encore/wp-content/uploads/2019/02/05.jpg',
-    },
 ];
 
 function formatCash(str) {
@@ -109,24 +89,33 @@ function RoomPage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const roomRes = await axios.get(`/api/post/info/${roomIdAPI}`);
-                if (roomRes) {
-                    setRoom(roomRes.data);
-                }
-                const hotelRes = await axios.get(`/api/hotel/info/${room.hotelId}`);
-                if (hotelRes) {
-                    setHotel(hotelRes.data);
-                }
-                const roomObj = {
-                    hotel_id: room.hotelId,
-                    post_id: room.id,
-                };
-                console.log(roomObj);
-                const suggestedRoomsRes = await axios.get('/api/post/postlistexcept', roomObj);
-                if (suggestedRoomsRes) {
-                    setSuggestedRooms(suggestedRoomsRes.data);
-                    console.log(suggestedRoomsRes.data);
-                }
+                // const roomRes = await axios.get(`/api/post/info/${roomIdAPI}`);
+                // if (roomRes) {
+                //     setRoom(roomRes.data);
+                // }
+                // const hotelRes = await axios.get(`/api/hotel/info/${room.hotelId}`);
+                // if (hotelRes) {
+                //     setHotel(hotelRes.data);
+                // }
+                // const suggestedRoomsRes = await axios.post('/api/post/postlistexcept', {
+                //     hotel_id: room.hotelId,
+                //     post_id: room._id,
+                // });
+                // if (suggestedRoomsRes) {
+                //     setSuggestedRooms(suggestedRoomsRes.data);
+                //     console.log(suggestedRoomsRes.data);
+                // }
+                axios.get(`/api/post/info/${roomIdAPI}`).then((res) => {
+                    setRoom(res.data);
+                    axios.get(`/api/hotel/info/${res.data.hotelId}`).then((res) => {
+                        setHotel(res.data);
+                    });
+                    axios
+                        .post('/api/post/postlistexcept', { hotel_id: res.data.hotelId, post_id: res.data._id })
+                        .then((res) => {
+                            setSuggestedRooms(res.data);
+                        });
+                });
             } catch (error) {
                 console.log(error);
             }
@@ -222,7 +211,7 @@ function RoomPage() {
                                         Book now!
                                     </Button>
 
-                                    {user && user.userType === 2 && (
+                                    {user && user.userType === 2 && user.hotelId === room.hotelId && (
                                         <>
                                             <Button
                                                 secondary
@@ -248,7 +237,12 @@ function RoomPage() {
                     </div>
                 </div>
 
-                <Rooms rooms={suggestedRooms} header="HOT" description="Best suggestion for you" />
+                <Rooms
+                    hotelId={room.hotelId}
+                    rooms={suggestedRooms}
+                    header="HOT"
+                    description="Best suggestion for you"
+                />
 
                 <BookingForm aRoom={room} />
 

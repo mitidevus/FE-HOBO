@@ -215,6 +215,7 @@ function HotelPage() {
                 </div>
 
                 <Rooms
+                    hotelId={hotel._id}
                     rooms={rooms}
                     addRoom
                     header="Room type"

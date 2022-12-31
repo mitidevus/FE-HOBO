@@ -78,6 +78,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                             placeholder="Name"
                             value={roomName}
                             onChange={(e) => setRoomName(e.target.value)}
+                            maxlength="22"
                             required
                         />
                     </div>
@@ -94,6 +95,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                             placeholder="Price"
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
+                            maxlength="8"
                             required
                         />
                     </div>
@@ -107,6 +109,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                             placeholder="Quantity"
                             value={quantity}
                             onChange={(e) => setQuantity(e.target.value)}
+                            maxlength="1"
                             required
                         />
                     </div>
@@ -120,6 +123,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                             placeholder="Bed"
                             value={bed}
                             onChange={(e) => setBed(e.target.value)}
+                            maxlength="1"
                             required
                         />
                     </div>
@@ -133,6 +137,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                             placeholder="Toilet"
                             value={toilet}
                             onChange={(e) => setToilet(e.target.value)}
+                            maxlength="1"
                             required
                         />
                     </div>
@@ -195,6 +200,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                             placehlder="Description"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
+                            maxlength="500"
                         ></textarea>
                     </div>
                 </div>

@@ -23,7 +23,7 @@ function formatCash(str) {
         });
 }
 
-function Rooms({ rooms, header, description, updateRooms, addRoom = false }) {
+function Rooms({ hotelId, rooms, header, description, updateRooms, addRoom = false }) {
     const user = useSelector(selectUser);
 
     const [showAddForm, setShowAddForm] = useState(false);
@@ -82,7 +82,7 @@ function Rooms({ rooms, header, description, updateRooms, addRoom = false }) {
             <div className={cx('rooms-container')}>
                 <ItemTitle header={header} description={description} />
                 {/* Add room button */}
-                {user && user.userType === 2 && addRoom && (
+                {user && user.userType === 2 && user.hotelId === hotelId && addRoom && (
                     <Button success className={cx('add-room-btn')} onClick={() => setShowAddForm(true)}>
                         <AddIcon />
                     </Button>
@@ -108,10 +108,14 @@ function Rooms({ rooms, header, description, updateRooms, addRoom = false }) {
                                     </li>
                                 </ul>
                                 <div className="card-body">
-                                    <Button primary large={!(user && user.userType === 2)} href={`/room/${room._id}`}>
+                                    <Button
+                                        primary
+                                        large={!(user && user.userType === 2 && user.hotelId === hotelId)}
+                                        href={`/room/${room._id}`}
+                                    >
                                         Details
                                     </Button>
-                                    {user && user.userType === 2 && (
+                                    {user && user.userType === 2 && user.hotelId === hotelId && (
                                         <>
                                             <Button
                                                 secondary

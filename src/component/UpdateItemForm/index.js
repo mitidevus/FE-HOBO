@@ -72,6 +72,8 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
                                 placeholder="Name"
                                 value={roomName}
                                 onChange={(e) => setRoomName(e.target.value)}
+                            maxlength="22"
+                            required
                             />
                         </div>
                     </div>
@@ -87,6 +89,8 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
                                 placeholder="Price"
                                 value={price}
                                 onChange={(e) => setPrice(e.target.value)}
+                                maxlength="8"
+                                required
                             />
                         </div>
                         <div className="col">
@@ -99,6 +103,8 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
                                 placeholder="Quantity"
                                 value={quantity}
                                 onChange={(e) => setQuantity(e.target.value)}
+                                maxlength="1"
+                                required
                             />
                         </div>
                         <div className="col">
@@ -111,6 +117,8 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
                                 placeholder="Bed"
                                 value={bed}
                                 onChange={(e) => setBed(e.target.value)}
+                                maxlength="1"
+                                required
                             />
                         </div>
                         <div className="col">
@@ -123,7 +131,8 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
                                 placeholder="Toilet"
                                 value={toilet}
                                 onChange={(e) => setToilet(e.target.value)}
-                            />
+                                maxlength="1"
+                                required/>
                         </div>
                     </div>
                     <div className="row mb-5">
@@ -138,6 +147,7 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
                                     placeholder="Thumbnail URL"
                                     value={thumbnail}
                                     onChange={(e) => setThumbnail(e.target.value)}
+                                    required
                                 />
                             </div>
                             <div>
@@ -151,6 +161,7 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
                                     placeholder="Slider URL"
                                     value={slider[0]}
                                     onChange={(e) => setSlider([e.target.value, slider[1], slider[2]])}
+                                    required
                                 />
 
                                 <input
@@ -159,6 +170,7 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
                                     placeholder="Slider URL"
                                     value={slider[1]}
                                     onChange={(e) => setSlider([slider[0], e.target.value, slider[2]])}
+                                    required
                                 />
 
                                 <input
@@ -167,6 +179,7 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
                                     placeholder="Slider URL"
                                     value={slider[2]}
                                     onChange={(e) => setSlider([slider[0], slider[1], e.target.value])}
+                                    required
                                 />
                             </div>
                         </div>
@@ -180,6 +193,7 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
                                 placehlder="Description"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
+                                maxlength="500"
                             ></textarea>
                         </div>
                     </div>
@@ -211,6 +225,8 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
                             placeholder="Name"
                             value={roomName}
                             onChange={(e) => setRoomName(e.target.value)}
+                            maxlength="20"
+                            required
                         />
                     </div>
 
@@ -225,6 +241,8 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
                                 placeholder="Price"
                                 value={price}
                                 onChange={(e) => setPrice(e.target.value)}
+                                maxlength="8"
+                                required
                             />
                         </div>
                         <div className="col-6">
@@ -237,6 +255,8 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
                                 placeholder="Quantity"
                                 value={quantity}
                                 onChange={(e) => setQuantity(e.target.value)}
+                                maxlength="1"
+                                required
                             />
                         </div>
                     </div>
@@ -252,6 +272,8 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
                                 placeholder="Bed"
                                 value={bed}
                                 onChange={(e) => setBed(e.target.value)}
+                                maxlength="1"
+                                required
                             />
                         </div>
                         <div className="col-6">
@@ -264,6 +286,8 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
                                 placeholder="Toilet"
                                 value={toilet}
                                 onChange={(e) => setToilet(e.target.value)}
+                                maxlength="1"
+                                required
                             />
                         </div>
                     </div>
