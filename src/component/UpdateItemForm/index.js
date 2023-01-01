@@ -194,6 +194,7 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                                 maxlength="500"
+                                required
                             ></textarea>
                         </div>
                     </div>
@@ -302,6 +303,7 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
                             placeholder="Thumbnail URL"
                             value={thumbnail}
                             onChange={(e) => setThumbnail(e.target.value)}
+                            required
                         />
                     </div>
 

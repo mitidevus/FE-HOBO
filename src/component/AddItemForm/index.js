@@ -201,6 +201,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             maxlength="500"
+                            required
                         ></textarea>
                     </div>
                 </div>

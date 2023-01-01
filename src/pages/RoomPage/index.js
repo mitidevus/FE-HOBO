@@ -89,22 +89,6 @@ function RoomPage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // const roomRes = await axios.get(`/api/post/info/${roomIdAPI}`);
-                // if (roomRes) {
-                //     setRoom(roomRes.data);
-                // }
-                // const hotelRes = await axios.get(`/api/hotel/info/${room.hotelId}`);
-                // if (hotelRes) {
-                //     setHotel(hotelRes.data);
-                // }
-                // const suggestedRoomsRes = await axios.post('/api/post/postlistexcept', {
-                //     hotel_id: room.hotelId,
-                //     post_id: room._id,
-                // });
-                // if (suggestedRoomsRes) {
-                //     setSuggestedRooms(suggestedRoomsRes.data);
-                //     console.log(suggestedRoomsRes.data);
-                // }
                 axios.get(`/api/post/info/${roomIdAPI}`).then((res) => {
                     setRoom(res.data);
                     axios.get(`/api/hotel/info/${res.data.hotelId}`).then((res) => {
@@ -121,7 +105,7 @@ function RoomPage() {
             }
         };
         fetchData();
-    }, []);
+    }, [roomIdAPI]);
 
     const handleDeleteRoom = () => {
         const confirm = window.confirm('Are you sure to delete this room?');
@@ -157,13 +141,11 @@ function RoomPage() {
         <div className={cx('wrapper')}>
             <div className={cx('content')}>
                 <div className={cx('hotel-title')}>
-                    <h3 className={cx('hotel-name')}>{hotel.hotelName}</h3>
-                    <p>
-                        <span className="fw-bold">Address:</span> {hotel.hotelAddress}
-                    </p>
-                    <p>
-                        <span className="fw-bold">Hotline:</span> {hotel.hotelPhoneNumber}
-                    </p>
+                    <span className={cx('hotel-name')}>{hotel.hotelName}</span>
+                    <br />
+                    <span className="fw-bold">Address:</span> {hotel.hotelAddress}
+                    <br />
+                    <span className="fw-bold">Hotline:</span> {hotel.hotelPhoneNumber}
                 </div>
 
                 <div className={cx('room-info')}>

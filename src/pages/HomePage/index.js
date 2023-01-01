@@ -52,14 +52,14 @@ function HomePage() {
         console.log("arr: ")
         console.log(arr)
 
-        if(inputContext!="")
+        if(inputContext!=="")
         {
             let temp=[];
 
             for(let i=0;i<arr.length;i++)
-                if(arr[i].hotelName.toLocaleLowerCase()==inputContext.toLocaleLowerCase() 
-                    || arr[i].location.toLocaleLowerCase()==inputContext.toLocaleLowerCase()
-                    || arr[i].roomName.toLocaleLowerCase()==inputContext.toLocaleLowerCase()) 
+                if(arr[i].hotelName.toLocaleLowerCase()===inputContext.toLocaleLowerCase() 
+                    || arr[i].location.toLocaleLowerCase()===inputContext.toLocaleLowerCase()
+                    || arr[i].roomName.toLocaleLowerCase()===inputContext.toLocaleLowerCase()) 
                     temp.push(arr[i]);
 
             if(filterValue==="Starts") temp.sort((a,b) => a.numberStar-b.numberStar)
@@ -69,7 +69,7 @@ function HomePage() {
 
                 const temp2=temp.filter(value => value.location.toLocaleLowerCase()===inputContext.toLocaleLowerCase())
                 
-                if(temp2.length!=0) temp=temp2
+                if(temp2.length!==0) temp=temp2
                 console.log("Location:")
                 console.log(temp)
                 temp.sort(function (a, b) {
@@ -81,7 +81,7 @@ function HomePage() {
             setCard(temp);
         }
         else{
-            if(filterValue.localeCompare("Filter")!=0) 
+            if(filterValue.localeCompare("Filter")!==0) 
                 alert("You must enter the search information before filtering or cliking button search!!!");
             setCard(arr);
         }

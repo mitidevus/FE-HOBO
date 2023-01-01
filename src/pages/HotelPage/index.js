@@ -10,8 +10,10 @@ import Rooms from '~/component/Rooms';
 import Slider from '~/component/Slider';
 import { selectUser } from '~/features/userSlice';
 import styles from './HotelPage.module.scss';
+import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import UpdateHotelForm from '../../component/UpdateHotelForm';
 
 const cx = classNames.bind(styles);
 
@@ -106,6 +108,38 @@ function HotelPage() {
     const [hotel, setHotel] = useState(hotelRes);
     const [rooms, setRooms] = useState(roomsRes);
     const [comments, setComments] = useState(commentsRes);
+    const [showUpdateForm, setShowUpdateForm] = useState(false);
+
+    const handleUpdateHotel = (newHotel) => {
+        // Call API to update room
+        axios
+            .post('/api/hotel/changehotelinfo', newHotel)
+            .then((res) => {
+                setHotel(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        console.log('Cap nhat thanh cong');
+    };
+
+    const handleDeleteHotel = () => {
+        const confirm = window.confirm('Are you sure to delete your hotel?');
+        if (confirm) {
+            const confirm2 = window.confirm('Really?');
+            if (confirm2) {
+                axios
+                    .delete(`/api/hotel/deletehotel/${hotel._id}`)
+                    .then((res) => {
+                        console.log(res);
+                        navigate('/');
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            }
+        }
+    };
 
     const updateRooms = (newRooms) => {
         setRooms(newRooms);
@@ -179,7 +213,7 @@ function HotelPage() {
         };
 
         fetchData();
-    }, []);
+    }, [hotelIdAPI]);
 
     console.log(hotel);
     console.log(rooms);
@@ -191,13 +225,21 @@ function HotelPage() {
 
             <div className={cx('content')}>
                 <div className={cx('hotel-title')}>
-                    <h3 className={cx('hotel-name')}>{hotel.hotelName}</h3>
-                    <p>
-                        <span className="fw-bold">Address</span> {hotel.hotelAddress}
-                    </p>
-                    <p>
-                        <span className="fw-bold">Hotline:</span> {hotel.hotelPhoneNumber}
-                    </p>
+                    <span className={cx('hotel-name')}>{hotel.hotelName}</span>
+                    <br />
+                    <span className="fw-bold">Address:</span> {hotel.hotelAddress}
+                    <br />
+                    <span className="fw-bold">Hotline:</span> {hotel.hotelPhoneNumber}
+                    {user && user.userType === 2 && user.hotelId === hotel._id && (
+                        <div className={cx('handle-hotel-btn')}>
+                            <Button warning  onClick={() => setShowUpdateForm(true)}>
+                                <EditIcon />
+                            </Button>
+                            <Button danger onClick={() => handleDeleteHotel()}>
+                                <CloseIcon />
+                            </Button>
+                        </div>
+                    )}
                 </div>
 
                 <div className={cx('description')}>
@@ -268,7 +310,7 @@ function HotelPage() {
                                                 <span className="text-black-50">{comment.createdDate}</span>
                                                 <p>{comment.content}</p>
                                             </div>
-                                            <div className={cx("handle-comment")}>
+                                            <div className={cx('handle-comment')}>
                                                 <div className="mb-1">
                                                     {user && user.userType === 0 && (
                                                         <Button
@@ -310,7 +352,13 @@ function HotelPage() {
                                             Comment
                                         </label>
 
-                                        <textarea maxlength="250" className="form-control" id="comment" rows="3" required></textarea>
+                                        <textarea
+                                            maxlength="250"
+                                            className="form-control"
+                                            id="comment"
+                                            rows="3"
+                                            required
+                                        ></textarea>
 
                                         <div className="w-50  mt-3">
                                             <Button
@@ -347,6 +395,16 @@ function HotelPage() {
                         )}
                     </div>
                 </div>
+
+                {showUpdateForm && (
+                    <>
+                        <UpdateHotelForm
+                            hotel={hotel}
+                            setShowUpdateForm={setShowUpdateForm}
+                            handleUpdateHotel={handleUpdateHotel}
+                        />
+                    </>
+                )}
             </div>
         </div>
     );
