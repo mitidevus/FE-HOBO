@@ -4,13 +4,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import axios from '~/api/auth';
 import { selectUser } from '~/features/userSlice';
 import AddItemForm from '../AddItemForm';
 import Button from '../Button';
 import ItemTitle from '../ItemTitle';
 import UpdateItemForm from '../UpdateItemForm';
 import styles from './Rooms.module.scss';
-import axios from '~/api/auth';
 
 const cx = classNames.bind(styles);
 
@@ -25,6 +26,7 @@ function formatCash(str) {
 
 function Rooms({ hotelId, rooms, header, description, updateRooms, addRoom = false }) {
     const user = useSelector(selectUser);
+    const navigate = useNavigate();
 
     const [showAddForm, setShowAddForm] = useState(false);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
@@ -92,10 +94,8 @@ function Rooms({ hotelId, rooms, header, description, updateRooms, addRoom = fal
                         <div className="col-4 mt-3" key={index}>
                             <div className="card text-center">
                                 <img className={cx('card-img-top', 'room-thumbnail')} src={room.thumbnail} alt="Room" />
-                                <div className="card-body">
-                                    <h5 className={cx('card-title', 'room-name')}>{room.roomName}</h5>
-                                </div>
                                 <ul className="list-group list-group-flush">
+                                    <li className={cx('list-group-item', 'room-name')}>{room.roomName}</li>
                                     <li className="list-group-item">Quantity: {room.quantity} people</li>
                                     <li className="list-group-item">
                                         {room.bed} {room.bed > 1 ? 'Beds' : 'Bed'}
@@ -104,14 +104,16 @@ function Rooms({ hotelId, rooms, header, description, updateRooms, addRoom = fal
                                         {room.toilet} {room.toilet > 1 ? 'Bathrooms' : 'Bathroom'}
                                     </li>
                                     <li className="list-group-item">
-                                        Price: <span className="fw-bold ms-1">₫{formatCash(`${room.price}`)}</span>/day
+                                        Price: <span className="fw-bold ms-1">{formatCash(`${room.price}`)}₫</span>/day
                                     </li>
                                 </ul>
                                 <div className="card-body">
                                     <Button
                                         primary
                                         large={!(user && user.userType === 2 && user.hotelId === hotelId)}
-                                        href={`/room/${room._id}`}
+                                        onClick={() => {
+                                            navigate(`/room/${room._id}`);
+                                        }}
                                     >
                                         Details
                                     </Button>

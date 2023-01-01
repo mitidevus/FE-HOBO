@@ -1,16 +1,17 @@
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
-import axios from '~/api/auth';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import axios from '~/api/auth';
 import BookingForm from '~/component/BookingForm';
 import Button from '~/component/Button';
 import Rooms from '~/component/Rooms';
 import Slider from '~/component/Slider';
 import UpdateItemForm from '~/component/UpdateItemForm';
 import { selectUser } from '~/features/userSlice';
+import Star from '../../component/Star';
 import styles from './RoomPage.module.scss';
 
 const cx = classNames.bind(styles);
@@ -141,11 +142,22 @@ function RoomPage() {
         <div className={cx('wrapper')}>
             <div className={cx('content')}>
                 <div className={cx('hotel-title')}>
-                    <span className={cx('hotel-name')}>{hotel.hotelName}</span>
+                    <span
+                        className={cx('hotel-name')}
+                        onClick={() => {
+                            navigate(`/hotel/${room.hotelId}`);
+                        }}
+                    >
+                        {hotel.hotelName}
+                    </span>
                     <br />
                     <span className="fw-bold">Address:</span> {hotel.hotelAddress}
                     <br />
                     <span className="fw-bold">Hotline:</span> {hotel.hotelPhoneNumber}
+                    <br />
+                    <div className={cx('hotel-star')}>
+                        <Star starNumber={hotel.starNumber} className="w-25"></Star>
+                    </div>
                 </div>
 
                 <div className={cx('room-info')}>
@@ -179,7 +191,12 @@ function RoomPage() {
                                         <span className="fw-bold">Description: </span>
                                         {room.description}
                                     </p>
-
+                                    <p>
+                                        <div className="d-flex align-items-center">
+                                            <span className="fw-bold me-1">Quality: </span>
+                                            <Star starNumber={room.starNumber} className="mb-1"></Star>
+                                        </div>
+                                    </p>
                                     <Button
                                         primary
                                         large

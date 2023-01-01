@@ -28,30 +28,30 @@ const Navbar = () => {
                     <h1 id="HOBO">HOBO</h1>
                 </NavLink>
                 <NavMenu>
-                    <NavLink to="/" activeStyle>
+                    <NavLink to="/" activestyle="true">
                         Home
                     </NavLink>
-                    <NavLink to="/about" activeStyle>
+                    <NavLink to="/about" activestyle="true">
                         About
                     </NavLink>
-                    <NavLink to="/contact" activeStyle>
+                    <NavLink to="/contact" activestyle="true">
                         Contact
                     </NavLink>
 
                     {user && user.userType === 2 && user.hotelId === null && (
-                        <NavLink to="/post" activeStyle>
+                        <NavLink to="/post" activestyle="true">
                             Create my first hotel
                         </NavLink>
                     )}
 
                     {user && user.userType === 2 && user.hotelId && (
-                        <NavLink to={`/hotel/${user.hotelId}`} activeStyle>
+                        <NavLink to={`/hotel/${user.hotelId}`} activestyle="true">
                             My Hotel
                         </NavLink>
                     )}
 
                     {user && user.userType === 0 && (
-                        <NavLink to="/approve" activeStyle>
+                        <NavLink to="/approve" activestyle="true">
                             Approve
                         </NavLink>
                     )}
@@ -78,10 +78,10 @@ const Navbar = () => {
                         </>
                     ) : (
                         <>
-                            <NavLink to="/login" activeStyle>
+                            <NavLink to="/login" activestyle="true">
                                 Login
                             </NavLink>
-                            <NavLink to="/signup" activeStyle>
+                            <NavLink to="/signup" activestyle="true">
                                 <Button primary>Sign Up</Button>
                             </NavLink>
                         </>

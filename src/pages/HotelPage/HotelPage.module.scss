@@ -24,12 +24,20 @@
     font-size: 40px;
 }
 
-.description, .utilities {
-    background-color: #FAC9B8;
+.hotel-star {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.description,
+.utilities {
+    background-color: #fac9b8;
     width: 100%;
 }
 
-.description-container, .utilities-container {
+.description-container,
+.utilities-container {
     padding: 30px 200px 40px;
 }
 
@@ -41,7 +49,6 @@
 .rooms-container {
     padding: 30px 200px;
 }
-
 
 .booking-contact {
     position: relative;
@@ -96,7 +103,6 @@
 
 .comment__item {
     background-color: #f7f7f7;
-
 }
 
 .comment__avatar {

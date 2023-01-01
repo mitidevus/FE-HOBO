@@ -18,9 +18,20 @@
     padding: 30px;
 }
 
+.hotel-star {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
 .hotel-name {
     font-family: var(--pattaya-font);
     font-size: 40px;
+
+    &:hover {
+        color: var(--primary-color);
+        cursor: pointer;
+    }
 }
 
 .room-info {

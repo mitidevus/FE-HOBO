@@ -1,19 +1,20 @@
-import axios from '~/api/auth';
+import CloseIcon from '@mui/icons-material/Close';
+import EditIcon from '@mui/icons-material/Edit';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import axios from '~/api/auth';
 import BookingForm from '~/component/BookingForm';
 import Button from '~/component/Button';
 import ItemTitle from '~/component/ItemTitle';
 import Rooms from '~/component/Rooms';
 import Slider from '~/component/Slider';
 import { selectUser } from '~/features/userSlice';
-import styles from './HotelPage.module.scss';
-import EditIcon from '@mui/icons-material/Edit';
-import CloseIcon from '@mui/icons-material/Close';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import Star from '../../component/Star';
 import UpdateHotelForm from '../../component/UpdateHotelForm';
+import styles from './HotelPage.module.scss';
 
 const cx = classNames.bind(styles);
 
@@ -230,9 +231,12 @@ function HotelPage() {
                     <span className="fw-bold">Address:</span> {hotel.hotelAddress}
                     <br />
                     <span className="fw-bold">Hotline:</span> {hotel.hotelPhoneNumber}
+                    <div className={cx('hotel-star')}>
+                        <Star starNumber={hotel.starNumber}></Star>
+                    </div>
                     {user && user.userType === 2 && user.hotelId === hotel._id && (
                         <div className={cx('handle-hotel-btn')}>
-                            <Button warning  onClick={() => setShowUpdateForm(true)}>
+                            <Button warning onClick={() => setShowUpdateForm(true)}>
                                 <EditIcon />
                             </Button>
                             <Button danger onClick={() => handleDeleteHotel()}>
@@ -260,7 +264,7 @@ function HotelPage() {
                     hotelId={hotel._id}
                     rooms={rooms}
                     addRoom
-                    header="Room type"
+                    header="Rooms"
                     description="Good choice for you"
                     updateRooms={updateRooms}
                 />

@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import axios from '~/api/auth';
 import Button from '~/component/Button';
 import Slider from '~/component/Slider';
+import Star from '../../component/Star';
 import styles from './ApprovePage.module.scss';
 
 const cx = classNames.bind(styles);
@@ -244,6 +245,10 @@ function ApprovePage() {
                                             <span className="fw-bold">Description: </span>
                                             {room.description}
                                         </div>
+                                        <div className="d-flex mb-2">
+                                            <span className="fw-bold mt-1 me-1">Quality: </span>
+                                            <Star starNumber={room.starNumber}></Star>
+                                        </div>
 
                                         <hr />
 
@@ -256,15 +261,9 @@ function ApprovePage() {
                                             <span className="fw-bold">Hotline: </span>
                                             <span className={cx('room-value')}>{room.phoneNumber}</span>
                                         </div>
-                                        <div className="mb-2">
+                                        <div className="mb-3">
                                             <span className="fw-bold">License: </span>
                                             <span className={cx('room-value')}>{room.licenseNumber}</span>
-                                        </div>
-                                        <div className="mb-2">
-                                            <span className="fw-bold">Star: </span>
-                                            {Array.from({ length: room.starNumber }, (_, index) => (
-                                                <i key={index} className="fas fa-star text-warning"></i>
-                                            ))}
                                         </div>
 
                                         <div className="d-flex justify-content-center">
