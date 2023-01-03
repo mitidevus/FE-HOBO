@@ -4,13 +4,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import axios from '~/api/auth';
 import { selectUser } from '~/features/userSlice';
 import AddItemForm from '../AddItemForm';
 import Button from '../Button';
 import ItemTitle from '../ItemTitle';
 import UpdateItemForm from '../UpdateItemForm';
 import styles from './Rooms.module.scss';
-import axios from '~/api/auth';
 
 const cx = classNames.bind(styles);
 
@@ -23,22 +24,21 @@ function formatCash(str) {
         });
 }
 
-function Rooms({ rooms, header, description, updateRooms, addRoom = false }) {
+function Rooms({ hotelId, rooms, header, description, updateRooms, addRoom = false }) {
     const user = useSelector(selectUser);
+    const navigate = useNavigate();
 
     const [showAddForm, setShowAddForm] = useState(false);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [updatedRoom, setUpdatedRoom] = useState({});
 
     const handleAddRoom = (room) => {
-        const newRooms = [...rooms, room];
-        updateRooms(newRooms);
-
         // Call API to add room
         axios
             .post('/api/post/createpost', room)
             .then((res) => {
-                console.log(res.data);
+                const newRooms = [...rooms, room];
+                updateRooms(newRooms);
             })
             .catch((err) => {
                 console.log(err);
@@ -48,14 +48,12 @@ function Rooms({ rooms, header, description, updateRooms, addRoom = false }) {
     const handleDeleteRoom = (roomId) => {
         const confirm = window.confirm('Are you sure to delete this room?');
         if (confirm) {
-            const newRooms = rooms.filter((room) => room._id !== roomId);
-            updateRooms(newRooms);
-
             // Call API to delete room
             axios
                 .delete(`/api/post/deletepost/${roomId}`)
                 .then((res) => {
-                    console.log(res.data);
+                    const newRooms = rooms.filter((room) => room._id !== roomId);
+                    updateRooms(newRooms);
                 })
                 .catch((err) => {
                     console.log(err);
@@ -64,19 +62,17 @@ function Rooms({ rooms, header, description, updateRooms, addRoom = false }) {
     };
 
     const handleUpdateRoom = (room) => {
-        const newRooms = rooms.map((item) => {
-            if (item._id === room._id) {
-                return room;
-            }
-            return item;
-        });
-        updateRooms(newRooms);
-
         // Call API to update room
         axios
             .post('/api/post/changeinfo', room)
             .then((res) => {
-                console.log(res.data);
+                const newRooms = rooms.map((item) => {
+                    if (item._id === room._id) {
+                        return room;
+                    }
+                    return item;
+                });
+                updateRooms(newRooms);
             })
             .catch((err) => {
                 console.log(err);
@@ -88,7 +84,7 @@ function Rooms({ rooms, header, description, updateRooms, addRoom = false }) {
             <div className={cx('rooms-container')}>
                 <ItemTitle header={header} description={description} />
                 {/* Add room button */}
-                {user && user.userType === 2 && addRoom && (
+                {user && user.userType === 2 && user.hotelId === hotelId && addRoom && (
                     <Button success className={cx('add-room-btn')} onClick={() => setShowAddForm(true)}>
                         <AddIcon />
                     </Button>
@@ -98,10 +94,8 @@ function Rooms({ rooms, header, description, updateRooms, addRoom = false }) {
                         <div className="col-4 mt-3" key={index}>
                             <div className="card text-center">
                                 <img className={cx('card-img-top', 'room-thumbnail')} src={room.thumbnail} alt="Room" />
-                                <div className="card-body">
-                                    <h5 className={cx('card-title', 'room-name')}>{room.roomName}</h5>
-                                </div>
                                 <ul className="list-group list-group-flush">
+                                    <li className={cx('list-group-item', 'room-name')}>{room.roomName}</li>
                                     <li className="list-group-item">Quantity: {room.quantity} people</li>
                                     <li className="list-group-item">
                                         {room.bed} {room.bed > 1 ? 'Beds' : 'Bed'}
@@ -110,14 +104,20 @@ function Rooms({ rooms, header, description, updateRooms, addRoom = false }) {
                                         {room.toilet} {room.toilet > 1 ? 'Bathrooms' : 'Bathroom'}
                                     </li>
                                     <li className="list-group-item">
-                                        Price: <span className="fw-bold ms-1">₫{formatCash(`${room.price}`)}</span>/day
+                                        Price: <span className="fw-bold ms-1">{formatCash(`${room.price}`)}₫</span>/day
                                     </li>
                                 </ul>
                                 <div className="card-body">
-                                    <Button primary large={!(user && user.userType === 2)} href={`/room/${room._id}`}>
+                                    <Button
+                                        primary
+                                        large={!(user && user.userType === 2 && user.hotelId === hotelId)}
+                                        onClick={() => {
+                                            navigate(`/room/${room._id}`);
+                                        }}
+                                    >
                                         Details
                                     </Button>
-                                    {user && user.userType === 2 && (
+                                    {user && user.userType === 2 && user.hotelId === hotelId && (
                                         <>
                                             <Button
                                                 secondary

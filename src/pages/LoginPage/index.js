@@ -39,7 +39,7 @@ function LoginPage() {
             });
         } catch (error) {
             console.log(error);
-            setError(error.response.data);
+            setError(error.response.data.message);
         }
     };
 

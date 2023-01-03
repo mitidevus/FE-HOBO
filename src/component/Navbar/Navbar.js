@@ -32,39 +32,30 @@ const Navbar = () => {
                     <h1 id="HOBO">HOBO</h1>
                 </NavLink>
                 <NavMenu>
-                    <NavLink to="/" activeStyle>
+                    <NavLink to="/" activestyle="true">
                         Home
                     </NavLink>
-                    <NavLink to="/about" activeStyle>
+                    <NavLink to="/about" activestyle="true">
                         About
                     </NavLink>
-                    <NavLink to="/contact" activeStyle>
+                    <NavLink to="/contact" activestyle="true">
                         Contact
                     </NavLink>
 
-                    {/* Xong thì xóa */}
-                    <NavLink to="/hotel/639700482e84ad02f4864a68" activeStyle>
-                        Hotel
-                    </NavLink>
-
-                    <NavLink to="room/63970668d5f14557aced81bb" activeStyle>
-                        Room
-                    </NavLink>
-
-                    {userInfor && userInfor.userType === 2 && userInfor.hotelId === null && (
-                        <NavLink to="/post" activeStyle>
+                    {user && user.userType === 2 && user.hotelId === null && (
+                        <NavLink to="/post" activestyle="true">
                             Create my first hotel
                         </NavLink>
                     )}
 
-                    {userInfor && userInfor.userType === 2 && userInfor.hotelId && (
-                        <NavLink to={`/hotel/${userInfor.hotelId}`} activeStyle>
+                    {user && user.userType === 2 && user.hotelId && (
+                        <NavLink to={`/hotel/${user.hotelId}`} activestyle="true">
                             My Hotel
                         </NavLink>
                     )}
 
-                    {userInfor && userInfor.userType === 0 && (
-                        <NavLink to="/approve" activeStyle>
+                    {user && user.userType === 0 && (
+                        <NavLink to="/approve" activestyle="true">
                             Approve
                         </NavLink>
                     )}
@@ -91,10 +82,10 @@ const Navbar = () => {
                         </>
                     ) : (
                         <>
-                            <NavLink to="/login" activeStyle>
+                            <NavLink to="/login" activestyle="true">
                                 Login
                             </NavLink>
-                            <NavLink to="/signup" activeStyle>
+                            <NavLink to="/signup" activestyle="true">
                                 <Button primary>Sign Up</Button>
                             </NavLink>
                         </>

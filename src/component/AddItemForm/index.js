@@ -9,6 +9,7 @@ const cx = classNames.bind(styles);
 
 function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
     const [roomName, setRoomName] = useState('');
+    const [starNumber, setStarNumber] = useState(0);
     const [price, setPrice] = useState('');
     const [quantity, setQuantity] = useState('');
     const [bed, setBed] = useState('');
@@ -28,6 +29,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
 
         if (
             !roomName ||
+            !starNumber ||
             !price ||
             !quantity ||
             !bed ||
@@ -44,6 +46,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
         const newRoom = {
             hotelId,
             roomName,
+            starNumber,
             price,
             quantity,
             bed,
@@ -68,7 +71,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                 {error && <p className={cx('error')}>{error}</p>}
 
                 <div className="row my-3">
-                    <div className="col-8">
+                    <div className="col-9">
                         <label htmlFor="roomName" className="form-label fw-bold">
                             Room name
                         </label>
@@ -78,6 +81,21 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                             placeholder="Name"
                             value={roomName}
                             onChange={(e) => setRoomName(e.target.value)}
+                            maxlength="22"
+                            required
+                        />
+                    </div>
+                    <div className="col-3">
+                        <label htmlFor="starNumber" className="form-label fw-bold">
+                            Star
+                        </label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Star number"
+                            value={starNumber}
+                            onChange={(e) => setStarNumber(e.target.value)}
+                            maxlength="1"
                             required
                         />
                     </div>
@@ -94,6 +112,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                             placeholder="Price"
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
+                            maxlength="8"
                             required
                         />
                     </div>
@@ -107,6 +126,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                             placeholder="Quantity"
                             value={quantity}
                             onChange={(e) => setQuantity(e.target.value)}
+                            maxlength="1"
                             required
                         />
                     </div>
@@ -120,6 +140,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                             placeholder="Bed"
                             value={bed}
                             onChange={(e) => setBed(e.target.value)}
+                            maxlength="1"
                             required
                         />
                     </div>
@@ -133,6 +154,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                             placeholder="Toilet"
                             value={toilet}
                             onChange={(e) => setToilet(e.target.value)}
+                            maxlength="1"
                             required
                         />
                     </div>
@@ -195,6 +217,8 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
                             placehlder="Description"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
+                            maxlength="500"
+                            required
                         ></textarea>
                     </div>
                 </div>

@@ -1,14 +1,19 @@
-import axios from '~/api/auth';
+import CloseIcon from '@mui/icons-material/Close';
+import EditIcon from '@mui/icons-material/Edit';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import axios from '~/api/auth';
 import BookingForm from '~/component/BookingForm';
 import Button from '~/component/Button';
 import ItemTitle from '~/component/ItemTitle';
 import Rooms from '~/component/Rooms';
 import Slider from '~/component/Slider';
 import { selectUser } from '~/features/userSlice';
+import Star from '../../component/Star';
+import UpdateHotelForm from '../../component/UpdateHotelForm';
 import styles from './HotelPage.module.scss';
 
 const cx = classNames.bind(styles);
@@ -79,56 +84,6 @@ const roomsRes = [
         toilet: 1,
         thumbnail: 'https://mauweb.monamedia.net/encore/wp-content/uploads/2019/02/02.jpg',
     },
-    {
-        id: 2,
-        hotelId: 123,
-        roomName: 'LUXURY DOUBLE ROOM SUITE',
-        price: 850000,
-        quantity: '2-4',
-        bed: 2,
-        toilet: 1,
-        thumbnail: 'https://mauweb.monamedia.net/encore/wp-content/uploads/2019/02/032.jpg',
-    },
-    {
-        id: 3,
-        hotelId: 123,
-        roomName: 'LUXURY SINGLE ROOM ART SUITE',
-        price: 900000,
-        quantity: '1-2',
-        bed: 1,
-        toilet: 1,
-        thumbnail: 'https://mauweb.monamedia.net/encore/wp-content/uploads/2019/02/05.jpg',
-    },
-    {
-        id: 4,
-        hotelId: 123,
-        roomName: 'LUXURY SINGLE ROOM SUITE',
-        price: 1450000,
-        quantity: '1-2',
-        bed: 1,
-        toilet: 1,
-        thumbnail: 'https://mauweb.monamedia.net/encore/wp-content/uploads/2019/02/041.jpg',
-    },
-    {
-        id: 5,
-        hotelId: 123,
-        roomName: 'DOUBLE SUITE ATTIC FLOOR',
-        price: 1500000,
-        quantity: '2-4',
-        bed: 2,
-        toilet: 2,
-        thumbnail: 'https://mauweb.monamedia.net/encore/wp-content/uploads/2019/02/013.jpg',
-    },
-    {
-        id: 6,
-        hotelId: 123,
-        roomName: 'PREMIUM DOUBLE ROOM SUITE',
-        price: 2000000,
-        quantity: '2-4',
-        bed: 2,
-        toilet: 2,
-        thumbnail: 'https://mauweb.monamedia.net/encore/wp-content/uploads/2019/02/06.jpg',
-    },
 ];
 
 const commentsRes = [
@@ -136,25 +91,7 @@ const commentsRes = [
         userId: 123,
         name: 'Nguyen Van A',
         avatar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/RedCat_8727.jpg/1200px-RedCat_8727.jpg',
-        date: '07:00 2020-01-01',
-        content:
-            'The hotel is very nice, the staff is very friendly, the room is very clean, I am very satisfied with this hotel.',
-        isHide: false,
-    },
-    {
-        userId: 456,
-        name: 'Nguyen Van B',
-        avatar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/RedCat_8727.jpg/1200px-RedCat_8727.jpg',
-        date: '08:00 2020-01-01',
-        content:
-            'The hotel is very nice, the staff is very friendly, the room is very clean, I am very satisfied with this hotel.',
-        isHide: false,
-    },
-    {
-        userId: 789,
-        name: 'Nguyen Van C',
-        avatar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/RedCat_8727.jpg/1200px-RedCat_8727.jpg',
-        date: '09:00 2020-01-01',
+        createDate: '07:00 2020-01-01',
         content:
             'The hotel is very nice, the staff is very friendly, the room is very clean, I am very satisfied with this hotel.',
         isHide: false,
@@ -172,9 +109,87 @@ function HotelPage() {
     const [hotel, setHotel] = useState(hotelRes);
     const [rooms, setRooms] = useState(roomsRes);
     const [comments, setComments] = useState(commentsRes);
+    const [showUpdateForm, setShowUpdateForm] = useState(false);
+
+    const handleUpdateHotel = (newHotel) => {
+        // Call API to update room
+        axios
+            .post('/api/hotel/changehotelinfo', newHotel)
+            .then((res) => {
+                setHotel(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        console.log('Cap nhat thanh cong');
+    };
+
+    const handleDeleteHotel = () => {
+        const confirm = window.confirm('Are you sure to delete your hotel?');
+        if (confirm) {
+            const confirm2 = window.confirm('Really?');
+            if (confirm2) {
+                axios
+                    .delete(`/api/hotel/deletehotel/${hotel._id}`)
+                    .then((res) => {
+                        console.log(res);
+                        navigate('/');
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            }
+        }
+    };
 
     const updateRooms = (newRooms) => {
         setRooms(newRooms);
+    };
+
+    const handleComment = (newComment) => {
+        const comment = {
+            hotelId: hotel._id,
+            userId: user._id,
+            content: newComment,
+        };
+        axios
+            .post('/api/comment/createcomment', comment)
+            .then((res) => {
+                setComments([res.data, ...comments]);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    const handleDeleteComment = (commentId) => {
+        const confirm = window.confirm('Are you sure to delete your comment?');
+        if (confirm) {
+            axios
+                .delete(`/api/comment/deletecomment/${commentId}`)
+                .then((res) => {
+                    const newComments = comments.filter((comment) => comment._id !== commentId);
+                    setComments(newComments);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    };
+
+    const handleHideComment = (commentId) => {
+        const confirm = window.confirm('Are you sure to hide this comment?');
+        if (confirm) {
+            axios
+                .patch(`/api/admin/hidecomment/${commentId}`)
+                .then((res) => {
+                    const newComments = comments.filter((comment) => comment._id !== commentId);
+                    setComments(newComments);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
     };
 
     useEffect(() => {
@@ -191,7 +206,7 @@ function HotelPage() {
                 }
                 const commentsRes = await axios.get(`/api/comment/commentlistbyhotel/${hotelIdAPI}`);
                 if (commentsRes) {
-                    setComments(commentsRes.data);
+                    setComments(commentsRes.data.reverse());
                 }
             } catch (error) {
                 console.log(error);
@@ -199,7 +214,7 @@ function HotelPage() {
         };
 
         fetchData();
-    }, []);
+    }, [hotelIdAPI]);
 
     console.log(hotel);
     console.log(rooms);
@@ -211,13 +226,24 @@ function HotelPage() {
 
             <div className={cx('content')}>
                 <div className={cx('hotel-title')}>
-                    <h3 className={cx('hotel-name')}>{hotel.hotelName}</h3>
-                    <p>
-                        <span className="fw-bold">Address</span> {hotel.hotelAddress}
-                    </p>
-                    <p>
-                        <span className="fw-bold">Hotline:</span> {hotel.hotelPhoneNumber}
-                    </p>
+                    <span className={cx('hotel-name')}>{hotel.hotelName}</span>
+                    <br />
+                    <span className="fw-bold">Address:</span> {hotel.hotelAddress}
+                    <br />
+                    <span className="fw-bold">Hotline:</span> {hotel.hotelPhoneNumber}
+                    <div className={cx('hotel-star')}>
+                        <Star starNumber={hotel.starNumber}></Star>
+                    </div>
+                    {user && user.userType === 2 && user.hotelId === hotel._id && (
+                        <div className={cx('handle-hotel-btn')}>
+                            <Button warning onClick={() => setShowUpdateForm(true)}>
+                                <EditIcon />
+                            </Button>
+                            <Button danger onClick={() => handleDeleteHotel()}>
+                                <CloseIcon />
+                            </Button>
+                        </div>
+                    )}
                 </div>
 
                 <div className={cx('description')}>
@@ -234,7 +260,14 @@ function HotelPage() {
                     </div>
                 </div>
 
-                <Rooms rooms={rooms} addRoom header="Room type" description="Good choice for you" updateRooms={updateRooms} />
+                <Rooms
+                    hotelId={hotel._id}
+                    rooms={rooms}
+                    addRoom
+                    header="Rooms"
+                    description="Good choice for you"
+                    updateRooms={updateRooms}
+                />
 
                 <div className={cx('utilities')}>
                     <div className={cx('utilities-container')}>
@@ -278,8 +311,36 @@ function HotelPage() {
                                                 <span className="ms-2 pb-3 fw-bold">{comment.name}</span>
                                             </div>
                                             <div className="w-100">
-                                                <span className="text-black-50">{comment.date}</span>
+                                                <span className="text-black-50">{comment.createdDate}</span>
                                                 <p>{comment.content}</p>
+                                            </div>
+                                            <div className={cx('handle-comment')}>
+                                                <div className="mb-1">
+                                                    {user && user.userType === 0 && (
+                                                        <Button
+                                                            warning
+                                                            onClick={() => {
+                                                                handleHideComment(comment._id);
+                                                            }}
+                                                            className={cx('handle-comment-btn')}
+                                                        >
+                                                            <RemoveCircleOutlineIcon />
+                                                        </Button>
+                                                    )}
+                                                </div>
+                                                <div>
+                                                    {user && user._id === comment.userId && (
+                                                        <Button
+                                                            danger
+                                                            onClick={() => {
+                                                                handleDeleteComment(comment._id);
+                                                            }}
+                                                            className={cx('handle-comment-btn')}
+                                                        >
+                                                            <CloseIcon />
+                                                        </Button>
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
                                     </li>
@@ -295,10 +356,24 @@ function HotelPage() {
                                             Comment
                                         </label>
 
-                                        <textarea className="form-control" id="comment" rows="3"></textarea>
+                                        <textarea
+                                            maxlength="250"
+                                            className="form-control"
+                                            id="comment"
+                                            rows="3"
+                                            required
+                                        ></textarea>
 
                                         <div className="w-50  mt-3">
-                                            <Button primary type="submit">
+                                            <Button
+                                                primary
+                                                type="button"
+                                                onClick={() => {
+                                                    const comment = document.getElementById('comment').value;
+                                                    document.getElementById('comment').value = '';
+                                                    handleComment(comment);
+                                                }}
+                                            >
                                                 Send
                                             </Button>
                                         </div>
@@ -324,6 +399,16 @@ function HotelPage() {
                         )}
                     </div>
                 </div>
+
+                {showUpdateForm && (
+                    <>
+                        <UpdateHotelForm
+                            hotel={hotel}
+                            setShowUpdateForm={setShowUpdateForm}
+                            handleUpdateHotel={handleUpdateHotel}
+                        />
+                    </>
+                )}
             </div>
         </div>
     );
