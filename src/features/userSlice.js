@@ -16,6 +16,7 @@ export const userSlice = createSlice({
         },
         signup(state, action) {
             state.user = action.payload;
+            //
         },
     },
 });
