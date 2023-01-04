@@ -11,7 +11,7 @@ function AccountPage() {
     const user = useSelector(selectUser);
     //console.log(user.userId)
     React.useEffect(() => {
-        Axios.get(`http://localhost:2345/api/user/info/${user._id}`)
+        Axios.get(`https://intro-to-software-be.bagang.ai/api/user/info/${user._id}`)
             .then((res) => {
                 setInforUser(res.data);
 
@@ -87,7 +87,7 @@ function AccountPage() {
             console.log(payload);
             event.preventDefault();
             event.stopPropagation();
-            Axios.post(`http://localhost:2345/api/user/changeinfo`, payload)
+            Axios.post(`https://intro-to-software-be.bagang.ai/api/user/changeinfo`, payload)
                 .then((res) => {
                     console.log(res.data);
                     setIsEditingPro5(false);
