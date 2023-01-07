@@ -6,6 +6,7 @@ import { Container, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Spinner from 'react-spinkit';
 import Search from '~/component/Search/search';
+import { api } from '../../constants';
 import Button from '../../component/Button';
 import Star from '../../component/Star';
 import styles from './HomePage.module.scss';
@@ -33,7 +34,7 @@ function HomePage() {
     const navigate = useNavigate();
 
     React.useEffect(() => {
-        Axios.get('https://intro-to-software-be.bagang.ai/api/post/postlist')
+        Axios.get(`${api.prod}/api/post/postlist`)
             .then((res) => {
                 setArr(res.data);
                 setCard(res.data);

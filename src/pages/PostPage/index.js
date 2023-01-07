@@ -2,10 +2,11 @@ import * as React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import  Axios  from 'axios';
-import './style.scss';
+import './PostPage.scss';
 import { useSelector } from 'react-redux';
 import {selectUser} from '../../features/userSlice'
 import {Rating} from 'react-simple-star-rating'
+import { api } from '../../constants';
 
 
 function SearchPage() {
@@ -95,8 +96,8 @@ function SearchPage() {
 
         
 
-            Axios.post("https://intro-to-software-be.bagang.ai/api/hotel/createhotel", {
-                    userId: user.userId,
+            Axios.post(`${api.prod}/api/hotel/createhotel`, {
+                    userId: user._id,
                     licenseNumber:licenseNumber,
                     hotelName: name,
                     hotelAddress: address,

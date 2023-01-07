@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from '~/api/auth';
 import Button from '~/component/Button';
 import { login } from '~/features/userSlice';
-import { loginPage } from '../../api/auth/auth.api';
 import styles from './LoginPage.module.scss';
 
 const cx = classNames.bind(styles);
@@ -30,14 +29,13 @@ function LoginPage() {
 
         // Send userAccount to server and back to home page
         try {
-            loginPage(userAccount).then((res) => {
-                if (res) {
-                    console.log("res", res)
-                    dispatch(login(res.data));
-                    navigate('/');
-                }
-            });
+            const response = await axios.post('/api/user/signin', userAccount);
+            if (response.status === 200) {
+                dispatch(login(response.data));
+                navigate('/');
+            }
         } catch (error) {
+            // Error
             console.log(error);
             setError(error.response.data.message);
         }
