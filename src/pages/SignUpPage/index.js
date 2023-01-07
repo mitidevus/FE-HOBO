@@ -202,7 +202,7 @@ function SignUpPage() {
                             disabled={Number(userType) === 1}
                         />
                     </div>
-                    <div className="mb-3">
+                    {/* <div className="mb-3">
                         <input
                             id="hotelLisenceNumber"
                             type="text"
@@ -211,7 +211,7 @@ function SignUpPage() {
                             onChange={(e) => setLicenseNumber(e.target.value)}
                             disabled={Number(userType) === 1}
                         />
-                    </div>
+                    </div> */}
                     <div className="mb-3">
                         <input
                             id="hotelPhoneNumber"

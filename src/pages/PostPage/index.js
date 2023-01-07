@@ -6,6 +6,7 @@ import './PostPage.scss';
 import { useSelector } from 'react-redux';
 import {selectUser} from '../../features/userSlice'
 import {Rating} from 'react-simple-star-rating'
+import { api } from '../../constants';
 
 
 function SearchPage() {
@@ -95,7 +96,7 @@ function SearchPage() {
 
         
 
-            Axios.post("http://localhost:2345/api/hotel/createhotel", {
+            Axios.post(`${api.prod}/api/hotel/createhotel`, {
                     userId: user._id,
                     licenseNumber:licenseNumber,
                     hotelName: name,
