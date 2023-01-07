@@ -61,7 +61,7 @@ function SignUpPage() {
             password,
             firstName,
             lastName,
-            userType: Number(userType),
+            userType,
             phoneNumber,
             avatar,
             hotelId,
@@ -167,8 +167,8 @@ function SignUpPage() {
                             type="radio"
                             name="userType"
                             id="tourist"
-                            value="1"
-                            checked={Number(userType) === 1}
+                            value="0"
+                            checked={userType === 1}
                             onChange={(e) => setUserType(e.target.value)}
                         />
                         <label className="form-check-label" htmlFor="tourist">
@@ -181,8 +181,8 @@ function SignUpPage() {
                             type="radio"
                             name="userType"
                             id="hotelOwner"
-                            value="2"
-                            checked={Number(userType) === 2}
+                            value="1"
+                            checked={userType === 2}
                             onChange={(e) => setUserType(e.target.value)}
                         />
                         <label className="form-check-label" htmlFor="hotelOwner">
@@ -199,19 +199,19 @@ function SignUpPage() {
                             className="form-control"
                             placeholder="Hotel name"
                             onChange={(e) => setHotelName(e.target.value)}
-                            disabled={Number(userType) === 1}
+                            disabled={userType !== 2}
                         />
                     </div>
-                    {/* <div className="mb-3">
+                    <div className="mb-3">
                         <input
                             id="hotelLisenceNumber"
                             type="text"
                             className="form-control"
                             placeholder="Hotel lisence number"
                             onChange={(e) => setLicenseNumber(e.target.value)}
-                            disabled={Number(userType) === 1}
+                            disabled={userType !== 2}
                         />
-                    </div> */}
+                    </div>
                     <div className="mb-3">
                         <input
                             id="hotelPhoneNumber"
@@ -219,7 +219,7 @@ function SignUpPage() {
                             className="form-control"
                             placeholder="Hotel phone number"
                             onChange={(e) => setHotelPhoneNumber(e.target.value)}
-                            disabled={Number(userType) === 1}
+                            disabled={userType !== 2}
                         />
                     </div>
                     <div className="mb-3">
@@ -229,7 +229,7 @@ function SignUpPage() {
                             className="form-control"
                             placeholder="Hotel address"
                             onChange={(e) => setHotelAddress(e.target.value)}
-                            disabled={Number(userType) === 1}
+                            disabled={userType !== 2}
                         />
                     </div>
                 </div>
