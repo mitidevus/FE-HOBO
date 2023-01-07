@@ -95,8 +95,8 @@ function SearchPage() {
 
         
 
-            Axios.post("https://intro-to-software-be.bagang.ai/api/hotel/createhotel", {
-                    userId: user.userId,
+            Axios.post("http://localhost:2345/api/hotel/createhotel", {
+                    userId: user._id,
                     licenseNumber:licenseNumber,
                     hotelName: name,
                     hotelAddress: address,
