@@ -33,7 +33,7 @@ function HomePage() {
     const navigate = useNavigate();
 
     React.useEffect(() => {
-        Axios.get('https://intro-to-software-be.bagang.ai/api/post/postlist')
+        Axios.get('http://localhost:2345/api/post/postlist')
             .then((res) => {
                 setArr(res.data);
                 setCard(res.data);
