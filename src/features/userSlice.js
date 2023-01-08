@@ -18,10 +18,14 @@ export const userSlice = createSlice({
             state.user = action.payload;
             //
         },
+        updateHotelId(state, action) {
+            state.user.hotelId = action.payload._id;
+            //
+        },
     },
 });
 
-export const { login, logout, signup } = userSlice.actions;
+export const { login, logout, signup, updateHotelId } = userSlice.actions;
 
 // Hàm để lấy dữ liệu từ redux
 export const selectUser = (state) => state.user.user;
