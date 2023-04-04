@@ -130,6 +130,8 @@ function ApprovePage() {
     const [rooms, setRooms] = useState(unapprovedRoomsRes);
     const [room, setRoom] = useState(rooms[0] || {});
 
+    console.log(room)
+
     // Click left button to change room
     const prevRoom = () => {
         const index = rooms.findIndex((item) => item._id === room._id);
@@ -219,7 +221,7 @@ function ApprovePage() {
                             <div className="row">
                                 <div className="col">
                                     <div className={cx('room-info-slider')}>
-                                        <Slider slides={[room.thumbnail, ...room.slider]} />
+                                        <Slider slides={[room.thumbnail, ...room.slider]} type="room" />
                                     </div>
                                 </div>
                                 <div className="col">

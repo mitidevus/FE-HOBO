@@ -1,11 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useEffect, useLayoutEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { BrowserRouter as Router, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, BrowserRouter as Router, Routes, useLocation } from 'react-router-dom';
 import { selectUser } from '~/features/userSlice';
 import { adminRoutes, hotelOwnerRoutes, privateRoutes, publicRoutes } from '~/routes';
-import Navbar from './component/Navbar/Navbar';
 import Footer from './component/Footer/Footer';
+import Navbar from './component/Navbar/Navbar';
 
 const ScrollToTop = ({ children }) => {
     const location = useLocation();

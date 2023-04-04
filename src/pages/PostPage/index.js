@@ -1,17 +1,14 @@
-import * as React from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import Axios from 'axios';
-import './PostPage.scss';
+import * as React from 'react';
+import Form from 'react-bootstrap/Form';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUser, updateHotelId } from '../../features/userSlice';
-import { Rating } from 'react-simple-star-rating';
-import { api } from '../../constants';
 import { useNavigate } from 'react-router-dom';
+import { api } from '../../constants';
+import { selectUser, updateHotelId } from '../../features/userSlice';
+import './PostPage.scss';
 
 function SearchPage() {
     const navigate = useNavigate();
-    const [selectedFiles, setSelectedFiles] = React.useState([]);
     const [thumbnail, setThumbnail] = React.useState();
     const [sliderList, setsliderList] = React.useState([]);
     const [utilities, setUtilities] = React.useState([]);
@@ -27,7 +24,7 @@ function SearchPage() {
     const user = useSelector(selectUser);
     //console.log(user.userId)
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const handleImageChange = (source) => {
         const file = source.target.value;
@@ -108,8 +105,8 @@ function SearchPage() {
                 slider: sliderList,
             }).then((res) => {
                 if (res.status === 200) {
-                    dispatch(updateHotelId(res.data))
-                    navigate(`/`)
+                    dispatch(updateHotelId(res.data));
+                    navigate(`/`);
                 }
             });
         } else {
@@ -121,13 +118,6 @@ function SearchPage() {
 
     const outputImage = (source) => {
         return <img src={source} alt="" width="20%" />;
-    };
-
-    const handleUtilitiesChange = (e, index) => {
-        const { name, value } = e.target;
-        const list = [...utilities];
-        list[index][name] = value;
-        setUtilities(list);
     };
 
     const handleUtilitiesRemove = (index) => {

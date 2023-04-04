@@ -217,8 +217,7 @@ function HotelPage() {
     }, [hotelIdAPI]);
 
     console.log(hotel);
-    console.log(rooms);
-    console.log(comments);
+
 
     return (
         <div className={cx('wrapper')}>
@@ -269,7 +268,7 @@ function HotelPage() {
                     updateRooms={updateRooms}
                 />
 
-                <div className={cx('utilities')}>
+                {/* <div className={cx('utilities')}>
                     <div className={cx('utilities-container')}>
                         <ItemTitle header="Utilities" description="Available services" />
                         <div className="row">
@@ -286,7 +285,7 @@ function HotelPage() {
                             ))}
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 <BookingForm rooms={rooms} />
 

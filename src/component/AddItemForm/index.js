@@ -19,6 +19,7 @@ function AddItemForm({ rooms, setShowAddForm, handleAddRoom }) {
     const [slider2, setSlider2] = useState('');
     const [slider3, setSlider3] = useState('');
     const [description, setDescription] = useState('');
+    // eslint-disable-next-line no-unused-vars
     const [error, setError] = useState('');
 
     const params = useParams();

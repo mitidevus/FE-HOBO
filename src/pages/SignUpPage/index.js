@@ -24,10 +24,6 @@ function SignUpPage() {
 
     // Hotel information
     const hotelId = null;
-    const [licenseNumber, setLicenseNumber] = useState('');
-    const [hotelName, setHotelName] = useState(null);
-    const [hotelAddress, setHotelAddress] = useState(null);
-    const [hotelPhoneNumber, setHotelPhoneNumber] = useState(null);
     const [agreeTerms, setAgreeTerms] = useState(false);
 
     const [error, setError] = useState('');
@@ -52,9 +48,6 @@ function SignUpPage() {
         if (password !== passwordConfirm) {
             return alert('Confirm password is not correct!');
         }
-        if (userType === 2 && !licenseNumber && !hotelPhoneNumber && !hotelName && !hotelAddress) {
-            return alert('Please fill license number!');
-        }
         const userAccount = {
             username,
             email,
@@ -65,10 +58,6 @@ function SignUpPage() {
             phoneNumber,
             avatar,
             hotelId,
-            licenseNumber,
-            hotelName,
-            hotelAddress,
-            hotelPhoneNumber,
         };
 
         // Send userAccount to server
@@ -98,6 +87,7 @@ function SignUpPage() {
                         className="form-control"
                         placeholder="Username"
                         onChange={(e) => setUsername(e.target.value)}
+                        autoComplete="off"
                     />
                 </div>
                 <div className="row my-3">
@@ -108,6 +98,7 @@ function SignUpPage() {
                             className="form-control"
                             placeholder="First name"
                             onChange={(e) => setFirstName(e.target.value)}
+                            autoComplete="off"
                         />
                     </div>
                     <div className="col-6">
@@ -117,6 +108,7 @@ function SignUpPage() {
                             className="form-control"
                             placeholder="Last name"
                             onChange={(e) => setLastName(e.target.value)}
+                            autoComplete="off"
                         />
                     </div>
                 </div>
@@ -128,6 +120,7 @@ function SignUpPage() {
                             className="form-control"
                             placeholder="Email address"
                             onChange={(e) => setEmail(e.target.value)}
+                            autoComplete="off"
                         />
                     </div>
                     <div className="col-6">
@@ -137,6 +130,7 @@ function SignUpPage() {
                             className="form-control"
                             placeholder="Phone number"
                             onChange={(e) => setPhoneNumber(e.target.value)}
+                            autoComplete="off"
                         />
                     </div>
                 </div>
@@ -147,6 +141,7 @@ function SignUpPage() {
                         className="form-control"
                         placeholder="Password"
                         onChange={(e) => setPassword(e.target.value)}
+                        autoComplete="off"
                     />
                 </div>
                 <div className="mb-3">
@@ -156,6 +151,7 @@ function SignUpPage() {
                         className="form-control"
                         placeholder="Password confirmation"
                         onChange={(e) => setPasswordConfirm(e.target.value)}
+                        autoComplete="off"
                     />
                 </div>
 
@@ -170,6 +166,7 @@ function SignUpPage() {
                             value="1"
                             checked={Number(userType) === 1}
                             onChange={(e) => setUserType(e.target.value)}
+                            autoComplete="off"
                         />
                         <label className="form-check-label" htmlFor="tourist">
                             Tourist
@@ -184,54 +181,12 @@ function SignUpPage() {
                             value="2"
                             checked={Number(userType) === 2}
                             onChange={(e) => setUserType(e.target.value)}
+                            autoComplete="off"
                         />
                         <label className="form-check-label" htmlFor="hotelOwner">
                             Hotel Owner
                         </label>
                     </div>
-                </div>
-
-                <div className="">
-                    {/* <div className="mb-3">
-                        <input
-                            id="hotelName"
-                            type="text"
-                            className="form-control"
-                            placeholder="Hotel name"
-                            onChange={(e) => setHotelName(e.target.value)}
-                            disabled={Number(userType) === 1}
-                        />
-                    </div> */}
-                    {/* <div className="mb-3">
-                        <input
-                            id="hotelLisenceNumber"
-                            type="text"
-                            className="form-control"
-                            placeholder="Hotel lisence number"
-                            onChange={(e) => setLicenseNumber(e.target.value)}
-                            disabled={Number(userType) === 1}
-                        />
-                    </div> */}
-                    {/* <div className="mb-3">
-                        <input
-                            id="hotelPhoneNumber"
-                            type="text"
-                            className="form-control"
-                            placeholder="Hotel phone number"
-                            onChange={(e) => setHotelPhoneNumber(e.target.value)}
-                            disabled={Number(userType) === 1}
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <input
-                            id="hotelAddress"
-                            type="text"
-                            className="form-control"
-                            placeholder="Hotel address"
-                            onChange={(e) => setHotelAddress(e.target.value)}
-                            disabled={Number(userType) === 1}
-                        />
-                    </div> */}
                 </div>
 
                 <div className="my-3 form-check">
@@ -240,6 +195,7 @@ function SignUpPage() {
                         className="form-check-input"
                         id="agreeTerms"
                         onChange={() => setAgreeTerms(!agreeTerms)}
+                        autoComplete="off"
                     />
                     <label className="form-check-label" htmlFor="agreeTerms">
                         I Agree

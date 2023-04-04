@@ -114,7 +114,7 @@ function HomePage() {
                                 i += (page - 1) * numberOfCards;
                                 if (i < card.length)
                                     return (
-                                        <div className="col-4 mt-3">
+                                        <div key={i} className="col-4 mt-3">
                                             <div className="card text-center">
                                                 <img
                                                     className={cx('card-img-top', 'room-thumbnail')}

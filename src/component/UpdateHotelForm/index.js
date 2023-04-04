@@ -15,6 +15,7 @@ function UpdateHotelForm({ hotel, setShowUpdateForm, handleUpdateHotel }) {
     const [starNumber, setStarNumber] = useState(hotel.starNumber || 0);
     const [slider, setSlider] = useState(hotel.slider || []);
     const [utilities, setUtilities] = useState(hotel.utilities || []);
+    // eslint-disable-next-line no-unused-vars
     const [error, setError] = useState('');
 
     const handleSubmit = async (e) => {

@@ -6,7 +6,7 @@ import styles from './Slider.module.scss';
 
 const cx = classNames.bind(styles);
 
-export default function Slider({ slides }) {
+export default function Slider({ slides, type }) {
     const [slideIndex, setSlideIndex] = useState(1);
 
     const nextSlide = () => {
@@ -30,7 +30,7 @@ export default function Slider({ slides }) {
             {slides.map((slide, index) => {
                 return (
                     <div key={index} className={slideIndex === index + 1 ? cx('slide', 'active-anim') : cx('slide')}>
-                        <img src={slide} alt="Slider" />
+                        <img src={type === "room" ? slide : slide.Slider} alt="Slider" />
                     </div>
                 );
             })}

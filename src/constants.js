@@ -1,4 +1,4 @@
 export const api = {
-    prod: 'https://intro-to-software-be.bagang.ai',
+    prod: 'https://be-hobo.onrender.com',
     dev: 'http://localhost:2345',
 };

@@ -1,9 +1,8 @@
+import CloseIcon from '@mui/icons-material/Close';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
-import styles from './UpdateItemForm.module.scss';
-import axios from '~/api/auth';
 import Button from '../Button';
-import CloseIcon from '@mui/icons-material/Close';
+import styles from './UpdateItemForm.module.scss';
 
 const cx = classNames.bind(styles);
 
@@ -17,6 +16,7 @@ function UpdateItemForm({ room, setShowUpdateForm, handleUpdateRoom, detail = fa
     const [thumbnail, setThumbnail] = useState(room.thumbnail || '');
     const [slider, setSlider] = useState(room.slider || []);
     const [description, setDescription] = useState(room.description || '');
+    // eslint-disable-next-line no-unused-vars
     const [error, setError] = useState('');
 
     const handleSubmit = async (e) => {
